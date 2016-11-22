@@ -1,0 +1,99 @@
+requirejs.config({
+    baseUrl: 'script/lib',
+    paths: {
+        app: '../app',
+        jquery: "jquery-2.2.1.min"
+    }
+});
+
+// Start the main app logic.
+requirejs(['jquery', 'echarts.min', 'properScreen', 'properScreen_css', 'common', 'app/index'],
+function   ($, echarts, flexble, flexble_css, common, index) {
+    //loaded and can be used here now.
+    //首页
+    var height = document. documentElement. clientHeight;
+	$(document).ready(function(){
+		$(".deviceHeight").css("height",height);
+		//获取链接参数
+		var id = getQueryString("id");
+		var cityName = decodeURIComponent(window.location.search.substr(16));
+
+		// alert(id);
+		// alert(cityName);
+
+
+		/*载入世界地图*/
+		var myChart = echarts.init(document.getElementById('main'));
+    	$.get('geojson/city/'+id+'.json', function (huizhouJson) {
+
+			echarts.registerMap('huizhou', huizhouJson);
+			option = {
+				backgroundColor: '#ddd',
+		        title: {
+		            text: '慕思加盟店'+cityName+'分布图',
+		            // subtext: 'Data from www.musi.com',
+		            sublink: 'http://www.musi.com',
+		            left: 'center'
+		        },
+		        tooltip: {
+		            trigger: 'item',
+		            showDelay: 0,
+		            transitionDuration: 0.2
+		        },
+		        visualMap: {
+		        	type: 'piecewise',
+		            left: 'center',
+		            top: 40,
+		            itemWidth: 30,
+		            itemHeight: 20,
+		            orient: 'horizontal',
+		            itemSymbol: 'rect',
+		            pieces: [
+			            {min: 1, max: 1,label: '已开发区域'},
+		            	{min: 0, max: 0,label: '未开发区域'},
+			        ],
+			        outOfRange:{
+			        	color: '#eee'
+			        },
+		            color: ['#ffcc66', '#eee']
+		        },
+		        toolbox: {
+		            show: true,
+		            //orient: 'vertical',
+		            left: 'left',
+		            top: 'top',
+		            feature: {
+		                dataView: {readOnly: false},
+		                restore: {},
+		                saveAsImage: {}
+		            }
+		        },
+		        series: [
+		            {
+		                name: '惠州市地图',
+		                type: 'map',
+		                roam: true,
+		                map: 'huizhou',
+		                itemStyle:{
+		                    emphasis:{label:{show:true}}
+		                },
+		                data:[
+		                    {name: '惠东县', value: 1},
+		                    {name: '博罗县', value: 1},
+		                    {name: '惠城区', value: 1},
+		                    {name: '惠阳区', value: 1}
+		                ]
+		            }
+		        ]
+		    };
+
+		    myChart.setOption(option);
+
+		    myChart.on('click', function (params) {
+	            // location.href = 'city.html';
+		    });
+ 		})
+
+	})
+});
+    	

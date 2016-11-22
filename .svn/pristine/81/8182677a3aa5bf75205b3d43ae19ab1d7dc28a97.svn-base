@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>广东省地图</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script data-main="script/province.js" src="script/lib/require.js"></script>
+</head>
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" class="deviceHeight" style="width: 100%;"></div>
+
+</body>
+</html>

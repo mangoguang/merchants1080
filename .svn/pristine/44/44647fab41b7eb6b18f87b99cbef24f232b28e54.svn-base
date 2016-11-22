@@ -1,0 +1,92 @@
+requirejs.config({
+    baseUrl: 'script/lib',
+    paths: {
+        app: '../app',
+        jquery: "jquery-2.2.1.min"
+    }
+});
+
+// Start the main app logic.
+requirejs(['jquery', 'echarts.min', 'properScreen', 'properScreen_css', 'app/index'],
+function   ($, echarts, flexble, flexble_css, index) {
+    //loaded and can be used here now.
+    //首页
+	$(document).ready(function(){
+		var height = document. documentElement. clientHeight;
+		$(".deviceHeight").css("height",height);
+
+		/*载入世界地图*/
+		var myChart = echarts.init(document.getElementById('main'));
+    	$.get('geojson/world.json', function (worldJson) {
+
+			echarts.registerMap('world', worldJson);
+			option = {
+				backgroundColor: "#00ccff",
+		        title: {
+		            text: '慕思加盟店全球分布图',
+		            left: 'center',
+		            // subtext: 'Data from www.musi.com',
+		            sublink: 'http://www.musi.com'
+		        },
+		        tooltip: {
+		            trigger: 'item',
+		            showDelay: 0,
+		            transitionDuration: 0.2
+		        },
+		        visualMap: {
+		        	type: 'piecewise',
+		            left: 'center',
+		            top: 40,
+		            itemWidth: 30,
+		            itemHeight: 20,
+		            orient: 'horizontal',
+		            itemSymbol: 'rect',
+		            pieces: [
+			            {min: 1, max: 1,label: '已开发区域'},
+		            	{min: 0, max: 0,label: '未开发区域'},
+			        ],
+			        outOfRange:{
+			        	color: '#eee'
+			        },
+		            color: ['#ffcc66', '#eee']
+		        },
+		        toolbox: {
+		            show: true,
+		            //orient: 'vertical',
+		            left: 'left',
+		            top: 'top',
+		            feature: {
+		                dataView: {readOnly: false},
+		                restore: {},
+		                saveAsImage: {}
+		            }
+		        },
+		        series: [
+		            {
+		                name: '世界地图',
+		                type: 'map',
+		                roam: true,
+		                map: 'world',
+		                itemStyle:{
+		                    emphasis:{label:{show:true}}
+		                },
+		                data:[
+		                    {name: 'China', value: 1},
+		                    {name: 'Australia', value: 1},
+		                    {name: 'Japan', value: 1},
+		                    {name: 'United States of America', value: 1}
+		                ]
+		            }
+		        ]
+		    };
+
+		    myChart.setOption(option);
+
+		    myChart.on('click', function (params) {
+	            location.href = 'country.html';
+		    });
+ 		})
+
+	})
+});
+    	

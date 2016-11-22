@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>广东省地图</title>
+	<script src="../script/lib/properScreen.js"></script>
+	<script src="../script/lib/properScreen_css.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body id="body">
+	<div class="topPadding"></div>
+  <h1 class="title">慕思招商系统</h1>
+  <button id="bottomBtn"></button>
+
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+  <div id="main" class="deviceHeight" style="width: 100%;"></div>
+
+  <ul class="symbol">
+    <li class="li1">单品店<span></span></li>
+    <li class="li2">综合店<span></span></li>
+  </ul>
+
+  <!-- 底部导航栏 -->
+  <div class="bottomNav">
+    <ul class="nav clearfix">
+      <li><a href="">慕思世界</a></li>
+      <li><a href="">产品中心</a></li>
+      <li><a href="">模拟开店</a></li>
+      <li><a href="">联系我们</a></li>
+    </ul>
+    <button class="navBtn"></button>
+  </div>
+
+  <!-- 加载动画 -->
+  <div class="animate">
+    <div id="rect" class="rect">
+      <div class="point" style="text-align: center;line-height: 50px;">
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../script/lib/jquery-2.2.1.min.js"></script>
+  <script src="../script/common.js"></script>
+  <script src="../script/lib/echarts.min.js"></script>
+  <script src="../script/province.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+/**
+ * Created by Administrator on 2016/6/30.
+ */
+var gulp = require('gulp'),
+    less = require('gulp-less'),
+    uglify = require('gulp-uglify'),
+    minifycss = require('gulp-minify-css'),
+    concat = require('gulp-concat'),
+    livereload = require('gulp-livereload'),
+    watch = require('gulp-watch'),
+    browserSync = require('browser-sync');
+
+
+gulp.task('less',function(){
+    return gulp.src('./less/*.less')
+        .pipe(watch('./less/*.less'))
+        .pipe(less())
+        .pipe(gulp.dest('./css'))
+        .pipe(minifycss())
+        .pipe(gulp.dest('./css/min'));
+})
+
+gulp.task('js',function(){
+    return gulp.src('./js/*.js')
+        .pipe(watch('./js/*.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./js/min'));
+})
+
+gulp.task('browser-sync',function(){
+    var files = [
+        './pages/*.html',
+        './css/*.css',
+        './js/*.js',
+        './*.html'
+    ];
+
+    browserSync.init(files,{
+        server:{
+            baseDir: './'
+        }
+    })
+})
+
+
+
+gulp.task('default',['browser-sync','less','js'], function() {
+    // gulp.src('./views/**/*.js')
+    //     .pipe(uglify())
+    //     .pipe(concat('main.js'))
+    //     .pipe(gulp.dest('./js'));
+});

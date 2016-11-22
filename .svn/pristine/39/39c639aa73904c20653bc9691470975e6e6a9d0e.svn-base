@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>招商APP</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script data-main="script/index.js" src="script/lib/require.js"></script>
+    <script src="script/lib/jquery-2.2.1.min.js"></script>
+    <style>
+    	body{
+    		background-color: rgba(0,0,0,0.3);
+    	}
+        h1{
+            background: #19bd9b;
+        }
+        .erweimaBox{
+        	border: 5px solid #19bd9b;
+        }
+
+    </style>
+</head>
+<body class="deviceHeight index">
+	<h1 style="height: 500px;">frame层</h1>
+
+    <script>
+
+        apiready = function(){
+            
+
+        };
+    </script>
+</body>
+</html>

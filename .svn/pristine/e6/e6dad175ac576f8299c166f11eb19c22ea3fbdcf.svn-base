@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>招商APP</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script data-main="script/index.js" src="script/lib/require.js"></script>
+    <style>
+    	body{
+    		background:#FFFFFF;
+    	}
+        h1{
+            background: #19bd9b;
+        }
+
+    </style>
+         <script>
+         
+    function openview()
+    {
+		var obj = api.require('FNScanner');
+		obj.openScanner({
+//			autorotation:true,
+//		    autoLight: true,
+//		    saveToAlbum: true,
+		    saveImg: {
+//		        path: 'fs://barImage/hh.jpg',
+		        w: 400,
+		        h: 400
+		    }
+		}, function(ret,err) {
+//				window.path = ret.savePath;
+			 if(ret){
+//		        alert(JSON.stringify(ret));
+		     }
+		});
+    };
+    
+    apiready = function(){
+//  汉王云名片烧苗模块
+    var recCard = api.require('hanvonCloudBcardReader');
+	api.getPicture({
+	    sourceType : 'library',
+	    encodingType : 'jpg',
+	    mediaValue : 'pic',
+	    destinationType : 'url',
+	    allowEdit : true,
+	    quality : 100,                
+	    saveToPhotoAlbum : false
+	}, function(ret, err) {
+	    if (ret) {
+	        url = ret.data;
+	        //console.log(url);
+	        recCard.recognitionBcard({
+	            androidkey : "163114c8-31b5-4424-bb85-617f81cf54d9",
+	            lang : "chns",
+	            picpath : url
+	        }, function(ret, err) {
+	            if (ret.status) {
+	                api.alert({
+	                    title : "识别结果",
+	                    msg : ret.result
+	                });
+	            } else {
+	                api.alert({
+	                    title : "识别结果",
+	                    msg : err.msg
+	                });
+	            }
+	        });
+	    } else {
+	        alert(JSON.stringify(err));
+	    }
+	});
+    
+//脉可寻名片识别模块
+//  var maketionCardReader = api.require('maketionCardReader');
+//  maketionCardReader.auth({
+//      uid: 123456
+//  }, function(ret, err) {
+//      if (ret.status) {
+//          api.alert({
+//              title: "提示",
+//              msg: ret.uid
+//          });
+//      } else {
+//          api.alert({
+//              title: "出错了",
+//              msg: err.msg
+//          });
+//      }
+//  });
+
+        
+//      var bodyHeight = window.innerHeight
+//      api.openFrame({
+//          name: 'main-con',
+//          url: './erweima.html',
+//          bounces: true,
+//          rect: {
+//              x: 0,
+//              y: 30,
+//              w: 300,
+//              h: bodyHeight - 30
+//          }
+//      });
+            // var contacts = api.require('contacts');
+            // contacts.queryByKeyword({
+            //     keyword: '大'
+            // }, function(ret, err) {
+            //     if (ret) {
+            //         var obj = ret;
+            //         // var contacts = obj.contacts;
+                    
+            //         alert(obj);
+            //         alert(obj.contacts[0].id);
+            //         var contactList = new Array();
+            //         for(var i=0;i<contacts.length;i++){
+            //             var msg = contacts[i].fullName;
+            //             contactList.push(msg);
+            //         }
+            //         alert(contactList);
+            //     }else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+
+            /*相机模块*/
+            // var cameraTool = api.require('cameraTool');
+            // cameraTool.openCamera(function(ret, err) { 
+            //     if (ret) {
+            //         alert(JSON.stringify(ret));
+            //         var src = ret.imgPath;
+            //         alert(src);
+            //         $("#newImg").attr("src",src);
+            //     }
+            //     // api.prompt({ 
+            //     //     title: "信息", 
+            //     //     msg: "图片路径：" + ret.imgPath, 
+            //     //     buttons: ["取消", "确定"],
+            //     // }); 
+                
+            // });
+
+            // var mediaScanner = api.require('mediaScanner');
+            // mediaScanner.open(function(ret, err) {
+            //     if (ret) {
+            //      var obj = ret;
+            //         var url = obj.list[0].url;
+            //      var size = obj.list[0].size;
+            //         alert(url);
+            //         alert(size);
+            //         $("#imgSize").html("图片大小为："+size+"kb");
+            //         $("#newImg").attr("src",url);
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+
+            /*二维码扫描模块*/
+        // var FNScanner = api.require('FNScanner');
+         // FNScanner.openScanner({
+         //     autorotation: true
+         // }, function(ret, err) {
+         //     if (ret) {
+         //         alert(JSON.stringify(ret));
+         //     } else {
+         //         alert(JSON.stringify(err));
+         //     }
+         // });
+
+            // var scanner = api.require('scanner');
+            // var height = document. documentElement. clientHeight/2;
+            // var width = document. documentElement. clientWidth/2;
+            // var FNScanner = api.require('FNScanner');
+            // FNScanner.openView({              
+            //     rect:{
+            //         x: width/2,
+            //         y: (4*height-width)/4-width/2,
+            //         w: width,
+            //         h: width,
+            //     },
+            //     autorotation: true
+            // }, function(ret, err) {
+            //     if (ret) {
+            //     	var href = ret.content;
+            //     	if(href == undefined){
+            //             FNScanner.closeView();
+            //     	}
+                	
+                    // alert("数据"+JSON.stringify(ret));
+//                  location.href = href;
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+
+            // scanner.openView({
+            //     x: 40,
+            //     y: 160,
+            //     w: 200,
+            //     h: 240,
+            //     sound: 'widget://test.wav'
+            // }, function(ret, err) {
+            //     if (ret) {
+            //         alert(JSON.stringify(ret));
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+
+            /*高德地图模块*/
+            // var aMap = api.require('aMap');
+            // var aMap = api.require('aMap');
+            // aMap.getNameFromCoords({
+            //     lon: 116.384767,
+            //     lat: 39.989539
+            // }, function(ret, err) {
+            //     if (ret.status) {
+            //         alert(JSON.stringify(ret));
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+
+            /*百度定位*/
+            // var baiduLocation = api.require('baiduLocation');
+            // baiduLocation.startLocation({
+            //     accuracy: '100m',
+            //     filter: 1,
+            //     autoStop: true
+            // }, function(ret, err) {
+            //     if (ret.status) {
+            //         alert(JSON.stringify(ret));
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+
+            // var baiduLocation = api.require('baiduLocation');
+            // baiduLocation.getLocation(function(ret, err) {
+            //     if (ret) {
+            //         alert(JSON.stringify(ret));
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+            
+
+            /*微信分享*/
+//          var wx = api.require('wx');
+//          wx.shareText({
+//              apiKey: '',
+//              scene: 'timeline',
+//              text: '我分享的文本'
+//          }, function(ret, err) {
+//              if (ret.status) {
+//                  alert('分享成功');
+//              } else {
+//                  alert(err.code);
+//              }
+//          });
+
+			//QQ分享
+//			var qq = api.require('qq');
+//			qq.login(function(ret, err) {
+//			    api.alert({
+//			        title: 'id和token',
+//			        msg: ret.openId + ret.accessToken
+//			    });
+//			});
+
+            
+        };
+    </script>
+</head>
+<body class="deviceHeight index">
+    
+    <div class="showList">
+        <a href="about.html">慕思</a>
+        <a href="world.html">加盟店分布</a>
+        <a href="show.html">加盟展示</a>
+        <a href="erweima.html">二维码扫描</a>
+        <a href="html/fixed.html">测试</a>
+        <a onclick="openview()">扫描</a>
+    </div>
+</body>
+</html>

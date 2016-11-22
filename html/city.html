@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>市级地图</title>
+	<script src="../script/lib/properScreen.js"></script>
+	<script src="../script/lib/properScreen_css.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body id="body" onload="load()">
+	<div class="topPadding"></div>
+  <h1 class="title">慕思招商系统</h1>
+  <button id="bottomBtn"></button>
+  
+  <ul class="symbol clearfix">
+    <li class="li1">单品店<span></span></li>
+    <li class="li2">综合店<span></span></li>
+  </ul>
+
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 100%;height: 100%;"></div>
+
+    <div class="storeDetailBox">
+      <div class="Left">
+        <div class="storeListTit">
+          <h1 class="title managerDetailTit">慕思招商系统</h1>
+          <h2>店铺列表</h2>
+        </div>
+        <ul class="storeList">
+
+        </ul>
+      </div>
+
+      <div class="Min">
+        <div class="storeDetail">
+          <!-- 轮播图 -->
+          <div class="flexslider">
+              <ul class="slides">
+                  <li style=""></li>
+                  <li style=""></li>
+                  <li style=""></li>
+              </ul>
+          </div>
+          <!-- 轮播图 -->
+
+          <div class="managerMsg">
+            <div class="photo"></div>
+            <h2 class="storeTit">旗舰店</h2>
+            <h2>经销商</h2>
+            <p>电话：<span class="storePhone">0769-2222222</span></p>
+            <p>地址：<span class="storeAddress">东莞市厚街镇双岗上环工业区</span></p>
+          </div>
+
+          <div class="storeMsg">
+            <p>店铺面积：<span  class="storeArea">100平方米</span></p>
+            <p>开业时间：<span class="startTime">2012年8月8日</span></p>
+            <p>经营品牌：</p>
+            <ul class="brandList clearfix">
+               
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="Right slidBar"></div>
+    </div>
+
+  <!-- 底部导航栏 -->
+  <div class="bottomNav">
+    <ul class="nav clearfix">
+      <li><a href="">慕思世界</a></li>
+      <li><a href="">产品中心</a></li>
+      <li><a href="">模拟开店</a></li>
+      <li><a href="">联系我们</a></li>
+    </ul>
+    <button class="navBtn"></button>
+  </div>
+
+  <!-- 加载动画 -->
+  <div class="animate">
+    <div id="rect" class="rect">
+      <div class="point" style="text-align: center;line-height: 50px;">
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../script/lib/jquery-2.2.1.min.js"></script>
+  <script type="text/javascript" src="../script/lib/flexslider-min.js"></script>
+  <script src="../script/common.js"></script>
+  <script src="../script/lib/echarts.min.js"></script>
+  <script src="../script/city.js"></script>
+</body>
+</html>

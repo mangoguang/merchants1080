@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--<meta charset="utf-8">
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,height=device-height,initial-scale=1.0"/>
+   --><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+   <title>APP</title>
+	<style>
+	
+  body
+	  { 
+	  background-color: rgb(0,0,0);
+	  padding: 20px;
+	  }
+
+	 .div2{
+		 TEXT-ALIGN: left; 
+		}
+		div{
+		text-align:center;
+		color:rgb(255,255,255);
+		 float:right;
+		
+		} 			  		 
+		.div1{ 		 font-size:1em;		}
+		.div2{ 		 font-size: 40px;   float:right;}
+		.div3{ 		 font-size:120px;	float:center;	}
+		.div4{ 		 font-size:140px;	float:center;	}	
+		.div5{ 		 font-size:150px;	float:center;	}
+		.div6{ 		 font-size:120px;	float:center;	}	
+		.div7{ 		 font-size:140px;	float:center;	}
+		.div8{ 		 font-size:150px;	float:center;	}	
+		.div9{		 font-size:60px;		}
+		.div10{ 		 font-size:60px;		}	
+		.div11{ 		 font-size:60px;		}
+		.div12{ 		 font-size:60px;		}	
+		.div13{ 		 font-size:60px;		}
+		.div14{ 		 font-size:60px;		}
+ 	</style>
+</head> 
+<body width="100%"  cellspacing="0" >
+	<div >
+		<font weight="10px"><div id="div2" class="div2" >日期</div></font>
+		<canvas id="clock" width="200" height="200"  >您的浏览器不支持canvas标签</canvas>		
+	</div>	 
+    <table  width="100%">
+    	<tr height="60%"> 
+			<th width="45%"><font ><div id="div3" class="div3">当日目标</div></font></th>
+		    <th width="45%"><font ><div id="div4" class="div4">num</div></font></th>
+		    <th width="10%"><font ><div id="div5" class="div5">套</div></font></th>
+		  </tr>	  
+		  <tr> <th><p></p></th>  </tr> 
+		  <tr> 
+		    <div id='sys-info'></div>
+		    <th width="45%"><font ><div id="div6" class="div6">实际完工</div></font></th>
+		    <th width="45%"><font ><div id="div7" class="div7">num</div></font></th>
+		    <th width="10%"><font ><div id="div8" class="div8">套</div></font></th>
+		  </tr>	   
+    </table>
+    <p></p>
+    <HR align=left width=100% color=#990099 SIZE=3 noShade>
+    <table width="100%" height="60%" cellspacing="0" >
+		<tr>
+			<th width="20%"><font ><div id="div9" class="div9">昨日目标</div></font></th>
+		    <th width="20%"><font ><div id="div10" class="div10">num</div></font></th>
+		    <th width="5%"><font ><div id="div11" class="div11">套</div></font></th>
+		    <th width="5" ></th>
+		    <th width="20%"><font ><div id="div12" class="div12">昨日完工</div></font></th>
+		    <th width="20%"><font ><div id="div13" class="div13">num</div></font></th>
+		    <th width="5%"><font ><div id="div14" class="div14">套</div></font></th>
+		 </tr>	   
+    </table>
+	
+</body>
+<script type="text/javascript" src="script/api.js"></script> 
+<script type="text/javascript">
+
+var canvas = document.getElementById('clock');
+var clock = canvas.getContext('2d');
+
+function drowClock(){
+
+	//清除画布
+	//clock.clearRect(0, 0, 800, 800);
+	canvas.width = 0;  
+	canvas.height = 0;  
+	canvas.width = 200;  
+	canvas.height = 180; 
+
+	var now = new Date();
+	var secd = now.getSeconds();
+	var min = now.getMinutes();
+	var hour = now.getHours();
+	//小时必须获取浮点类型（小时+分数转化的小时）
+
+	//时间格式19:23:30
+	//将24小时进制装换为12小时进制
+	hour = hour + (min / 60);
+	hour = hour > 12 ? hour - 12 : hour;
+
+	//背景
+	clock.beginPath();
+	clock.lineWidth = 2;
+	clock.strokeStyle = "White";
+	clock.arc(75, 75, 75, 0, 180, false);
+	clock.stroke();
+	clock.closePath();
+	//刻度
+	//时刻度
+	for (var i = 0; i < 12; i++) {
+		clock.save();
+		//设置时针的粗细
+		clock.lineWidth = 5;
+		//设置时针的颜色
+		clock.strokeStyle = "White";
+		//先设置0,0点
+		clock.translate(75, 75);
+		//再设置旋转角度
+		clock.rotate((i * 30) * Math.PI / 180);//角度*Math.PI/180=弧度
+		clock.beginPath();
+		clock.moveTo(0, -65);
+		clock.lineTo(0, -70);
+		clock.closePath();
+		clock.stroke();
+		clock.restore();
+	}
+	//分刻度
+	for (var i = 0; i < 60; i++) {
+		clock.save();
+		//设置时针的粗细
+		clock.lineWidth = 1;
+		//设置时针的颜色
+		clock.strokeStyle = "White";
+		//先设置0,0点
+		clock.translate(75, 75);
+		//再设置旋转角度
+		clock.rotate((i * 6) * Math.PI / 180);//角度*Math.PI/180=弧度
+		clock.beginPath();
+		clock.moveTo(0, -70);
+		clock.lineTo(0, -75);
+		clock.closePath();
+		clock.stroke();
+		clock.restore();
+	}
+	//时针
+	clock.save();
+	clock.lineWidth = 5;
+	clock.strokeStyle = "White";
+	clock.translate(75, 75);
+	clock.rotate(hour * 30 * Math.PI / 180);
+	clock.beginPath();
+
+	clock.moveTo(0, -55);
+	clock.lineTo(0, 5);
+	clock.stroke();
+	clock.closePath();
+	clock.restore();
+	////分针
+	clock.save();
+	clock.lineWidth = 3;
+	clock.strokeStyle = "White";
+	clock.translate(75, 75);
+	clock.rotate(min * 6 * Math.PI / 180);
+	clock.beginPath();
+
+	clock.moveTo(0, -60);
+	clock.lineTo(0, 5);
+	clock.stroke();
+	clock.closePath();
+	clock.restore();
+
+	//秒针
+	clock.save();
+	clock.lineWidth = 1;
+	clock.strokeStyle = "red";
+	clock.translate(75, 75);
+	clock.rotate(secd * 6 * Math.PI / 180);
+	clock.beginPath();
+
+	clock.moveTo(0, -65);
+	clock.lineTo(0, 5);
+	clock.closePath();
+	clock.stroke();
+
+	//画交叉点
+	clock.beginPath();
+	clock.arc(0, 0, 2.5, 0, 180, false);
+	clock.closePath();
+	clock.fillStyle = "gray";
+	clock.fill();
+	clock.stroke();
+
+
+	clock.beginPath();
+	clock.arc(0, -55, 2.5, 0, 180, false);
+	clock.closePath();
+	clock.fillStyle = "gray";
+	clock.fill();
+	clock.stroke();
+	clock.restore();
+
+}
+
+//var read_time=30000;
+//getcofig();
+//drowClock();
+setInterval(drowClock, 1000);
+   
+ 
+    apiready = function () {
+
+ 
+   		var vsql = ' SELECT  * FROM View_table_scjd_new JOIN  kb_shebeiguanli  ON   SheBeiNO =  no ';
+	
+		vsql = vsql + 'sofa2014!';
+  
+		api.ajax({
+	    url: 'http://jdxz.kukasofa.com:8000/Service.asmx/ZipSelectJson',
+	    method: 'post',
+	    timeout: 30,
+	    dataType: 'json',
+	    returnAll:false,
+	    data:{
+	        values: {sql: vsql}    // 
+	    } 					
+	},function(ret,err){ 
+	    if (ret) {	    
+			for(var i = 0;i < ret.length;i++){ 
+			    var vmbcl=ret[i].mbcl ;
+				var vsjcl=ret[i].sjcl ;
+				var vztbm=ret[i].ztmb ;
+		    	var vztsl=ret[i].ztsl ;
+		    	var vdate =ret[i].data;
+		    	var vnum =ret[i].num;
+		    	var vnum1 =ret[i].num1 ;
+		        var SheBeiNO =ret[i].SheBeiNO ; 
+		        
+		    	document.getElementById("div2").innerHTML = vdate;  //时间
+		    	document.getElementById("div4").innerHTML = vmbcl;  //当日目标
+		    	document.getElementById("div7").innerHTML = vsjcl;  //实际完工
+		    	document.getElementById("div10").innerHTML = vztbm;  //昨日目标
+		    	document.getElementById("div13").innerHTML = vztsl;   //昨日完工
+		    	
+			 
+			    if ( vnum == '1')
+			    {
+					var obj = api.require('speechRecognizer');
+					obj.read({
+					    readStr:'恭喜大家已经完成今天的任务!继续努力哦!'
+					},function(ret,err) {
+					    if(ret.status) {
+					        ret.speakProgress
+					    }else{
+					        err.msg
+					    }
+					});
+				}else
+				{
+					//var obj = api.require('speechRecognizer');
+					//obj.stopRead();
+				}
+				
+				if ( vnum1 == '1')
+			    {
+					var obj = api.require('speechRecognizer');
+					obj.read({
+					    readStr:'恭喜大家已经超过了昨天的产量!继续努力哦!'
+					},function(ret,err) {
+					    if(ret.status) {
+					        ret.speakProgress
+					    }else{
+					        err.msg
+					    }
+					});
+				}else
+				{
+					//var obj = api.require('speechRecognizer');
+					//obj.stopRead();
+				}
+				
+			}
+	        
+	    }else {
+	 		msg:('错误码：'+err.code+'；错误信息：'+err.msg+'网络状态码：'+err.statusCode)
+	    }
+	});  
+ 
+};
+   	 
+ 
+   
+setInterval(apiready,10000);   //30秒   100000
+ //window.onload=apiready;//不要括号   
+ 
+</script>
+</html>

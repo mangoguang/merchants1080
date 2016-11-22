@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>中国地图</title>
+	<script src="../script/lib/properScreen.js"></script>
+	<script src="../script/lib/properScreen_css.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+</head>
+<body id="body">
+	<div class="topPadding"></div>
+		
+	<h1 class="title">慕思招商系统</h1>
+  <button id="bottomBtn"></button>
+	
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+  <div id="main" class="deviceHeight countryMap" style="width: 100%;left: 0;bottom:0;"></div>
+
+  <div id="managerListBox">
+  	<div class="Left">
+      <div class="tit">
+        <h1 class="title managerDetailTit">慕思招商系统</h1>
+        <h2>招商经理列表</h2>
+      </div>
+      <ul id="addList" class="managerListBox">
+      </ul>
+      <div class="managerListShadow"></div>
+    </div>
+
+    <div class="Min">
+      <div class="managerDetail">
+        <div class="photoBox">
+          <div class="photo"></div>
+          <p class="name">张三</p>
+          <p>片区：<span class="pianqu">华南地区</span></p>
+          <p>负责区域：<span class="area">广东、广西、湖南</span></p>
+        </div>
+
+        <div class="storeContent">
+          <ul class="photoList clearfix">
+            <li><img src="../image1080/pictures.png"/></li>
+            <li><img src="../image1080/pictures.png"/></li>
+            <li><img src="../image1080/pictures.png"/></li>
+            <li><img src="../image1080/pictures.png"/></li>
+          </ul>
+
+          <div class="managerMsg">
+            <p class="phone">电话：1595858585</p>
+            <img src="../image1080/6-qr.png"/>
+            <span>扫一扫添加关注</span>
+          </div>
+
+          <div class="developDetailBox">
+            <h2>区域开发详情</h2>
+            <h3>已开发区域</h3>
+            <p class="developList">广东、广西、湖南、湖北</p>
+            <h3 class="undevelop">未开发区域</h3>
+            <p class="undevelopList">云浮、汕尾</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="managerList "></button>
+  </div>
+
+  <ul class="visualMapList clearfix">
+    <li><span></span>东一区</li><li><span></span>东二区</li><li><span></span>东三区</li>
+    <li><span></span>南一区</li><li><span></span>南二区</li><li><span></span>南三区</li>
+    <li><span></span>西一区</li><li><span></span>西二区</li><li><span></span>西三区</li>
+    <li><span></span>北一区</li><li><span></span>北二区</li><li><span></span>北三区</li>
+  </ul>
+
+  <!-- 底部导航栏 -->
+  <div class="bottomNav">
+    <ul class="nav clearfix">
+      <li><a href="">慕思世界</a></li>
+      <li><a href="">产品中心</a></li>
+      <li><a href="">模拟开店</a></li>
+      <li><a href="">联系我们</a></li>
+    </ul>
+    <button class="navBtn"></button>
+  </div>  <!-- 底部导航栏 -->
+  <div class="bottomNav">
+    <ul class="nav clearfix">
+      <li><a href="">慕思世界</a></li>
+      <li><a href="">产品中心</a></li>
+      <li><a href="">模拟开店</a></li>
+      <li><a href="">联系我们</a></li>
+    </ul>
+    <button class="navBtn"></button>
+  </div>
+
+  <!-- 加载动画 --> 
+  <div class="animate">
+    <div id="rect" class="rect">
+      <div class="point" style="text-align: center;line-height: 50px;">
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../script/lib/jquery-2.2.1.min.js"></script>
+  <script src="../script/common.js"></script>
+  <script src="../script/lib/echarts.min.js"></script>
+  <script src="../script/country.js"></script>
+</body>
+</html>

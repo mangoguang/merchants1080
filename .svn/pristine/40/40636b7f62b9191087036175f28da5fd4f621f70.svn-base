@@ -1,0 +1,95 @@
+ /* 变量 */
+ @font10: .266rem; @font12: .32rem; @font14: .36rem;
+ @font16: .42rem;  @font18: .48rem; @font20: .533rem;
+ @font24: .64rem;  @font30: .8rem;
+ @color: #19bd9b;  @color1: #020202;
+
+/*reset css */
+body,dl,dd,ul,ol,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,textarea,optgroup,p,blockquote,figure,hr,menu,dir,thead,tbody,tfoot,th,td {margin:0;padding:0}  
+ul,ol{list-style-type:none;list-style-image:none}
+a{text-decoration:none}a:active{background-color:transparent}  a:active,a:hover{outline:0 none}a:focus{outline:1px dotted}  
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;font-size:62.5%}  
+body{font-size:14px;line-height:1.8}
+h1,h2,h3,h4,h5,h6{font-weight:400}h1{font-size:36px}h2{font-size:30px}h3{font-size:22px}h4{font-size:18px}h5{font-size:14px}h6{font-size:12px}
+a:link,a:visited,a:hover,a:active{text-decoration: none;}
+a,button{
+    outline:none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0); 
+}
+button,input,textarea{
+    border: none;
+    background: none;
+}
+textarea{overflow: hidden;}
+a:hover{text-decoration:none;}
+a{color: @color1;}
+
+/* common css */
+#main{padding-top: .5rem;}
+.left{float: left;}
+.right{float: right;}
+.clear{clear: both;}
+.clearfix { *zoom: 1; } 
+.clearfix:before, 
+.clearfix:after {
+  display: table;
+  line-height: 0; 
+  content: ""; 
+} 
+.clearfix:after { clear: both; } 
+.line20{height:20px;background: #f9f9f9;}
+.line50{height: 50px;}
+.line100{height: 100px;}
+
+/* ------首页------ */
+// body.index{background-color: @color1;}
+.showList{
+  position: absolute;
+  width: 9rem;
+  height: 6rem;
+  left: 50%;
+  top: 50%;
+  margin-left: -4.5rem;
+  margin-top: -3rem;
+  a{
+    display: block;
+    line-height: 2.6em;
+    margin-top: .5rem;
+    font-size: @font20;
+    text-align: center;
+    color: #fff;
+    background: #525252;
+    border-radius: .1rem;
+  }
+}
+
+/* 市级地图 */
+.storyList{
+  margin-top: .5rem;
+  padding: 0 .5rem;
+  &>li{
+    padding-left: .6rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid #f0f1f2;
+    position: relative;
+    i{
+      font-size: @font24;
+      display: inline-block;
+      line-height: 1.708rem;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    h3{
+      font-size: @font16;
+      line-height: 3em;
+    }
+    p{
+      font-size: @font12;
+      line-height: 1.4em;
+    }
+  }
+}

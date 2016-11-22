@@ -1,0 +1,1 @@
+requirejs.config({baseUrl:"script/lib",paths:{app:"../app",jquery:"jquery-2.2.1.min"}}),requirejs(["jquery","properScreen","properScreen_css","api"],function(e,r,n,i){var c=document.documentElement.clientHeight;e(document).ready(function(){e("body.index").css("height",c)})});

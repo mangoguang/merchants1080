@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>招商APP</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script data-main="script/index.js" src="script/lib/require.js"></script>
+    <script src="script/lib/jquery-2.2.1.min.js"></script>
+    <style>
+    	body{
+    		background-color: rgba(0,0,0,0.3);
+    	}
+        h1{
+            background: #19bd9b;
+        }
+        .erweimaBox{
+        	border: 5px solid #19bd9b;
+        }
+
+    </style>
+</head>
+<body class="deviceHeight index">
+	<div id="erweimaBox" style="border: 5px solid #19bd9b;">
+		
+	</div>
+
+    <script>
+    $(function(){
+
+    	erweima();
+    	function erweima(){
+    		var height = document. documentElement. clientHeight/2;
+		    var width = document. documentElement. clientWidth/2;
+		    $("#erweimaBox").css({
+		    	"width": width,
+		    	"height": width
+//		    	"margin-top": ((4*height-width)/4-width/2)-5,
+//		    	"margin-left": (width/2)-5
+		    });
+    	}
+    })
+        window.onpopstate = function(event) {
+       alert("location: " + document.location + ", state: " + JSON.stringify(event.state)+":"+typeof(JSON.stringify(event.state)));
+   //      if (JSON.stringify(event.state) == "null") {
+   //      	marketingLoad();
+   //      }else if (JSON.stringify(event.state.page) == 2) {
+   //      	var modeltype = 3458;
+   //      	var typeId = 22;
+   //      	page = 1;
+   //      	addModel2Left(modeltype,typeId,model2Logo);
+   //      }else if (JSON.stringify(event.state.page) == 21) {
+			// addModel2child(bespeakId,typeId);
+   //      }
+    };
+        apiready = function(){
+            /*二维码扫描模块*/
+//          var FNScanner = api.require('FNScanner');
+//          FNScanner.openScanner({
+//              autorotation: true
+//          }, function(ret, err) {
+//              if (ret) {
+//                  alert(JSON.stringify(ret));
+//              } else {
+//                  alert(JSON.stringify(err));
+//              }
+//          });
+
+			var scanner = api.require('scanner');
+            var height = document. documentElement. clientHeight/2;
+            var width = document. documentElement. clientWidth/2;
+            var FNScanner = api.require('FNScanner');
+            FNScanner.openView({              
+                rect:{
+                    x: width/2,
+                    y: (4*height-width)/4-width/2,
+                    w: width,
+                    h: width,
+                },
+                autorotation: true
+            }, function(ret, err) {
+                if (ret) {
+                	var href = ret.content;
+                	if(href != undefined){
+                        FNScanner.closeView();
+                		location.href = href;
+                	}
+                	
+                    // alert("数据"+JSON.stringify(ret));
+//                  location.href = href;
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+        
+
+            // scanner.openView({
+            //     x: 40,
+            //     y: 160,
+            //     w: 200,
+            //     h: 240,
+            //     sound: 'widget://test.wav'
+            // }, function(ret, err) {
+            //     if (ret) {
+            //         alert(JSON.stringify(ret));
+            //     } else {
+            //         alert(JSON.stringify(err));
+            //     }
+            // });
+            
+
+        };
+    </script>
+</body>
+</html>

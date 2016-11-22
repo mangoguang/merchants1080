@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>世界地图</title>
+    <script src="script/lib/properScreen.js"></script>
+    <script src="script/lib/properScreen_css.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    
+</head>
+<body id="body">
+    <div class="topPadding"></div>
+    <h1 class="title">慕思招商系统</h1>
+    <div id="slidBar"></div>
+  <button id="bottomBtn"></button>
+
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+  <div id="main" class="deviceHeight worldMap" style="width: 100%;"></div>
+  <div class="tooltip tooltip1">
+    <p><span>2600</span>家</p>
+    <h2>中国</h2>
+  </div>
+  <div class="tooltip tooltip2">
+        <p><span>200</span>家</p>
+    <h2>美国</h2>
+  </div>
+  <div class="tooltip tooltip3">
+    <p><span>200</span>家</p>
+    <h2>澳大利亚</h2>
+  </div>
+
+  <h3 class="mapTitle">截止至2016年年底，全球共有<strong>2800</strong>家店</h3>
+
+  <div class="listBox">
+    <h1 class="title listBoxTitle">慕思经销网点列表</h1>
+        <div class="selectBox clearfix">
+            <div class="countrysListBox">
+                <h2>国家</h2>
+                <ul class="selectList countrysList">
+                    <li>中国</li>
+                    <li>美国</li>
+                    <li>澳大利亚</li>
+                </ul>
+            </div>
+
+            <div class="countrysListBox">
+                <h2 class="provinceBtn">省</h2>
+                <ul class="selectList provincesList">
+
+                </ul>
+            </div>
+
+            <div class="countrysListBox">
+                <h2>市</h2>
+                <ul class="selectList citysList">
+
+                </ul>
+            </div>
+        </div>
+
+        <!-- 柱状图 -->
+    <div class="barGraphBox">
+      <h2>已开发地区</h2>
+      <div id='barGraphBox'>
+        <div id="barGraph" class="barGraph">
+        </div>
+      </div>
+    </div>
+
+    <!-- 未开发地区 -->
+    <div class="unDevelopBox">
+        <h2><span>未开发地区</span></h2>
+        <ul class="clearfix">
+            <li>新疆</li>
+            <li>新疆</li>
+            <li>新疆</li>
+            <li>新疆</li>
+            <li>新疆</li>
+            <li>新疆</li>
+        </ul>
+        
+    </div>
+    <button class="hideBtn"></button>
+  </div>
+
+  <div id="countryListBox">
+    <ul class="countryListBox">
+      <li>
+        <h3><strong>中国</strong>共有<span>3000</span>家店，其中</h3>
+        <ul class="clearfix">
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>加盟店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>直营店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>分公司</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3><strong>中国</strong>共有<span>3000</span>家店，其中</h3>
+        <ul class="clearfix">
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>加盟店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>直营店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>分公司</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3><strong>中国</strong>共有<span>3000</span>家店，其中</h3>
+        <ul class="clearfix">
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>加盟店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>直营店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>分公司</p>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <h3><strong>中国</strong>共有<span>3000</span>家店，其中</h3>
+        <ul class="clearfix">
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>加盟店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>直营店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>分公司</p>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <h3><strong>中国</strong>共有<span>3000</span>家店，其中</h3>
+        <ul class="clearfix">
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>加盟店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>直营店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>分公司</p>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <h3><strong>中国</strong>共有<span>3000</span>家店，其中</h3>
+        <ul class="clearfix">
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>加盟店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>直营店</p>
+          </li>
+          <li>
+            <h4><span>1000</span>家</h4>
+            <p>分公司</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+    <div class="mapListBox clearfix">
+        <div class="mapListL left">
+            <ul class="countryList left">
+                <li class="on">中国<span class='span1'></span></li>
+                <li>美国<span class='span2'></span></li>
+                <li>加拿大<span class='span3'></span></li>
+                <li>澳大利亚<span class='span4'></span></li>
+                <li>日本<span class='span5'></span></li>
+            </ul>
+
+            <ul class="provinceList left">
+                
+            </ul>
+
+            <div class="cityListBox left">
+                <h2></h2>
+                <h3><b></b>已开发<span class="span1"></span></h3>
+                <ul class="cityList1 clearfix list left">
+                </ul>
+
+                <h3><b></b>未开发<span class="span2"></span></h3>
+                <ul class="cityList2 clearfix list left">
+                </ul>
+            </div>
+
+            <div class="countysListBox left">
+                <h2></h2>
+                <h3><b></b>已开发<span></span></h3>
+                <ul class="list">
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+  <!-- 底部导航栏 -->
+  <div class="bottomNav">
+    <ul class="nav clearfix">
+      <li><a href="">慕思世界</a></li>
+      <li><a href="">产品中心</a></li>
+      <li><a href="">模拟开店</a></li>
+      <li><a href="">联系我们</a></li>
+    </ul>
+    <button class="navBtn"></button>
+  </div>
+
+    <!-- 加载动画 -->
+    <div class="animate">
+    <div id="rect" class="rect">
+      <div class="point" style="text-align: center;line-height: 50px;">
+
+      </div>
+    </div>
+  </div>
+    <script src="script/lib/jquery-2.2.1.min.js"></script>
+    <script src="script/common.js"></script>
+    <script src="script/lib/echarts.min.js"></script>
+    <script src="script/world.js"></script>
+</body>
+</html>

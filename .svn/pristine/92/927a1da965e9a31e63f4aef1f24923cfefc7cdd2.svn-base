@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>惠州市地图</title>
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script data-main="script/city.js" src="script/lib/require.js"></script>
+</head>
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 100%;height: 10rem;"></div>
+
+    <ul class="storyList">
+    	<li>
+    		<i class="fa fa-map-marker"></i>
+			<h3>东莞厚街旗舰店</h3>
+			<p>地址：东莞市厚街镇双岗上环工业区</p>
+    	</li>
+    	<li>
+    		<i class="fa fa-map-marker"></i>
+    		<h3>东莞南城3D品牌店</h3>
+    		<p>东莞市南城步行街</p>
+    	</li>
+    	<li>
+    		<i class="fa fa-map-marker"></i>
+    		<h3>东莞东城综合门店</h3>
+    		<p>东莞市东城万达广场四楼</p>
+    	</li>
+    </ul>
+
+</body>
+</html>

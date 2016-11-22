@@ -1,0 +1,20 @@
+requirejs.config({
+    baseUrl: 'script/lib',
+    paths: {
+        app: '../app',
+        jquery: "jquery-2.2.1.min"
+    }
+});
+
+// Start the main app logic.
+requirejs(['jquery', 'properScreen', 'properScreen_css', 'api'],
+function   ($, flexble, flexble_css, api) {
+    //loaded and can be used here now.
+    //首页
+    var height = document. documentElement. clientHeight;
+	$(document).ready(function(){
+		$("body.index").css("height",height);
+        
+	})
+
+});
