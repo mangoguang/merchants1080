@@ -257,7 +257,6 @@ function getManMsg(obj) {
 		mangerArea: manArea,
 		bigArea: manPianqu
 	}
-	alert(manArea + ':  :' + manPianqu);
 	getData1(dataPath + "marketsinfo", ajaxData).then(function(ret1) {
 
 		var developListArr = ret1.develop.split(",");

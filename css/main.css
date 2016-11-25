@@ -114,17 +114,6 @@ a {
   z-index: 1;
 } */
 /* 水波纹样式 */
-button {
-  position: relative;
-  display: block;
-  height: 3em;
-  letter-spacing: .2em;
-  font-weight: bold;
-  cursor: pointer;
-  overflow: hidden;
-  user-select: none;
-  border-radius: 2px; }
-
 .ripple {
   position: absolute;
   background: rgba(255, 255, 255, 0.25);
@@ -134,7 +123,8 @@ button {
   -moz-transform: scale(0);
   -webkit-transform: scale(0);
   -o-transform: scale(0);
-  -ms-transform: scale(0); }
+  -ms-transform: scale(0);
+  z-index: 9999; }
   .ripple.show {
     animation: ripple .75s ease-out;
     -moz-animation: ripple .75s ease-out;
@@ -897,7 +887,7 @@ h1.title {
     border-radius: .1rem; }
 
 /* ------世界地图------ */
-#body {
+.body {
   overflow: hidden;
   background: url("../image1080/background.jpg") no-repeat;
   background-size: 100% 100%; }
@@ -1218,22 +1208,6 @@ h1.title {
       color: #dcdcdc; }
     #managerListBox .tit .managerDetailTit {
       width: 600px !important; }
-
-.managerListShadow {
-  width: 600px;
-  height: 240px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 10;
-  background: -webkit-linear-gradient(top, rgba(128, 128, 128, 0), rgba(128, 128, 128, 0.6));
-  /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(bottom, rgba(128, 128, 128, 0), rgba(128, 128, 128, 0.6));
-  /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(bottom, rgba(128, 128, 128, 0), rgba(128, 128, 128, 0.6));
-  /* Firefox 3.6 - 15 */
-  background: linear-gradient(to bottom, rgba(128, 128, 128, 0), rgba(128, 128, 128, 0.6));
-  /* 标准的语法（必须放在最后） */ }
 
 .managerListBox {
   width: 600px;

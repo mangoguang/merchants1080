@@ -93,17 +93,17 @@ a{color: $color1;}
 
 /* 水波纹样式 */
 
-button {
-  position: relative;
-  display: block;
-  height: 3em;
-  letter-spacing: .2em;
-  font-weight: bold;
-  cursor: pointer;
-  overflow: hidden;
-  user-select: none;
-  border-radius: 2px;
-}
+// button {
+//   position: relative;
+//   display: block;
+//   height: 3em;
+//   letter-spacing: .2em;
+//   font-weight: bold;
+//   cursor: pointer;
+//   overflow: hidden;
+//   user-select: none;
+//   border-radius: 2px;
+// }
 
 .ripple {
   position: absolute;
@@ -115,6 +115,7 @@ button {
   -webkit-transform: scale(0);
   -o-transform: scale(0);
   -ms-transform: scale(0);
+  z-index: 9999;
   &.show {
     animation: ripple .75s ease-out;
     -moz-animation: ripple .75s ease-out;

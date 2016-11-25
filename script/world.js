@@ -281,7 +281,12 @@ function barOption(ajaxData) {
 	getData1(dataPath + "brandbyinfo", ajaxData).then(function(data) {
 
 			//获取行政区域数组
-			var yAxisData = data.area;
+			var temp = data.area;
+			var yAxisData = [];
+			for (var i = 0; i < temp.length; i++) {
+				yAxisData.push(temp[i][0]);
+			}
+			console.log(yAxisData);
 
 			//获取各品牌
 			var legendData = [];

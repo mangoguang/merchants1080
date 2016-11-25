@@ -11,7 +11,7 @@ var tips = localStorage.getItem("tips"); //本地存储
 //屏幕可布局高度
 var height = document.documentElement.clientHeight;
 
-var dataPath = 'http://10.11.0.229:8080/deruccimid/cst/';
+var dataPath = 'http://10.12.0.52:8080/deruccimid/cst/';
 
 //body全屏
 $("#body").height(height);
@@ -87,19 +87,20 @@ function Tips() {
 
 /*水波纹*/
 var addRippleEffect = function(e) {
+    var body = document.getElementById('body');
     var target = e.target;
-    if (target.tagName.toLowerCase() !== 'button') return false;
+    if (target.tagName.toLowerCase() === '') return false;
     var rect = target.getBoundingClientRect();
     var ripple = target.querySelector('.ripple');
     if (!ripple) {
         ripple = document.createElement('span');
         ripple.className = 'ripple';
-        ripple.style.height = ripple.style.width = Math.max(rect.width, rect.height) + 'px';
-        target.appendChild(ripple);
+        ripple.style.height = ripple.style.width = Math.max(30, 30) + 'px';
+        body.appendChild(ripple);
     }
     ripple.classList.remove('show');
-    var top = e.pageY - rect.top - ripple.offsetHeight / 2 - document.body.scrollTop;
-    var left = e.pageX - rect.left - ripple.offsetWidth / 2 - document.body.scrollLeft;
+    var top = e.pageY - 15;
+    var left = e.pageX - 15;
     ripple.style.top = top + 'px';
     ripple.style.left = left + 'px';
     ripple.classList.add('show');
