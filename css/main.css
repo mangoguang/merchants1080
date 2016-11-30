@@ -580,6 +580,16 @@ h1.title {
   background-size: auto 110px,auto 120px;
   z-index: 9; }
 
+.back {
+  width: 122px;
+  height: 122px;
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background: url(../image1080/4-back.png) no-repeat;
+  background-size: 100% 100%;
+  z-index: 999; }
+
 #slidBar {
   opacity: 0.5;
   width: 156px;
