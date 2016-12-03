@@ -580,6 +580,47 @@ h1.title {
   background-size: auto 110px,auto 120px;
   z-index: 9; }
 
+.back {
+  width: 122px;
+  height: 122px;
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background: url(../image1080/4-back.png) no-repeat;
+  background-size: 100% 100%;
+  z-index: 999; }
+
+.manageMsgBox {
+  width: 280px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: rgba(110, 110, 110, 0.2);
+  color: #e5e5e5;
+  position: absolute;
+  padding-bottom: 20px;
+  top: 180px;
+  right: 40px;
+  z-index: 10; }
+  .manageMsgBox .img1 {
+    width: 92px;
+    height: 92px;
+    margin-top: -60px;
+    margin-left: 40px; }
+  .manageMsgBox .img2 {
+    width: 80px;
+    height: 80px;
+    margin-top: -54px;
+    margin-left: 20px; }
+  .manageMsgBox > h3 {
+    font-size: 26px;
+    text-align: center;
+    margin: 15px auto 20px auto;
+    line-height: 1em; }
+  .manageMsgBox p {
+    font-size: 20px;
+    line-height: 30px;
+    padding: 0 10px; }
+
 #slidBar {
   opacity: 0.5;
   width: 156px;
@@ -1173,7 +1214,7 @@ h1.title {
   left: 0;
   top: 50%;
   margin-top: -115px;
-  background: url(../image1080/1-manager.png) no-repeat;
+  background: url(../image1080/1-manager.gif) no-repeat;
   background-size: 100% 100%; }
 
 #managerListBox {
@@ -1421,7 +1462,7 @@ h1.title {
 .symbol {
   width: 250px;
   position: absolute;
-  right: 140px;
+  right: 105px;
   bottom: 140px;
   z-index: 10; }
   .symbol li {
@@ -1470,7 +1511,7 @@ h1.title {
     left: 1200px;
     top: 50%;
     margin-top: -115px;
-    background: url(../image1080/11-shop.png) no-repeat;
+    background: url(../image1080/11-shop.gif) no-repeat;
     background-size: 100% 100%;
     opacity: 0.5; }
 
