@@ -29,6 +29,8 @@ $(document).ready(function() {
 		});
 	})
 
+	managerMsg(provinceName);
+
 	$(".deviceHeight").css("height", height);
 	//获取链接参数
 	var id = getQueryString("id");
@@ -429,6 +431,35 @@ function load() {
 		'background-size': '1144px 140px'
 	});
 }
+
+//招商经理名片数据初始化
+managerMsg = function(provinceName) {
+	var ajaxData = {};
+
+	getData1(dataPath + "managerbyinfo", ajaxData).then(function(arr) {
+		var managerName;
+		for (var i = 0; i < arr.length; i++) {
+			var citys = arr[i].city;
+			var cityList = citys.split(',');
+			if (cityList.indexOf(provinceName) > 0) {
+				managerName = arr[i].name;
+			}
+		}
+		var ajaxData1 = {
+			name: managerName
+		};
+
+		getData1(dataPath + "managerbyinfo", ajaxData1).then(function(arr1) {
+			console.log(arr1);
+			var msg = arr1[0];
+			$('.name').text(msg.name);
+			$('.area').text(msg.area);
+			$('.provinces').text(msg.city);
+			$('.phone').text(msg.phone);
+		})
+	})
+}
+
 /**
  *
  * 　　　┏┓　　　┏┓

@@ -13,11 +13,37 @@ $(document).ready(function() {
   setData(id);
 });
 
+//招商经理名片数据初始化
+managerMsg = function() {
+  var ajaxData = {};
+
+  getData1(dataPath + "managerbyinfo", ajaxData).then(function(arr) {
+    var managerName;
+    for (var i = 0; i < arr.length; i++) {
+      var citys = arr[i].city;
+      var cityList = citys.split(',');
+      if (cityList.indexOf(provinceName) > 0) {
+        managerName = arr[i].name;
+      }
+    }
+    var ajaxData1 = {
+      name: managerName
+    };
+
+    getData1(dataPath + "managerbyinfo", ajaxData1).then(function(arr1) {
+      console.log(arr1);
+      var msg = arr1[0];
+      $('.name').text(msg.name);
+      $('.area').text(msg.area);
+      $('.provinces').text(msg.city);
+      $('.phone').text(msg.phone);
+    })
+  })
+}
+managerMsg();
+
 setData = function(id) {
   /*载入中国主要城市地图*/
-
-
-
   var ajaxData = {
     country: '中国',
     province: provinceName
@@ -28,7 +54,6 @@ setData = function(id) {
     var jingdus = [];
     var weidus = [];
     var types = [];
-    console.log(arr);
 
 
     //获取各城市品牌信息
@@ -55,7 +80,6 @@ setData = function(id) {
         types.push(stores[j].type);
       }
     }
-    console.log(data);
 
 
     //定义series数组
