@@ -1088,15 +1088,35 @@ h1.title{
 }
 
 .tooltip{
-  width: 200px;
-  height: 240px;
+  width: 100px;
+  height: 120px;
   text-align: center;
   box-sizing: border-box;
-  padding-top: 60px;
+  padding-top: 30px;
   background: url(../image1080/6-tap.png) no-repeat;
   background-size: 100% auto;
   position: absolute;
   z-index: 9;
+  p{
+    font-size: 14px;
+    span{
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 1em;
+    }
+  }
+  h2{
+    font-size: 14px;
+    line-height: 1em;
+    font-weight: 700;
+  }
+}
+.tooltip1{
+  width: 200px;
+  height: 240px;
+  top: 215px;
+  left: 1120px;
+  padding-top: 60px;
   p{
     font-size: 18px;
     span{
@@ -1111,18 +1131,22 @@ h1.title{
     font-weight: 700;
   }
 }
-.tooltip1{
-  top: 550px;
-  left: 1140px;
-}
 .tooltip2{
-  top: 205px;
-  left: 320px;
+  top: 335px;
+  left: 1280px;
 }
 .tooltip3{
-  top: 215px;
-  left: 1120px;
+  top: 650px;
+  left: 1140px;
 }
+// .tooltip4{
+//   top: 550px;
+//   left: 1140px;
+// }
+// .tooltip5{
+//   top: 550px;
+//   left: 1140px;
+// }
 
 .listBox{
   display: none;

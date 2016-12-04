@@ -24,11 +24,9 @@ $(document).ready(function() {
 
 	//获取URL参数
 	var countryName = decodeURIComponent(window.location.search.substr(6));
-	if (countryName == 'China') {
+	// if (countryName == 'China') {
 		getChina();
-	} else {
-		getOtherCountry();
-	}
+	// }
 
 	//遮罩显示隐藏
 	$(".managerList").click(function() {
@@ -111,11 +109,6 @@ var province = {
 	"浙江": "zhejiang"
 }
 
-//当进入其他国家时，弹框显示
-function getOtherCountry() {
-	alert('除中国外，暂无其他国家数据！');
-	history.back(-1);
-}
 
 getChina = function() {
 	var ajaxData = {};

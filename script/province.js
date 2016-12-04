@@ -1,9 +1,22 @@
 var height = document.documentElement.clientHeight;
 var danpin = 0; //初始化单品店数
 var zonghe = 0; //初始化综合店数
+
 //获取URL参数
 var provinceName = decodeURIComponent(window.location.search.substr(6));
 provinceName = provinceName.split("&", 1).toString(); //省份中文名
+
+//初始化地图设置
+if (provinceName == '海南') {
+  var geoTop = 2600;
+  var geoL = 1600;
+  var geoZoom = 8;
+} else {
+  var geoTop = 80;
+  var geoL = 300;
+  var geoZoom = 1.1;
+}
+
 
 $(document).ready(function() {
   $(".deviceHeight").css("height", height - deviceTopHeight);
@@ -95,8 +108,9 @@ setData = function(id) {
             // name: brands[i],
             type: 'map',
             // roam: true,
-            top: 80,
-            zoom: 1.1,
+            top: geoTop,
+            left: geoL,
+            zoom: geoZoom,
             map: id,
             symbol: 'pin',
             symbolSize: 50,
@@ -260,8 +274,9 @@ setOption = function(id, series, storeNames, Brands, Citys) {
       },
       geo: {
         map: id,
-        top: 80,
-        zoom: 1.1,
+        top: geoTop,
+        left: geoL,
+        zoom: geoZoom,
         // roam: true,
         label: {
           emphasis: {

@@ -42,6 +42,7 @@
 // 	}
 // });
 
+
 //地图相对位置参数
 var geoTop = 170;
 var geoLeft = 20;
@@ -61,6 +62,7 @@ $(document).ready(function() {
 	/*------列表部分代码------*/
 	//点击显示/隐藏列表按钮
 	$("#slidBar").click(function() {
+		// history.pushState('abc', null, 'http://10.11.0.234:3000/html/country.html' + '/');
 		$(".listBox").show(500);
 	})
 
@@ -115,11 +117,14 @@ $(document).ready(function() {
 	/*------列表部分代码结束------*/
 
 	//设置地图
-	setData();
+	getData1(dataPath + "sortinfo").then(function(arr) {
+		setData(arr);
+	})
+
 });
 
 
-setData = function() {
+setData = function(arr) {
 	/*载入世界地图*/
 	var myChart = echarts.init(document.getElementById('main'));
 	$.get('geojson/world.json', function(worldJson) {
@@ -138,10 +143,39 @@ setData = function() {
 			"加拿大": [-83.98, 55.33]
 		};
 
-		//定义series数组
-		var country = ['美国', '中国', '日本', '澳大利亚', '加拿大'];
-		var PictureName = ['United States of America', 'China', 'Japan', 'Australia', 'Canada'];
+		var convertData = function(data) {
+			var res = [];
+			for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+					res.push({
+						name: data[i].name,
+						value: geoCoord.concat(data[i].value)
+					});
+				}
+			}
+			return res;
+		};
+
+		//定义series数组123123
+		var country = [];
+		for (var i = 0; i < arr.length; i++) {
+			country.push(arr[i].area);
+		}
+		var PictureName = ['China', 'Japan', 'Australia', 'United States of America', 'India', 'Germany', 'Cambodia', 'Canada'];
 		var series = new Array();
+		var obj2 = {
+			type: 'scatter',
+			coordinateSystem: 'geo',
+			data: convertData([{
+				name: "中国",
+				value: 2
+			}]),
+			symbol: 'image://../image/China.png',
+			symbolSize: [15, 10]
+		}
+		series.push(obj2);
+
 		(function() {
 			var data = new Array();
 			for (var i = 0; i < country.length; i++) {
@@ -169,6 +203,7 @@ setData = function() {
 			};
 			series.push(obj);
 		})()
+
 
 		//设置地图
 		option = {
@@ -240,27 +275,34 @@ setData = function() {
 		load();
 		//点击相应国家实现下钻
 		myChart.on('click', function(params) {
+			// var type = params.componentType;
+			// alert(type);
 			var str = params.name;
 			var countryName = '';
 			switch (str) {
 				case 'China':
-					countryName = 'China';
-					location.href = 'html/country.html?name=' + countryName;
+					location.href = 'html/country.html?name=China';
 					break;
 				case 'United States of America':
-					countryName = 'United States of America';
-					location.href = 'html/country.html?name=' + countryName;
+					location.href = 'html/othercountry.html?name=USA';
 					break;
 				case 'Japan':
-					countryName = 'Japan';
-					location.href = 'html/country.html?name=' + countryName;
+					location.href = 'html/othercountry.html?name=Japan';
 					break;
 				case 'Australia':
-					countryName = 'Australia';
-					location.href = 'html/country.html?name=' + countryName;
+					location.href = 'html/othercountry.html?name=Australia';
 					break;
-				default:
-					location.href = 'html/country.html?name=' + countryName;
+				case 'Germany':
+					location.href = 'html/othercountry.html?name=German';
+					break;
+				case 'India':
+					location.href = 'html/othercountry.html?name=India';
+					break;
+				case 'Canada':
+					location.href = 'html/othercountry.html?name=Canada';
+					break;
+					// default:
+					// location.href = 'html/country.html?name=' + countryName;
 			}
 
 		});
@@ -276,16 +318,15 @@ setData = function() {
 
 /*---插入国家数据---*/
 function setCountryData() {
-	getData1(dataPath + "countrycstinfo").then(function(data) {
-		var data = data.countryMsg;
+	getData1(dataPath + "sortinfo").then(function(data) {
 		var storesTotal = 0;
 		// var countryName = ['中国', '美国', '澳大利亚'];
-
-		for (i = 0; i < 3; i++) {
-			storesTotal += parseInt(data[i].QTY);
+		for (i = 0; i < data.length; i++) {
+			var temp = data[i].qtyflags;
+			storesTotal += parseInt(temp[0].QTY);
 			var className = '.tooltip' + (i + 1);
-			$(className + ' span').html(data[i].QTY);
-			$(className + ' h2').html(data[i].COUNTRYNAME);
+			$(className + ' span').html(temp[0].QTY);
+			$(className + ' h2').html(temp[0].AREA);
 		}
 		$(".mapTitle strong").html(storesTotal);
 	})
@@ -325,16 +366,12 @@ function barOption(ajaxData) {
 					lengendNumArr[i].push(lengendBrandArr[i][j].QTY);
 				}
 			}
-			console.log(lengendNumArr[0].length);
 
 			var setupData = [];
 			for (var i = 0; i < lengendNumArr[0].length; i++) {
 				setupData.push(0);
 			}
-			console.log(lengendNumArr[0].length);
-			console.log(setupData);
 			lengendNumArr.unshift(setupData);
-			console.log(lengendNumArr);
 
 
 			var series = [];
@@ -590,20 +627,23 @@ addStoreMsg = function() {
 	};
 	getData1(dataPath + "sortinfo", ajaxData).then(function(arr) {
 		var lis = [];
-		var storeSum = 0;
+		var storeSum = [];
 		for (var i = 0; i < arr.length; i++) {
 			var temp = arr[i].qtyflags;
 			var qty = [];
+			var total = 0;
 			for (j = 0; j < temp.length; j++) {
 				if (temp[j].QTY != undefined) {
 					qty.push(temp[j].QTY);
-					storeSum += parseInt(temp[j].QTY);
+					total += parseInt(temp[j].QTY);
 				} else {
 					qty.push(0);
 				}
 			}
+			storeSum.push(total);
+
 			var li = '<li>' +
-				'<h3><strong>' + arr[i].area + '</strong>共有<span class="storeSum"></span>家店，其中</h3>' +
+				'<h3><strong>' + arr[i].area + '</strong>共有<span class="storeSum">' + storeSum[i] + '</span>家店，其中</h3>' +
 				'<ul class="clearfix">' +
 				'<li>' +
 				'<h4><span>' + qty[0] + '</span>家</h4>' +
@@ -623,7 +663,6 @@ addStoreMsg = function() {
 		}
 
 		$('.countryListBox').append(lis);
-		$('.storeSum').text(storeSum);
 	})
 }
 
