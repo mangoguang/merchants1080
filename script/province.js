@@ -302,7 +302,7 @@ setOption = function(id, series, storeNames, Brands, Citys) {
       var city = cityMap[str];
 
       if (Citys.indexOf(str) != -1) {
-        location.href = 'city.html?id=' + city + '&name=' + encodeURIComponent(str) + '&province=' + encodeURIComponent(provinceName);
+        location.href = 'city.html?id=' + city + '&name=' + encodeURIComponent(str) + '&province=' + encodeURIComponent(provinceName) + '&index=3';
       }
     });
   })

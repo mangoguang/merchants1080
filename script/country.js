@@ -25,7 +25,7 @@ $(document).ready(function() {
 	//获取URL参数
 	var countryName = decodeURIComponent(window.location.search.substr(6));
 	// if (countryName == 'China') {
-		getChina();
+	getChina();
 	// }
 
 	//遮罩显示隐藏
@@ -111,10 +111,12 @@ var province = {
 
 
 getChina = function() {
-	var ajaxData = {};
+	var ajaxData = {
+		country: '中国'
+	};
 	getData1(dataPath + "managerbyinfo", ajaxData).then(function(data) {
 		/*载入国家或地区地图*/
-
+		console.log(data);
 		//点击侧边按钮将数据插入到招商经理列表
 		$(".managerList").click(function() {
 			var id = $(".managerListBox").attr('id');
@@ -404,25 +406,25 @@ setOption = function(pieces, series, data, area) {
 			if (name == 'China') {
 				switch (provinceName) {
 					case 'tianjin':
-						location.href = 'city.html?id=000001&name=' + encodeURIComponent('天津市') + '&provinceName=天津';
+						location.href = 'city.html?id=000001&name=' + encodeURIComponent('天津市') + '&provinceName=天津' + '&index=2';
 						break;
 					case 'beijing':
-						location.href = 'city.html?id=000002&name=' + encodeURIComponent('北京市') + '&provinceName=北京';
+						location.href = 'city.html?id=000002&name=' + encodeURIComponent('北京市') + '&provinceName=北京' + '&index=2';
 						break;
 					case 'chongqing':
-						location.href = 'city.html?id=000003&name=' + encodeURIComponent('重庆市') + '&provinceName=重庆';
+						location.href = 'city.html?id=000003&name=' + encodeURIComponent('重庆市') + '&provinceName=重庆' + '&index=2';
 						break;
 					case 'shanghai':
-						location.href = 'city.html?id=000004&name=' + encodeURIComponent('上海市') + '&provinceName=上海';
+						location.href = 'city.html?id=000004&name=' + encodeURIComponent('上海市') + '&provinceName=上海' + '&index=2';
 						break;
 					case 'xianggang':
-						location.href = 'city.html?id=000005&name=' + encodeURIComponent('香港') + '&provinceName=香港';
+						location.href = 'city.html?id=000005&name=' + encodeURIComponent('香港') + '&provinceName=香港' + '&index=2';
 						break;
 					case 'aomen':
-						location.href = 'city.html?id=000006&name=' + encodeURIComponent('澳门') + '&provinceName=澳门';
+						location.href = 'city.html?id=000006&name=' + encodeURIComponent('澳门') + '&provinceName=澳门' + '&index=2';
 						break;
 					default:
-						location.href = 'province.html?name=' + encodeURIComponent(str) + '&id=' + provinceName;
+						location.href = 'province.html?name=' + encodeURIComponent(str) + '&id=' + provinceName + '&index=2';
 				}
 			}
 		});

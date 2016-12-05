@@ -162,7 +162,9 @@ setData = function(arr) {
 		for (var i = 0; i < arr.length; i++) {
 			country.push(arr[i].area);
 		}
-		var PictureName = ['China', 'Japan', 'Australia', 'United States of America', 'India', 'Germany', 'Cambodia', 'Canada'];
+		console.log(country);
+
+		var PictureName = ['China', 'Japan', 'Australia', 'United States of America', 'India', 'Germany', 'Cambodia', 'Canada', 'Italy'];
 		var series = new Array();
 		var obj2 = {
 			type: 'scatter',
@@ -281,25 +283,28 @@ setData = function(arr) {
 			var countryName = '';
 			switch (str) {
 				case 'China':
-					location.href = 'html/country.html?name=China';
+					location.href = 'html/country.html?name=China&index=1';
 					break;
 				case 'United States of America':
-					location.href = 'html/othercountry.html?name=USA';
+					location.href = 'html/othercountry.html?name=USA&CNname=' + encodeURIComponent('美国') + '&index=1';
 					break;
 				case 'Japan':
-					location.href = 'html/othercountry.html?name=Japan';
+					location.href = 'html/othercountry.html?name=Japan&CNname=' + encodeURIComponent('日本') + '&index=1';
 					break;
 				case 'Australia':
-					location.href = 'html/othercountry.html?name=Australia';
+					location.href = 'html/othercountry.html?name=Australia&CNname=' + encodeURIComponent('澳大利亚') + '&index=1';
 					break;
 				case 'Germany':
-					location.href = 'html/othercountry.html?name=German';
+					location.href = 'html/othercountry.html?name=German&CNname=' + encodeURIComponent('德国') + '&index=1';
 					break;
 				case 'India':
-					location.href = 'html/othercountry.html?name=India';
+					location.href = 'html/othercountry.html?name=India&CNname=' + encodeURIComponent('印度') + '&index=1';
 					break;
 				case 'Canada':
-					location.href = 'html/othercountry.html?name=Canada';
+					location.href = 'html/othercountry.html?name=Canada&CNname=' + encodeURIComponent('加拿大') + '&index=1';
+					break;
+				case 'Italy':
+					location.href = 'html/othercountry.html?name=Italy&CNname=' + encodeURIComponent('意大利') + '&index=1';
 					break;
 					// default:
 					// location.href = 'html/country.html?name=' + countryName;

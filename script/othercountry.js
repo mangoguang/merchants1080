@@ -9,6 +9,11 @@ var visualMapShow = true;
 var titleTop = 170;
 var titleLeft = 360;
 
+var urlStr = decodeURIComponent(window.location.search.substr(8));
+var urlArr = urlStr.split('=');
+urlArr = urlArr[1].split('&');
+var CNname = urlArr[0];
+
 $(document).ready(function() {
   document.addEventListener('plusready', function() {
     plus.key.addEventListener('backbutton', function() {
@@ -30,47 +35,13 @@ $(document).ready(function() {
 //美国的名称与geojson名称不同
 var name = getQueryString("name");
 
-var province = {
-  "广东": "guangdong",
-  "安徽": "anhui",
-  "澳门": "aomen",
-  "北京": "beijing",
-  "重庆": "chongqing",
-  "福建": "fujian",
-  "甘肃": "gansu",
-  "广西": "guangxi",
-  "贵州": "guizhou",
-  "海南": "hainan",
-  "河北": "hebei",
-  "黑龙江": "heilongjiang",
-  "河南": "henan",
-  "湖北": "hubei",
-  "湖南": "hunan",
-  "江苏": "jiangsu",
-  "江西": "jiangxi",
-  "吉林": "jilin",
-  "辽宁": "liaoning",
-  "内蒙古": "neimenggu",
-  "宁夏": "ningxia",
-  "青海": "qinghai",
-  "山东": "shandong",
-  "上海": "shanghai",
-  "山西": "shanxi",
-  "四川": "sichuan",
-  "天津": "tianjin",
-  "香港": "xianggang",
-  "新疆": "xinjiang",
-  "西藏": "xizang",
-  "云南": "yunnan",
-  "浙江": "zhejiang"
-}
-
-
 getChina = function() {
-  var ajaxData = {};
+  var ajaxData = {
+    country: CNname
+  };
   getData1(dataPath + "managerbyinfo", ajaxData).then(function(data) {
     /*载入国家或地区地图*/
-
+    console.log(data);
     var data1 = [];
     for (var i = 0; i < data.length; i++) {
       var arr = data[i].city.split(",");
@@ -106,43 +77,43 @@ getChina = function() {
       var series = new Array();
       for (var i = 0; i < data.length; i++) {
         var obj = {
-          name: area[i],
-          top: geoTop,
-          left: geoLeft,
-          type: 'map',
-          zoom: zoom,
-          // roam: true,
-          map: name,
-          scaleLimit: {
-            min: 0.6,
-            max: 20
-          },
-          label: {
-            normal: {
-              show: true,
-              textStyle: {
-                color: '#e5e5e5',
-                fontSize: 12
+            name: area[i],
+            top: geoTop,
+            left: geoLeft,
+            type: 'map',
+            zoom: zoom,
+            // roam: true,
+            map: name,
+            scaleLimit: {
+              min: 0.6,
+              max: 20
+            },
+            label: {
+              normal: {
+                show: true,
+                textStyle: {
+                  color: '#e5e5e5',
+                  fontSize: 12
+                }
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  color: '#525252',
+                  fontSize: 12
+                }
               }
             },
-            emphasis: {
-              show: true,
-              textStyle: {
-                color: '#525252',
-                fontSize: 12
+            itemStyle: {
+              normal: {
+                borderColor: borderColor,
+                areaColor: MapColorL
               }
-            }
-          },
-          itemStyle: {
-            normal: {
-              borderColor: borderColor,
-              areaColor: MapColorL
-            }
-          },
-          // data: Data[i]
-          data: Data[i]
-        }
-        // series.push(obj);
+            },
+            // data: Data[i]
+            data: Data[i]
+          }
+          // series.push(obj);
       }
       return (series);
     }
@@ -234,7 +205,7 @@ setOption = function(pieces, series, data, area) {
       //     //        西三区     东一区     北二区    北三区      南二区     西二区     东二区     南三区     西一区     北一区     东三区     南一区  
       // },
       toolbox: {
-        show: false,
+        show: true,
         //orient: 'vertical',
         left: 'left',
         top: 'top',
@@ -251,14 +222,14 @@ setOption = function(pieces, series, data, area) {
         top: geoTop,
         left: geoLeft,
         zoom: zoom,
-        // roam: true,
+        roam: true,
         scaleLimit: {
           min: 0.6,
           max: 20
         },
         label: {
           emphasis: {
-            show: false
+            show: true
           }
         },
         itemStyle: {

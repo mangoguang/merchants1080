@@ -12,7 +12,8 @@ var visulMapR = 143;
 var height = document.documentElement.clientHeight;
 var urlStr = decodeURIComponent(window.location.search.substr(11));
 var paramArr = urlStr.split("=");
-var provinceName = paramArr[2];
+var paramArr1 = paramArr[2].split('&');
+var provinceName = paramArr1[0];
 var cityName = paramArr[1].split('&', 1).toString();
 
 $(document).ready(function() {
