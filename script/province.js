@@ -28,29 +28,22 @@ $(document).ready(function() {
 
 //招商经理名片数据初始化
 managerMsg = function() {
-  var ajaxData = {};
+  var ajaxData = {
+    country: '中国'
+  };
 
   getData1(dataPath + "managerbyinfo", ajaxData).then(function(arr) {
-    var managerName;
     for (var i = 0; i < arr.length; i++) {
       var citys = arr[i].city;
       var cityList = citys.split(',');
-      if (cityList.indexOf(provinceName) > 0) {
-        managerName = arr[i].name;
+      if (cityList.indexOf(provinceName) >= 0) {
+        var msg = arr[i];
+        $('.name').text(msg.name);
+        $('.area').text(msg.area);
+        $('.provinces').text(msg.city);
+        $('.phone').text(msg.phone);
       }
     }
-    var ajaxData1 = {
-      name: managerName
-    };
-
-    getData1(dataPath + "managerbyinfo", ajaxData1).then(function(arr1) {
-      console.log(arr1);
-      var msg = arr1[0];
-      $('.name').text(msg.name);
-      $('.area').text(msg.area);
-      $('.provinces').text(msg.city);
-      $('.phone').text(msg.phone);
-    })
   })
 }
 managerMsg();
@@ -62,6 +55,7 @@ setData = function(id) {
     province: provinceName
   };
   getData1(dataPath + "distributeinfo", ajaxData).then(function(arr) {
+    console.log(arr);
     var data = [];
     var storeNames = [];
     var jingdus = [];
@@ -79,10 +73,18 @@ setData = function(id) {
 
 
     for (var i = 0; i < arr.length; i++) {
-      var obj = { //obj为城市对象数组
-        name: arr[i].cityName,
-        value: 1
-      };
+      if (arr[i].allDevStatus) {
+        var obj = { //obj为城市对象数组123123
+          name: arr[i].cityName,
+          value: 3
+        };
+      } else {
+        var obj = { //obj为城市对象数组
+          name: arr[i].cityName,
+          value: 1
+        };
+      }
+
       data.push(obj);
 
       var stores = arr[i].stores;
@@ -249,15 +251,19 @@ setOption = function(id, series, storeNames, Brands, Citys) {
           fontSize: 26
         },
         pieces: [{
+          min: 3,
+          max: 4,
+          label: '完全开发区域'
+        }, {
           min: 1,
           max: 2,
-          label: '已开发区域'
+          label: '未完全开发区域'
         }, {
           min: 0,
           max: 0,
           label: '未开发区域'
         }, ],
-        color: [MapColorR, MapColorL]
+        color: [MapColorM, MapColorR, MapColorL]
       },
       toolbox: {
         show: false,
@@ -300,9 +306,10 @@ setOption = function(id, series, storeNames, Brands, Citys) {
       var str = params.name;
       //cityMap在common.js文件定义
       var city = cityMap[str];
-
-      if (Citys.indexOf(str) != -1) {
+      if ((Citys.indexOf(str) != -1) && (city != undefined)) {
         location.href = 'city.html?id=' + city + '&name=' + encodeURIComponent(str) + '&province=' + encodeURIComponent(provinceName) + '&index=3';
+      } else {
+        alert('该市地图数据暂时缺失！');
       }
     });
   })

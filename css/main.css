@@ -981,8 +981,8 @@ h1.title {
 .tooltip1 {
   width: 200px;
   height: 240px;
-  top: 215px;
-  left: 1120px;
+  top: 245px;
+  left: 1080px;
   padding-top: 60px; }
   .tooltip1 p {
     font-size: 18px; }
@@ -996,12 +996,24 @@ h1.title {
     font-weight: 700; }
 
 .tooltip2 {
-  top: 335px;
-  left: 1280px; }
+  top: 345px;
+  left: 1250px; }
 
 .tooltip3 {
   top: 650px;
-  left: 1140px; }
+  left: 1230px; }
+
+.tooltip4 {
+  top: 360px;
+  left: 420px; }
+
+.tooltip5 {
+  top: 450px;
+  left: 1000px; }
+
+.tooltip6 {
+  top: 280px;
+  left: 760px; }
 
 .listBox {
   display: none;
@@ -1494,6 +1506,9 @@ h1.title {
     background-size: 32px 40px;
     background-position: 0 center;
     color: #fec20b; }
+
+.symbol1 {
+  bottom: 200px; }
 
 /* ------省级地图结束------ */
 /* ------市级地图------ */

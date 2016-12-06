@@ -435,29 +435,22 @@ function load() {
 
 //招商经理名片数据初始化
 managerMsg = function(provinceName) {
-	var ajaxData = {};
+	var ajaxData = {
+		country: '中国'
+	};
 
 	getData1(dataPath + "managerbyinfo", ajaxData).then(function(arr) {
-		var managerName;
 		for (var i = 0; i < arr.length; i++) {
 			var citys = arr[i].city;
 			var cityList = citys.split(',');
-			if (cityList.indexOf(provinceName) > 0) {
-				managerName = arr[i].name;
+			if (cityList.indexOf(provinceName) >= 0) {
+				var msg = arr[i];
+				$('.name').text(msg.name);
+				$('.area').text(msg.area);
+				$('.provinces').text(msg.city);
+				$('.phone').text(msg.phone);
 			}
 		}
-		var ajaxData1 = {
-			name: managerName
-		};
-
-		getData1(dataPath + "managerbyinfo", ajaxData1).then(function(arr1) {
-			console.log(arr1);
-			var msg = arr1[0];
-			$('.name').text(msg.name);
-			$('.area').text(msg.area);
-			$('.provinces').text(msg.city);
-			$('.phone').text(msg.phone);
-		})
 	})
 }
 

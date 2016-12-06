@@ -162,7 +162,6 @@ setData = function(arr) {
 		for (var i = 0; i < arr.length; i++) {
 			country.push(arr[i].area);
 		}
-		console.log(country);
 
 		var PictureName = ['China', 'Japan', 'Australia', 'United States of America', 'India', 'Germany', 'Cambodia', 'Canada', 'Italy'];
 		var series = new Array();
@@ -304,7 +303,10 @@ setData = function(arr) {
 					location.href = 'html/othercountry.html?name=Canada&CNname=' + encodeURIComponent('加拿大') + '&index=1';
 					break;
 				case 'Italy':
-					location.href = 'html/othercountry.html?name=Italy&CNname=' + encodeURIComponent('意大利') + '&index=1';
+					alert('该国家地图数据暂时缺失');
+					break;
+				case 'Cambodia':
+					alert('该国家地图数据暂时缺失');
 					break;
 					// default:
 					// location.href = 'html/country.html?name=' + countryName;

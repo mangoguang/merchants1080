@@ -1,6 +1,7 @@
 /*全局变量*/
 var bgColor = '#e1eff7'; //地图容器背景色
-var MapColorR = '#00acc1'; //已开发颜色
+var MapColorR = '#00acc1'; //完全开发颜色
+var MapColorM = '#ff7373'; //未完全开发颜色
 var MapColorL = '#e5e5e5'; //未开发颜色
 var titleColor = '#1e2022'; //地图标题字体颜色
 var borderColor = '#333'; //地图边界颜色
