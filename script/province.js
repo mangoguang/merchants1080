@@ -236,7 +236,7 @@ setOption = function(id, series, storeNames, Brands, Citys) {
       },
       visualMap: {
         type: 'piecewise',
-        right: 143,
+        right: 92,
         bottom: 30,
         align: 'left',
         itemWidth: 40,

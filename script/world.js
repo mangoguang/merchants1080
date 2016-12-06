@@ -325,6 +325,16 @@ setData = function(arr) {
 
 /*---插入国家数据---*/
 function setCountryData() {
+	var ENname = ['China', 'Japan', 'Australia', 'USA', 'India', 'German', 'Cambodia', 'Canada', 'Italy'];
+	for (var i = 0; i < 7; i++) {
+		var tooltipList = '<a href="./html/country.html?name=' + ENname[i] + '">' +
+			'<div class="tooltip tooltip' + (i + 1) + '">' +
+			'<p><span></span>家</p>' +
+			'<h2></h2>' +
+			'</div>' +
+			'</a>';
+		$('body').append(tooltipList);
+	}
 	getData1(dataPath + "sortinfo").then(function(data) {
 		var storesTotal = 0;
 		// var countryName = ['中国', '美国', '澳大利亚'];
