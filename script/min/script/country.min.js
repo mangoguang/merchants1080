@@ -6,8 +6,6 @@ var visualMapBottom = 80;
 var visualMapLeft = 160;
 var visualMapOrient = 'vertical';
 var visualMapShow = true;
-var titleTop = 170;
-var titleLeft = 360;
 
 $(document).ready(function() {
 	document.addEventListener('plusready', function() {
@@ -32,8 +30,6 @@ $(document).ready(function() {
 	$(".managerList").click(function() {
 		var marginRight = $("#managerListBox").css('margin-left');
 		if (marginRight == '0px') {
-			titleTop = 170;
-			titleLeft = titleLeft;
 			geoLeft = 'center';
 			zoom = 1.1;
 			visualMapShow = true;
@@ -46,8 +42,6 @@ $(document).ready(function() {
 			});
 			$(".visualMapList").hide();
 		} else {
-			titleTop = 130;
-			titleLeft = 'center';
 			geoLeft = 'center';
 			zoom = 1;
 			visualMapShow = false;
@@ -287,8 +281,8 @@ setOption = function(pieces, series, data, area) {
 			// backgroundColor: bgColor, //bgColor变量在common.js定义
 			title: {
 				text: '中国地图',
-				top: titleTop,
-				left: titleLeft,
+				top: 50,
+				left: 260,
 				// subtext: 'Data from www.musi.com',
 				sublink: 'http://www.musi.com',
 				textStyle: {
@@ -356,28 +350,28 @@ setOption = function(pieces, series, data, area) {
 					saveAsImage: {}
 				}
 			},
-			geo: {
-				map: name,
-				top: geoTop,
-				left: geoLeft,
-				zoom: zoom,
-				// roam: true,
-				scaleLimit: {
-					min: 0.6,
-					max: 20
-				},
-				label: {
-					emphasis: {
-						show: false
-					}
-				},
-				itemStyle: {
-					normal: {
-						borderColor: borderColor,
-						areaColor: MapColorL
-					}
-				}
-			},
+			// geo: {
+			// 	map: name,
+			// 	top: geoTop,
+			// 	left: geoLeft,
+			// 	zoom: zoom,
+			// 	// roam: true,
+			// 	scaleLimit: {
+			// 		min: 0.6,
+			// 		max: 20
+			// 	},
+			// 	label: {
+			// 		emphasis: {
+			// 			show: false
+			// 		}
+			// 	},
+			// 	itemStyle: {
+			// 		normal: {
+			// 			borderColor: borderColor,
+			// 			areaColor: MapColorL
+			// 		}
+			// 	}
+			// },
 			series: series()
 				// {
 				//         name: '华中招商经理',

@@ -577,18 +577,27 @@ h1.title {
   top: 40px;
   background: url(../image1080/1-logo.png) no-repeat, url(../image1080/2-titleback.png) no-repeat;
   background-position: 70px 0,0 0;
-  background-size: auto 110px,auto 120px;
-  z-index: 9; }
+  background-size: auto 110px,auto 120px; }
 
 .back {
   width: 122px;
   height: 122px;
   position: fixed;
   bottom: 30px;
-  left: 30px;
+  left: 90px;
   background: url(../image1080/4-back.png) no-repeat;
   background-size: 100% 100%;
   z-index: 999; }
+
+.msgDiv {
+  width: 290px;
+  height: 606px;
+  padding: 60px 0 30px 0;
+  position: absolute;
+  top: 160px;
+  right: 40px;
+  z-index: 10;
+  overflow-x: hidden; }
 
 .manageMsgBox {
   width: 280px;
@@ -598,14 +607,15 @@ h1.title {
   color: #e5e5e5;
   position: absolute;
   padding-bottom: 20px;
-  top: 180px;
+  top: 200px;
   right: 40px;
   z-index: 10; }
   .manageMsgBox .img1 {
     width: 92px;
     height: 92px;
     margin-top: -60px;
-    margin-left: 40px; }
+    margin-left: 40px;
+    border-radius: 50%; }
   .manageMsgBox .img2 {
     width: 80px;
     height: 80px;
@@ -620,6 +630,12 @@ h1.title {
     font-size: 20px;
     line-height: 30px;
     padding: 0 10px; }
+
+.manageMsgBox1, .manageMsgBox2 {
+  position: static; }
+
+.manageMsgBox2 {
+  margin-top: 65px; }
 
 #slidBar {
   opacity: 0.5;
@@ -1094,7 +1110,7 @@ h1.title {
 
 .barGraph {
   width: 1186px;
-  height: 90%; }
+  height: 95%; }
 
 .unDevelopBox {
   display: none;
@@ -1107,9 +1123,8 @@ h1.title {
     font-size: 42px;
     font-weight: 700;
     text-align: center;
-    line-height: 1.2em;
     color: #999;
-    margin: 90px 0 30px 0; }
+    margin-bottom: 30px; }
     .unDevelopBox h2 span {
       display: inline-block;
       padding: 0 40px;
@@ -1142,17 +1157,29 @@ h1.title {
   background: url(../image1080/4-back.png) no-repeat;
   background-size: 100% 100%; }
 
-.countryListBox {
+#countryListBox {
   width: 410px;
-  height: 650px;
-  overflow-x: hidden;
-  text-align: center;
+  height: 630px;
   position: absolute;
   top: 50%;
   right: 0;
   margin-top: -350px;
-  margin-right: 100px;
+  margin-right: 40px;
   z-index: 9; }
+
+.divB {
+  width: 380px;
+  height: 40px;
+  background: url(../image1080/scroll.gif) no-repeat;
+  background-size: 380px 40px;
+  margin-left: 15px;
+  margin-top: 20px; }
+
+.countryListBox {
+  height: 570px;
+  position: relative;
+  text-align: center;
+  overflow-x: hidden; }
   .countryListBox > li:nth-child(3n) {
     border-bottom: 0; }
   .countryListBox > li {
@@ -1161,7 +1188,6 @@ h1.title {
     line-height: 50px;
     border-bottom: 1px solid #191919;
     margin: 0 auto;
-    padding-bottom: 20px;
     margin-bottom: 20px; }
     .countryListBox > li span {
       font-size: 34px; }
@@ -1487,8 +1513,8 @@ h1.title {
 .symbol {
   width: 250px;
   position: absolute;
-  right: 105px;
-  bottom: 140px;
+  left: 60px;
+  top: 320px;
   z-index: 10; }
   .symbol li {
     font-size: 26px;
@@ -1508,7 +1534,8 @@ h1.title {
     color: #fec20b; }
 
 .symbol1 {
-  bottom: 200px; }
+  top: 380px;
+  left: 20px; }
 
 /* ------省级地图结束------ */
 /* ------市级地图------ */

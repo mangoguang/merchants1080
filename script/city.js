@@ -1,13 +1,12 @@
 var danpin = 0; //初始化单品店数
 var zonghe = 0; //初始化综合店数
 //地图配置参数
+areaColor = MapColorL;
 var geoTop = 130;
 var geoLeft = 'center';
 var zoom = 1.1;
-var titleTop = 30;
-var titleR = 30;
-var visualMapBottom = 50;
-var visulMapR = 143;
+var visualMapBottom = 180;
+var visulMapR = 80;
 
 var height = document.documentElement.clientHeight;
 var urlStr = decodeURIComponent(window.location.search.substr(11));
@@ -80,11 +79,8 @@ $(document).ready(function() {
 				zoom = 1.1;
 				geoTop = 130;
 
-				titleTop = 30;
-				titleR = 30;
-
-				visualMapBottom = 50;
-				visulMapR = 143;
+				visualMapBottom = 180;
+				visulMapR = 80;
 				setMap();
 				$(".storeDetailBox").css('margin-left', '-1200px');
 				$(".symbol").css({
@@ -101,11 +97,8 @@ $(document).ready(function() {
 				zoom = 0.8;
 				geoTop = 100;
 
-				titleTop = 80;
-				titleR = 'center'
-
-				visualMapBottom = 55;
-				visulMapR = 480;
+				visualMapBottom = 'bottom';
+				visulMapR = -280;
 				setMap();
 				$(".storeDetailBox").css('margin-left', '0px');
 				$(".symbol").css({
@@ -125,6 +118,7 @@ insertData = function(id) {
 		city: cityName
 	};
 	getData1(dataPath + "areadistribute", ajaxData).then(function(arr) {
+		// areaColor = MapColorR;
 		var stores = [];
 		for (var i = 0; i < arr.length; i++) {
 			var array = arr[i].stores;
@@ -179,34 +173,18 @@ insertData = function(id) {
 			}
 
 			var obj = {
-					type: "scatter",
-					coordinateSystem: "geo",
-					zlevel: 12,
-					data: [{
-						name: stores[i].STORE,
-						value: [stores[i].JINGDU, stores[i].WEIDU]
-					}],
-					symbol: symbol,
-					symbolSize: [32, 40]
-				}
-				//如果第一次出现，则value=1，否则value=0
-				// console.log(ret[i].diqumingchen);
-				// if (UniqueQuxian.indexOf(ret[i].diqumingchen) == -1) {
-				// 	UniqueQuxian.push(ret[i].diqumingchen);
-				// 	var obj1 = {
-				// 		name: ret[i].diqumingchen,
-				// 		value: 1
-				// 	};
-				// } else {
-				// 	var obj1 = {
-				// 		name: ret[i].diqumingchen,
-				// 		value: 0,
-				// 		date: ret[i].kaiyeriqi
-				// 	};
-				// };
+				type: "scatter",
+				coordinateSystem: "geo",
+				zlevel: 12,
+				data: [{
+					name: stores[i].STORE,
+					value: [stores[i].JINGDU, stores[i].WEIDU]
+				}],
+				symbol: symbol,
+				symbolSize: [32, 40]
+			}
 
 			series.push(obj);
-			// data.push(obj1);
 		}
 
 		for (var i = 0; i < arr.length; i++) {
@@ -237,7 +215,7 @@ insertData = function(id) {
 				itemStyle: {
 					normal: {
 						borderColor: borderColor,
-						areaColor: MapColorL
+						areaColor: areaColor
 					}
 				},
 				data: data
@@ -330,8 +308,8 @@ setOption = function(id, series, arr) {
 			// backgroundColor: bgColor, //bgColor变量在common.js定义
 			title: {
 				text: cityName + '加盟商分布',
-				top: titleTop,
-				right: titleR,
+				top: 50,
+				left: 260,
 				// subtext: 'Data from www.musi.com',
 				sublink: 'http://www.musi.com',
 				textStyle: {
@@ -359,8 +337,8 @@ setOption = function(id, series, arr) {
 			},
 			visualMap: {
 				type: 'piecewise',
-				right: visulMapR,
-				bottom: visualMapBottom,
+				left: visulMapR,
+				top: visualMapBottom,
 				align: 'left',
 				itemWidth: 40,
 				itemHeight: 40,
@@ -419,7 +397,7 @@ setOption = function(id, series, arr) {
 			},
 			series: series
 		};
-
+		console.log(series);
 		myChart.setOption(option);
 
 	})
@@ -433,24 +411,36 @@ function load() {
 	});
 }
 
+
 //招商经理名片数据初始化
 managerMsg = function(provinceName) {
 	var ajaxData = {
-		country: '中国'
+		province: provinceName
 	};
 
-	getData1(dataPath + "managerbyinfo", ajaxData).then(function(arr) {
+	getData1(dataPath + "managerbyprovince", ajaxData).then(function(arr) {
+		var index;
 		for (var i = 0; i < arr.length; i++) {
-			var citys = arr[i].city;
-			var cityList = citys.split(',');
-			if (cityList.indexOf(provinceName) >= 0) {
+			if ((arr[i].city).indexOf(cityName) >= 0) {
+				console.log(arr[i]);
 				var msg = arr[i];
-				$('.name').text(msg.name);
+				$('.name').text(msg.manger);
 				$('.area').text(msg.area);
 				$('.provinces').text(msg.city);
 				$('.phone').text(msg.phone);
 			}
 		}
+		// for (var i = 0; i < arr.length; i++) {
+		// 	var citys = arr[i].city;
+		// 	var cityList = citys.split(',');
+		// 	if (cityList.indexOf(provinceName) >= 0) {
+		// 		var msg = arr[i];
+		// 		$('.name').text(msg.name);
+		// 		$('.area').text(msg.area);
+		// 		$('.provinces').text(msg.city);
+		// 		$('.phone').text(msg.phone);
+		// 	}
+		// }
 	})
 }
 
