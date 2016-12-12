@@ -13,7 +13,7 @@ var tips = localStorage.getItem("tips"); //本地存储
 //屏幕可布局高度
 var height = document.documentElement.clientHeight;
 
-var dataPath = 'http://10.12.0.52:8080/deruccimid/cst/';
+var dataPath = 'http://10.11.0.220:8080/deruccimid/cst/';
 
 //body全屏
 $("#body").height(height);

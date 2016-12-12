@@ -20,13 +20,26 @@ $("#body").height(height);
 
 //点击底部导航栏按钮
 $("#bottomBtn").click(function() {
-    $(".bottomNav").show();
-    $("#bottomBtn").hide();
+    backHome();
 })
+    // $("#bottomBtn").click(function() {
+    //     $(".bottomNav").show();
+    //     $("#bottomBtn").hide();
+    // })
 $(".navBtn").click(function() {
     $(".bottomNav").hide();
     $("#bottomBtn").show();
 })
+
+//回退到首页
+backHome = function() {
+    var index = window.location.href;
+    index = index[(index.length - 1)];
+    if (index != 'l') {
+        window.history.go(-(parseInt(index)));
+        return false;
+    }
+}
 
 //设置设备状态栏
 var u = navigator.userAgent;

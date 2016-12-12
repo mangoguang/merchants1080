@@ -61,12 +61,12 @@ $(document).ready(function() {
 
 	/*------列表部分代码------*/
 	//点击显示/隐藏列表按钮
-	$("#slidBar").click(function() {
+	$("#slidBar>.list").click(function() {
 		// history.pushState('abc', null, 'http://10.11.0.234:3000/html/country.html' + '/');
 		$(".listBox").show(500);
 	})
 
-	$(".hideBtn").click(function() {
+	$("#slidBar>.map").click(function() {
 		$(".listBox").hide(500);
 	})
 
@@ -117,7 +117,9 @@ $(document).ready(function() {
 	/*------列表部分代码结束------*/
 
 	//设置地图
+	/*	各个国家开店总数，直营点与加盟店个数。*/
 	getData1(dataPath + "sortinfo").then(function(arr) {
+		// console.log(arr);
 		setData(arr);
 	})
 
@@ -157,7 +159,7 @@ setData = function(arr) {
 			return res;
 		};
 
-		//定义series数组123123
+		//定义series数组
 		var country = [];
 		for (var i = 0; i < arr.length; i++) {
 			country.push(arr[i].area);
@@ -352,6 +354,7 @@ function setCountryData() {
 		$('body').append(tooltipList);
 	}
 	getData1(dataPath + "sortinfo").then(function(data) {
+		// console.log(data);
 		var storesTotal = 0;
 		// var countryName = ['中国', '美国', '澳大利亚'];
 		for (i = 0; i < data.length; i++) {
@@ -369,13 +372,14 @@ function setCountryData() {
 function barOption(ajaxData) {
 
 	getData1(dataPath + "brandbyinfo", ajaxData).then(function(data) {
-
+			// console.log(data);
 			//获取行政区域数组
 			var temp = data.area;
 			var yAxisData = [];
 			for (var i = 0; i < temp.length; i++) {
 				yAxisData.push(temp[i][0]);
 			}
+			// console.log(yAxisData);
 
 			//获取各品牌
 			var legendData = [];
@@ -384,6 +388,7 @@ function barOption(ajaxData) {
 				legendData.push(brandMsg[i].brand);
 			}
 			legendData.unshift('全部');
+			// console.log(legendData);
 
 			//获取各品牌在各行政区域的店铺数量
 			var lengendBrandArr = [];
@@ -439,6 +444,7 @@ function barOption(ajaxData) {
 					itemWidth: 30,
 					itemHeight: 20,
 					selectedMode: selectedMode,
+					inactiveColor: '#555',
 					textStyle: {
 						color: textColor,
 						fontSize: 12
@@ -539,12 +545,14 @@ function barOption(ajaxData) {
 
 //增加省级跟市级选择列表
 function addProvinceLi() {
+	$(".provincesList").empty();
 	var lis = '';
 	for (var i = 0; i < provinces.length; i++) {
 		var li = '<li><p>' + provinces[i] + '</p></li>';
 		lis = lis + li;
 	}
 	$(".provincesList").append(lis);
+	provinceBtn();
 
 	var ajaxData = {
 		country: '中国',
@@ -553,18 +561,31 @@ function addProvinceLi() {
 			// city: '深圳市'
 	};
 	getData1(dataPath + "brandbyinfo", ajaxData).then(function(arr2) {
+		$('.citysList').empty();
 		var area = arr2.area;
 		var lis1 = '';
 		for (var i = 0; i < area.length; i++) {
-			var li = '<li><p>' + area[i] + '</p></li>';
+			var li = '<li><p>' + area[i][0] + '</p></li>';
 			lis1 = lis1 + li;
 		}
 		$('.citysList').append(lis1);
 	})
 }
 
+//点击国家列表
 function countryBtn() {
 	$(".countrysList li").click(function() {
+
+		var _thisName = $(this).text();
+		if (_thisName == '中国') {
+			$('.hideBox').show();
+			addProvinceLi();
+			$('.citysListBox').hide(); //市级列表隐藏
+		} else {
+			$('.hideBox').hide();
+			addOtherCountry(_thisName);
+		}
+		$('.provinceBtn').text('省');
 		$(this).parent().hide(500);
 		var name = $(this).text();
 		$(this).parent().siblings().text(name);
@@ -580,7 +601,9 @@ function countryBtn() {
 
 function provinceBtn() {
 	$(".provincesList li").click(function() {
+		$('.citysListBox > h2').text('市');
 		$(this).parent().hide(500);
+		$('.citysListBox').show(500);
 		var name = $(this).text();
 		$(this).parent().siblings().text(name);
 		var ajaxData = {
@@ -589,7 +612,10 @@ function provinceBtn() {
 				// province: '广东',
 				// city: '深圳市'
 		};
+		/*根据省份获取该省下各市的品牌分布情况，各市的名称，品牌名称及店铺数。
+		单品店以及综合店数量统计*/
 		getData1(dataPath + "distributeinfo", ajaxData).then(function(arr) {
+			// console.log(arr);
 			var li = '';
 			for (var i = 0; i < arr.length; i++) {
 				li = li + '<li>' + arr[i].cityName + '</li>'
@@ -604,7 +630,9 @@ function provinceBtn() {
 		var ajaxData = {
 			province: name
 		};
+		/*根据省份名称得出该省级行政区域未重点开发地区*/
 		getData1(dataPath + "voidmarkets", ajaxData).then(function(arr3) {
+			// console.log(arr3);
 			var lis = arr3.unDevelop;
 			lis = lis.split(',');
 			var liStr = '';
@@ -658,8 +686,11 @@ addStoreMsg = function() {
 	var ajaxData = {
 		// country: '中国'
 	};
+	/*	各个国家开店总数，直营点与加盟店个数。*/
 	getData1(dataPath + "sortinfo", ajaxData).then(function(arr) {
+		// console.log(arr);
 		var lis = [];
+		var countryLis = [];
 		var storeSum = [];
 		for (var i = 0; i < arr.length; i++) {
 			var temp = arr[i].qtyflags;
@@ -686,16 +717,46 @@ addStoreMsg = function() {
 				'<h4><span>' + qty[1] + '</span>家</h4>' +
 				'<p>直营店</p>' +
 				'</li>' +
-				'<li>' +
-				'<h4><span>' + qty[2] + '</span>家</h4>' +
-				'<p>分公司</p>' +
-				'</li>' +
+				// '<li>' +
+				// '<h4><span>' + qty[2] + '</span>家</h4>' +
+				// '<p>分公司</p>' +
+				// '</li>' +
 				'</ul>' +
 				'</li>';
+
+			var countryLi = '<li>' + arr[i].area + '</li>';
+
+			countryLis += countryLi;
 			lis += li;
 		}
 
 		$('.countryListBox').append(lis);
+		$('.countrysList').append(countryLis);
+
+		countryBtn();
+	})
+}
+
+addOtherCountry = function(name1) {
+	var ajaxData = {
+		country: name1
+	};
+	getData1(dataPath + "distributeinfo", ajaxData).then(function(arr) {
+		// var countryNames = [];
+		$(".provincesList").empty(); //清空省级列表
+		$('.citysList').empty(); //清空市级列表
+		var lis = '';
+		for (i in arr) {
+			var name = arr[i].cityName;
+			name = name.split('|');
+			name = name[0];
+			// countryNames.push(name);
+			var li = '<li>' + name + '</li>';
+			lis += li;
+		}
+		// alert(lis);
+		$('.provincesList').append(lis);
+		provinceBtn();
 	})
 }
 

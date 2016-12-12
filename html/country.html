@@ -9,6 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
 </head>
 <body id="body" class="body">
+  <!-- <div class="testBtn" style="width: 50px;height: 50px;background:red;position: absolute;top:100px;left:100px;z-index:12;"></div> -->
+  
   <div class="back" onclick="javascript :history.back(-1);"></div>
 	<div class="topPadding"></div>
 		
@@ -17,6 +19,10 @@
 	
 	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
   <div id="main" class="deviceHeight countryMap" style="width: 100%;"></div>
+
+  <ul class="visualMap">
+
+  </ul>
 
   <div id="managerListBox">
   	<div class="Left">
@@ -64,13 +70,6 @@
 
     <button class="managerList "></button>
   </div>
-
-  <ul class="visualMapList clearfix">
-    <li><span></span>东一区</li><li><span></span>东二区</li><li><span></span>东三区</li>
-    <li><span></span>南一区</li><li><span></span>南二区</li><li><span></span>南三区</li>
-    <li><span></span>西一区</li><li><span></span>西二区</li><li><span></span>西三区</li>
-    <li><span></span>北一区</li><li><span></span>北二区</li><li><span></span>北三区</li>
-  </ul>
 
   <!-- 底部导航栏 -->
   <div class="bottomNav">

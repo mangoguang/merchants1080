@@ -12,10 +12,14 @@
 
 <!--<div id="testBtn" style="width: 100px;height: 100px;background: red;position: absolute;z-index:11;top:100px;left:100px;"></div>-->
 
+    <ul id="slidBar">
+        <li class='map on'>地图</li>
+        <li class="list">列表</li>
+    </ul>
     <div class="topPadding"></div>
     <h1 class="title"></h1>
-    <div id="slidBar"></div>
-  <button id="bottomBtn"></button>
+    
+  <!-- <button id="bottomBtn"></button> -->
 
     <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
   <div id="main" class="deviceHeight worldMap" style="width: 100%;"></div>
@@ -29,20 +33,18 @@
             <div class="countrysListBox">
                 <h2>国家</h2>
                 <ul class="selectList countrysList">
-                    <li>中国</li>
-                    <li>美国</li>
-                    <li>澳大利亚</li>
+
                 </ul>
             </div>
 
-            <div class="countrysListBox">
+            <div class="provincesListBox hideBox">
                 <h2 class="provinceBtn">省</h2>
                 <ul class="selectList provincesList">
 
                 </ul>
             </div>
 
-            <div class="countrysListBox">
+            <div class="citysListBox hideBox" style="display: none;">
                 <h2>市</h2>
                 <ul class="selectList citysList">
 
@@ -72,7 +74,6 @@
         </ul>
         
     </div>
-    <button class="hideBtn"></button>
   </div>
 
   <div id="countryListBox">
