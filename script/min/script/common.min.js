@@ -20,8 +20,8 @@ $("#body").height(height);
 
 //点击底部导航栏按钮
 $("#bottomBtn").click(function() {
-    backHome();
-})
+        backHome();
+    })
     // $("#bottomBtn").click(function() {
     //     $(".bottomNav").show();
     //     $("#bottomBtn").hide();

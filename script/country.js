@@ -8,7 +8,7 @@ var visualMapOrient = 'vertical';
 var nomore = true; //为false时不再加载visualMap列表
 
 var sel = [];
-var col = ['#673ab7', '#1976d2', '#0d47a1', '#d32f2f', '#8e24aa', '#d81b60', '#f5410a', '#ec407a', '#ff99ff', '#ff5722', '#f4ce37', '#ffc107', '#79cf4c', '#ccff00'];
+var col = ['#673ab7', '#1976d2', '#0d47a1', '#d32f2f', '#8e24aa', '#d81b60', '#f5410a', '#ec407a', '#ff99ff', '#ff5722', '#f4ce37', '#ffc107', '#79cf4c', '#ccff00', '#ff9900', '#add6d6'];
 
 $(document).ready(function() {
 	document.addEventListener('plusready', function() {

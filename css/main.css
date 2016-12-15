@@ -1177,7 +1177,7 @@ h1.title {
   margin-top: 20px; }
 
 .countryListBox {
-  height: 570px;
+  height: 610px;
   position: relative;
   text-align: center;
   overflow-x: hidden; }
@@ -1241,36 +1241,40 @@ h1.title {
     position: absolute;
     left: 0;
     top: 8px; }
-  .visualMap li:nth-child(14) span {
+  .visualMap li:nth-child(16) span {
     background: #ff7373; }
-  .visualMap li:nth-child(13) span {
+  .visualMap li:nth-child(15) span {
     background: #673ab7; }
-  .visualMap li:nth-child(12) span {
+  .visualMap li:nth-child(14) span {
     background: #1976d2; }
-  .visualMap li:nth-child(11) span {
+  .visualMap li:nth-child(13) span {
     background: #0d47a1; }
-  .visualMap li:nth-child(10) span {
+  .visualMap li:nth-child(12) span {
     background: #d32f2f; }
-  .visualMap li:nth-child(9) span {
+  .visualMap li:nth-child(11) span {
     background: #8e24aa; }
-  .visualMap li:nth-child(8) span {
+  .visualMap li:nth-child(10) span {
     background: #d81b60; }
-  .visualMap li:nth-child(7) span {
+  .visualMap li:nth-child(9) span {
     background: #f5410a; }
-  .visualMap li:nth-child(6) span {
+  .visualMap li:nth-child(8) span {
     background: #ec407a; }
-  .visualMap li:nth-child(5) span {
+  .visualMap li:nth-child(7) span {
     background: #ff99ff; }
-  .visualMap li:nth-child(4) span {
+  .visualMap li:nth-child(6) span {
     background: #ff5722; }
-  .visualMap li:nth-child(3) span {
+  .visualMap li:nth-child(5) span {
     background: #f4ce37; }
-  .visualMap li:nth-child(2) span {
+  .visualMap li:nth-child(4) span {
     background: #ffc107; }
-  .visualMap li:nth-child(1) span {
+  .visualMap li:nth-child(3) span {
     background: #79cf4c; }
-  .visualMap li:nth-child(0) span {
+  .visualMap li:nth-child(2) span {
     background: #ccff00; }
+  .visualMap li:nth-child(1) span {
+    background: #ff9900; }
+  .visualMap li:nth-child(0) span {
+    background: #add6d6; }
 
 .managerList {
   opacity: 0.5;

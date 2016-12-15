@@ -1346,7 +1346,7 @@ h1.title{
   margin-top: 20px;
 }
 .countryListBox{
-  height: 570px;
+  height: 610px;
   position: relative;
   text-align: center;
   overflow-x: hidden;
@@ -1432,21 +1432,25 @@ h1.title{
     top: 8px;
   }
   // 颜色的顺序需要跟country.js文件的col数组相同
-  li:nth-child(14) span{background: #ff7373;}
-  li:nth-child(13) span{background: #673ab7;}
-  li:nth-child(12) span{background: #1976d2;}
-  li:nth-child(11) span{background: #0d47a1;}
-  li:nth-child(10) span{background: #d32f2f;}
-  li:nth-child(9) span{background: #8e24aa;}
-  li:nth-child(8) span{background: #d81b60;}
-  li:nth-child(7) span{background: #f5410a;}
-  li:nth-child(6) span{background: #ec407a;}
-  li:nth-child(5) span{background: #ff99ff;}
-  li:nth-child(4) span{background: #ff5722;}
-  li:nth-child(3) span{background: #f4ce37;}
-  li:nth-child(2) span{background: #ffc107;}
-  li:nth-child(1) span{background: #79cf4c;}
-  li:nth-child(0) span{background: #ccff00;}
+  
+  
+  li:nth-child(16) span{background: #ff7373;}
+  li:nth-child(15) span{background: #673ab7;}
+  li:nth-child(14) span{background: #1976d2;}
+  li:nth-child(13) span{background: #0d47a1;}
+  li:nth-child(12) span{background: #d32f2f;}
+  li:nth-child(11) span{background: #8e24aa;}
+  li:nth-child(10) span{background: #d81b60;}
+  li:nth-child(9) span{background: #f5410a;}
+  li:nth-child(8) span{background: #ec407a;}
+  li:nth-child(7) span{background: #ff99ff;}
+  li:nth-child(6) span{background: #ff5722;}
+  li:nth-child(5) span{background: #f4ce37;}
+  li:nth-child(4) span{background: #ffc107;}
+  li:nth-child(3) span{background: #79cf4c;}
+  li:nth-child(2) span{background: #ccff00;}
+  li:nth-child(1) span{background: #ff9900;}
+  li:nth-child(0) span{background: #add6d6;}
 }
 
 .managerList {

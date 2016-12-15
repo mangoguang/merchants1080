@@ -359,10 +359,14 @@ function setCountryData() {
 		// var countryName = ['中国', '美国', '澳大利亚'];
 		for (i = 0; i < data.length; i++) {
 			var temp = data[i].qtyflags;
+			var str = temp[0].AREA;
+			str = str.split('|');
+			countryName = str[1];
+			console.log(temp);
 			storesTotal += parseInt(temp[0].QTY);
 			var className = '.tooltip' + (i + 1);
 			$(className + ' span').html(temp[0].QTY);
-			$(className + ' h2').html(temp[0].AREA);
+			$(className + ' h2').html(countryName);
 		}
 		$(".mapTitle strong").html(storesTotal);
 	})
@@ -706,8 +710,12 @@ addStoreMsg = function() {
 			}
 			storeSum.push(total);
 
+			var str = arr[i].area;
+			str = str.split('|');
+			countryName = str[1];
+
 			var li = '<li>' +
-				'<h3><strong>' + arr[i].area + '</strong>共有<span class="storeSum">' + storeSum[i] + '</span>家店，其中</h3>' +
+				'<h3><strong>' + countryName + '</strong>共有<span class="storeSum">' + storeSum[i] + '</span>家店，其中</h3>' +
 				'<ul class="clearfix">' +
 				'<li>' +
 				'<h4><span>' + qty[0] + '</span>家</h4>' +
@@ -724,7 +732,7 @@ addStoreMsg = function() {
 				'</ul>' +
 				'</li>';
 
-			var countryLi = '<li>' + arr[i].area + '</li>';
+			var countryLi = '<li>' + countryName + '</li>';
 
 			countryLis += countryLi;
 			lis += li;
