@@ -119,6 +119,7 @@ insertData = function(id) {
 	};
 	getData1(dataPath + "areadistribute", ajaxData).then(function(arr) {
 		// areaColor = MapColorR;
+		console.log(arr);
 		var stores = [];
 		for (var i = 0; i < arr.length; i++) {
 			var array = arr[i].stores;
@@ -397,7 +398,6 @@ setOption = function(id, series, arr) {
 			},
 			series: series
 		};
-		console.log(series);
 		myChart.setOption(option);
 
 	})
@@ -422,7 +422,6 @@ managerMsg = function(provinceName) {
 		var index;
 		for (var i = 0; i < arr.length; i++) {
 			if ((arr[i].city).indexOf(cityName) >= 0) {
-				console.log(arr[i]);
 				var msg = arr[i];
 				$('.name').text(msg.manger);
 				$('.area').text(msg.area);
