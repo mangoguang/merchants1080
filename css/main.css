@@ -183,10 +183,21 @@ a {
   top: 0;
   left: 0; }
 
+.rectBox {
+  width: 50px;
+  height: 50px;
+  background: url(../image1080/logoloading.png) no-repeat, #121416;
+  background-size: 40px 40px;
+  background-position: 4px 2px;
+  border-radius: 25px;
+  position: absolute;
+  z-index: 9999;
+  top: 50%;
+  left: 50%; }
+
 #rect {
   width: 50px;
   height: 50px;
-  background: #121416;
   margin: 0 150px;
   border-radius: 25px;
   position: absolute;
@@ -591,10 +602,10 @@ h1.title {
 
 .msgDiv {
   width: 290px;
-  height: 606px;
+  height: 906px;
   padding: 60px 0 30px 0;
   position: absolute;
-  top: 160px;
+  top: 50px;
   right: 40px;
   z-index: 10;
   overflow-x: hidden; }
@@ -635,7 +646,7 @@ h1.title {
   position: static; }
 
 .manageMsgBox2 {
-  margin-top: 65px; }
+  margin-top: 100px; }
 
 #slidBar {
   width: 60px;
@@ -1160,24 +1171,37 @@ h1.title {
 
 #countryListBox {
   width: 410px;
-  height: 630px;
+  height: 900px;
   position: absolute;
   top: 50%;
   right: 0;
-  margin-top: -350px;
+  margin-top: -480px;
   margin-right: 40px;
   z-index: 9; }
 
-.divB {
+#scroll {
   width: 380px;
   height: 40px;
-  background: url(../image1080/scroll.gif) no-repeat;
-  background-size: 380px 40px;
   margin-left: 15px;
   margin-top: 20px; }
 
+.scrollTop {
+  background: url(../image1080/scroll.gif) no-repeat;
+  background-size: 380px 40px;
+  transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  margin-top: 0px;
+  margin-bottom: 20px; }
+
+.scrollBottom {
+  background: url(../image1080/scroll.gif) no-repeat;
+  background-size: 380px 40px; }
+
 .countryListBox {
-  height: 610px;
+  height: 840px;
   position: relative;
   text-align: center;
   overflow-x: hidden; }
@@ -1284,7 +1308,11 @@ h1.title {
   left: 0;
   top: 50%;
   margin-top: -115px;
-  background: url(../image1080/1-manager.gif) no-repeat;
+  background: url(../image1080/manager1.gif) no-repeat;
+  background-size: 100% 100%; }
+
+.managerList2 {
+  background: url(../image1080/manager2.gif) no-repeat;
   background-size: 100% 100%; }
 
 #managerListBox {
@@ -1507,6 +1535,27 @@ h1.title {
 
 /* ------省级地图结束------ */
 /* ------市级地图------ */
+.controlBox {
+  width: 200px;
+  height: 100px;
+  position: absolute;
+  z-index: 999;
+  top: 450px;
+  left: 90px; }
+  .controlBox li {
+    float: left;
+    width: 100px;
+    height: 100px; }
+  .controlBox li:nth-child(1) {
+    background: url(../image1080/big-1.png) no-repeat;
+    background-size: 60px 60px;
+    background-position: center center; }
+  .controlBox li:nth-child(2) {
+    display: none;
+    background: url(../image1080/small-1.png) no-repeat;
+    background-size: 60px 60px;
+    background-position: center center; }
+
 .storeDetailBox {
   width: 1290px;
   height: 100%;
@@ -1534,7 +1583,11 @@ h1.title {
     left: 1200px;
     top: 50%;
     margin-top: -115px;
-    background: url(../image1080/11-shop.gif) no-repeat;
+    background: url(../image1080/store1.gif) no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.5; }
+  .storeDetailBox .Right2 {
+    background: url(../image1080/store2.gif) no-repeat;
     background-size: 100% 100%;
     opacity: 0.5; }
 

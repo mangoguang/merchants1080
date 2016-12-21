@@ -76,6 +76,20 @@ $(document).ready(function() {
 		$(".listBox").hide(500);
 	})
 
+	$('.countryListBox').scroll(function() {
+		var t = $(this).scrollTop();
+		if (t > 50) {
+			$('.scroll1').addClass('scrollTop');
+		} else {
+			$('.scroll1').removeClass('scrollTop');
+		}
+		if (t > 1320) {
+			$('.scroll2').removeClass('scrollBottom');
+		} else {
+			$('.scroll2').addClass('scrollBottom');
+		}
+	})
+
 	//点击选择按钮
 	$(".selectBox h2").click(function() {
 		var display = $(this).siblings().css('display');
@@ -141,7 +155,6 @@ setData = function(arr) {
 
 		var mapName = 'world';
 		echarts.registerMap(mapName, worldJson);
-		console.log(ENname);
 		var geoCoordMap = {
 			"China": [113.5, 63.48],
 			"Japan": [138.76, 48.67],
@@ -187,7 +200,7 @@ setData = function(arr) {
 					name: ENname[i],
 					value: 2
 				}]),
-				symbol: 'image://../image1080/6-tap.png',
+				symbol: 'image://./image1080/6-tap.png',
 				symbolSize: symbolSize,
 				label: {
 					normal: {
@@ -404,7 +417,6 @@ setData = function(arr) {
 function barOption(ajaxData) {
 
 	getData1(dataPath + "brandbyinfo", ajaxData).then(function(data) {
-			// console.log(data);
 			//获取行政区域数组
 			var temp = data.area;
 			var yAxisData = [];
@@ -416,7 +428,7 @@ function barOption(ajaxData) {
 			//获取各品牌
 			var legendData = [];
 			var brandMsg = data.brandMsg;
-			for (var i = 0; i < 8 /*brandMsg.length*/ ; i++) {
+			for (var i = 0; i < brandMsg.length; i++) {
 				legendData.push(brandMsg[i].brand);
 			}
 			legendData.unshift('全部');
@@ -647,7 +659,7 @@ function provinceBtn() {
 		/*根据省份获取该省下各市的品牌分布情况，各市的名称，品牌名称及店铺数。
 		单品店以及综合店数量统计*/
 		getData1(dataPath + "distributeinfo", ajaxData).then(function(arr) {
-			// console.log(arr);
+			arr = arr.detailCount;
 			var li = '';
 			for (var i = 0; i < arr.length; i++) {
 				li = li + '<li>' + arr[i].cityName + '</li>'
@@ -721,6 +733,26 @@ addStoreMsg = function() {
 	/*	各个国家开店总数，直营点与加盟店个数。*/
 	getData1(dataPath + "sortinfo", ajaxData).then(function(arr) {
 		// console.log(arr);
+		var count = [];
+		for (i in arr) {
+			var temp = arr[i].qtyflags;
+			count.push(temp[0].QTY);
+		}
+		for (var i = 0; i < count.length; i++) {
+			for (var j = i; j < count.length; j++) {
+				var x = parseInt(count[i]);
+				var y = parseInt(count[j]);
+				if (x < y) {
+					var temp = x;
+					count[i] = y;
+					count[j] = x;
+					var temp1 = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp1;
+				}
+			}
+		}
+
 		var lis = [];
 		var countryLis = [];
 		var storeSum = [];
@@ -736,6 +768,7 @@ addStoreMsg = function() {
 					qty.push(0);
 				}
 			}
+
 			storeSum.push(total);
 
 			var str = arr[i].area;

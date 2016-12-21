@@ -51,7 +51,9 @@ getData = function(countryName, name) {
     country: countryName
   };
   getData1(dataPath + "distributeinfo", ajaxData).then(function(arr) {
-
+    console.log(arr);
+    setStoreSum(arr.totalCount);
+    arr = arr.detailCount;
     //店铺资料
     //获取店铺信息列表
     var stores = []; //店铺列表
@@ -249,24 +251,32 @@ function load() {
   });
 }
 
-/**
- *
- * 　　　┏┓　　　┏┓
- * 　　┏┛┻━━━┛┻┓
- * 　　┃　　　　　　　┃
- * 　　┃　　　━　　　┃
- * 　　┃　┳┛　┗┳　┃
- * 　　┃　　　　　　　┃
- * 　　┃　　　┻　　　┃
- * 　　┃　　　　　　　┃
- * 　　┗━┓　　　┏━┛Code is far away from bug with the animal protecting
- * 　　　　┃　　　┃    神兽保佑,代码无bug
- * 　　　　┃　　　┃
- * 　　　　┃　　　┗━━━┓
- * 　　　　┃　　　　　 ┣┓
- * 　　　　┃　　　　 ┏┛
- * 　　　　┗┓┓┏━┳┓┏┛
- * 　　　　　┃┫┫　┃┫┫
- * 　　　　　┗┻┛　┗┻┛
- *
- */
+setStoreSum = function(arr) {
+    var temp0 = arr[0].QTY;
+    if (arr[1] == undefined) {
+      var temp1 = 0;
+    }
+    $('.symbol>.li1>span').text('(' + temp0 + ')');
+    $('.symbol>.li2>span').text('(' + temp1 + ')');
+  }
+  /**
+   *
+   * 　　　┏┓　　　┏┓
+   * 　　┏┛┻━━━┛┻┓
+   * 　　┃　　　　　　　┃
+   * 　　┃　　　━　　　┃
+   * 　　┃　┳┛　┗┳　┃
+   * 　　┃　　　　　　　┃
+   * 　　┃　　　┻　　　┃
+   * 　　┃　　　　　　　┃
+   * 　　┗━┓　　　┏━┛Code is far away from bug with the animal protecting
+   * 　　　　┃　　　┃    神兽保佑,代码无bug
+   * 　　　　┃　　　┃
+   * 　　　　┃　　　┗━━━┓
+   * 　　　　┃　　　　　 ┣┓
+   * 　　　　┃　　　　 ┏┛
+   * 　　　　┗┓┓┏━┳┓┏┛
+   * 　　　　　┃┫┫　┃┫┫
+   * 　　　　　┗┻┛　┗┻┛
+   *
+   */

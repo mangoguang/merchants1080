@@ -38,6 +38,8 @@ $(document).ready(function() {
 			zoom = 1.1;
 			getChina();
 
+			$(this).removeClass('managerList2');
+
 			$("#managerListBox").css('margin-left', '-1200px');
 			$("#main").css({
 				'width': '100%',
@@ -48,6 +50,8 @@ $(document).ready(function() {
 			geoLeft = 'center';
 			zoom = 1;
 			getChina();
+
+			$(this).addClass('managerList2');
 
 			$("#managerListBox").css('margin-left', '0px');
 			$("#main").css({
