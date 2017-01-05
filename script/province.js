@@ -37,11 +37,11 @@ managerMsg = function() {
   };
 
   getData1(dataPath + "managerbyprovince", ajaxData).then(function(arr) {
-
+    console.log(arr);
     for (var i = 0; i < arr.length; i++) {
       var msgDiv = '<div class="manageMsgBox manageMsgBox' + (i + 1) + '">' +
-        '<img class="img1" src="../image1080/3-photo.png"/>' +
-        '<img class="img2" src="../image1080/6-qr.png"/>' +
+        '<img class="img1" src="'+picPath+arr[i].mulu+'/'+arr[i].pics+'"/>' +
+        '<img class="img2" src="'+picPath+arr[i].mulu+'/'+arr[i].qr+'"/>' +
         '<h3 class="name">招商经理：' + arr[i].manger + '</h3>' +
         '<p>片区：<span class="area">' + arr[i].area + '</span></p>' +
         '<p>负责区域：<span class="provinces">' + arr[i].city + '</span></p>' +

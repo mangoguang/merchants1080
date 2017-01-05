@@ -754,9 +754,11 @@ addStoreMsg = function() {
 		}
 
 		var lis = [];
+		var storeTotal = 0;
 		var countryLis = [];
 		var storeSum = [];
 		for (var i = 0; i < arr.length; i++) {
+
 			var temp = arr[i].qtyflags;
 			var qty = [];
 			var total = 0;
@@ -777,6 +779,8 @@ addStoreMsg = function() {
 			ENname.push(str[0]); //各国英文名称列表
 			CNname.push(str[1]); //各国中文名称列表
 			sum.push((parseInt(qty[0]) + parseInt(qty[1])));
+
+			storeTotal += (parseInt(qty[0]) + parseInt(qty[1]));
 
 			var li = '<li>' +
 				'<h3><strong>' + countryName + '</strong>共有<span class="storeSum">' + storeSum[i] + '</span>家店，其中</h3>' +
@@ -803,7 +807,7 @@ addStoreMsg = function() {
 		}
 		$('.countryListBox').append(lis);
 		$('.countrysList').append(countryLis);
-
+		$(".mapTitle strong").html(storeTotal);
 		countryBtn();
 	})
 }

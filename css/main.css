@@ -1420,9 +1420,8 @@ h1.title {
   .photoBox .photo {
     width: 166px;
     height: 166px;
-    background: url(../image1080/3-photo.png) no-repeat;
-    background-size: 100% 100%;
-    margin: 0 auto; }
+    margin: 0 auto;
+    border-radius: 50%; }
   .photoBox p {
     font-size: 26px;
     padding-left: 20px; }
