@@ -1,48 +1,3 @@
-/*元根代码测试*/
-// $.ajax({
-// 	type: 'post',
-// 	url: 'http://10.11.0.46:8088/DeRuCCIApp/backAppJson.do',
-// 	dataType: 'jsonp',
-// 	jsonp: "jsoncallback",
-// 	// data: {
-// 	//     userName: 'admin',
-// 	//     userPwd: 'admin123'
-// 	// },
-// 	async: false,
-// 	success: function(data) {
-// 		console.log(data[0].danh);
-// 	},
-// 	error: function(data) {
-// 		console.log(data);
-// 	}
-// });
-
-/*廖勇接口测试*/
-// $.ajax({
-// 	type: 'post',
-// 	url: 'http://10.11.0.229:8080/deruccimid/cst/countrycstinfo',
-// 	dataType: 'jsonp',
-// 	jsonp: "jsoncallback",
-// 	// data: {
-// 	// 	province: '广东',
-// 	// 	city: '深圳市',
-// 	// 	county: '龙岗区'
-// 	// },
-// 	success: function(data) {
-// 		alert('success');
-// 		console.log('测试');
-// 		console.log(data);
-// 		console.log('测试');
-// 	},
-// 	error: function(data) {
-// 		alert('error');
-// 		console.log('测试');
-// 		console.log(data);
-// 		console.log('测试');
-// 	}
-// });
-
-
 //地图相对位置参数
 var geoTop = 170;
 var geoLeft = 20;
@@ -52,6 +7,10 @@ var provinces = ["广东", "安徽", "澳门", "北京", "重庆", "福建", "�
 var CNname = [];
 var ENname = [];
 var sum = [];
+
+var ajaxObj = {};
+var brandList = [];
+var brandState = true;
 
 $(document).ready(function() {
 	var height = document.documentElement.clientHeight;
@@ -107,20 +66,7 @@ $(document).ready(function() {
 	//添加省份筛选列
 	addProvinceLi();
 
-	//点击柱状图列表框省份按钮
-	countryBtn();
-	provinceBtn();
-	cityBtn();
 
-	// /*---插入国家数据---*/
-	// setCountryData();
-
-	/*---柱状图代码---*/
-	var ajaxData = {
-		country: '中国'
-			// city: '惠州市'
-	}
-	barOption(ajaxData);
 
 	// $("#testBtn").click(function() {
 	// 	selectedMode = 'single';
@@ -150,7 +96,7 @@ setData = function(arr) {
 	var myChart = echarts.init(document.getElementById('main'));
 	$.get('geojson/world.json', function(worldJson) {
 		//地图加载成功
-		$('.animate').css('background', 'none').fadeOut(600);
+		// $('.animate').css('background', 'none').fadeOut(600);
 		Tips();
 
 		var mapName = 'world';
@@ -377,46 +323,28 @@ setData = function(arr) {
 	})
 }
 
-/*---插入国家数据---*/
-// function setCountryData() {
-// 	var ENname = ['China', 'Japan', 'Australia', 'USA', 'India', 'German', 'Cambodia', 'Canada', 'Italy'];
-// 	var CNname = ['中国', '日本', '澳大利亚', '美国', '印度', '德国', '柬埔寨', '加拿大', '意大利'];
-// 	for (var i = 0; i < 6; i++) {
-// 		if (i == 0) {
-// 			aName = '<a href="./html/country.html?name=' + ENname[i] + '&index=1">';
-// 		} else {
-// 			aName = '<a href="./html/othercountry.html?name=' + ENname[i] + '&CNname=' + CNname[i] + '&index=1">';
-// 		}
-// 		var tooltipList = aName +
-// 			'<div class="tooltip tooltip' + (i + 1) + '">' +
-// 			'<p><span></span>家</p>' +
-// 			'<h2></h2>' +
-// 			'</div>' +
-// 			'</a>';
-// 		$('body').append(tooltipList);
-// 	}
-// 	getData1(dataPath + "sortinfo").then(function(data) {
-// 		// console.log(data);
-// 		var storesTotal = 0;
-// 		// var countryName = ['中国', '美国', '澳大利亚'];
-// 		for (i = 0; i < data.length; i++) {
-// 			var temp = data[i].qtyflags;
-// 			var str = temp[0].AREA;
-// 			str = str.split('|');
-// 			countryName = str[1];
-// 			storesTotal += parseInt(temp[0].QTY);
-// 			var className = '.tooltip' + (i + 1);
-// 			$(className + ' span').html(temp[0].QTY);
-// 			$(className + ' h2').html(countryName);
-// 		}
-// 		$(".mapTitle strong").html(storesTotal);
-// 	})
-// }
+function lazyload() {
+	//点击柱状图列表框省份按钮
+	countryBtn();
+	provinceBtn();
+	cityBtn();
+
+	// /*---插入国家数据---*/
+	// setCountryData();
+
+	/*---柱状图代码---*/
+	ajaxObj = {
+		country: '中国'
+			// city: '惠州市'
+	}
+	barOption(ajaxObj);
+}
 
 /*---柱状图代码---*/
-function barOption(ajaxData) {
+function barOption(ajaxObj) {
 
-	getData1(dataPath + "brandbyinfo", ajaxData).then(function(data) {
+	getData1(dataPath + "brandbyinfo", ajaxObj).then(function(data) {
+			console.log(data);
 			//获取行政区域数组
 			var temp = data.area;
 			var yAxisData = [];
@@ -431,7 +359,16 @@ function barOption(ajaxData) {
 			for (var i = 0; i < brandMsg.length; i++) {
 				legendData.push(brandMsg[i].brand);
 			}
+			// $('.barLengend')
+			// console.log(legendData);
 			legendData.unshift('全部');
+			if (brandState) {
+				brandList = legendData;
+				addBrandList(legendData);
+				brandState = false;
+			}
+			barList();
+			// console.log(legendData);
 			// console.log(legendData);
 
 			//获取各品牌在各行政区域的店铺数量
@@ -449,6 +386,7 @@ function barOption(ajaxData) {
 				}
 			}
 
+			/*柱状图lengend模块'全部'数组数据*/
 			var setupData = [];
 			for (var i = 0; i < lengendNumArr[0].length; i++) {
 				setupData.push(0);
@@ -457,9 +395,9 @@ function barOption(ajaxData) {
 
 
 			var series = [];
-			for (var i = 0; i < legendData.length; i++) {
+			for (var i = 0; i < brandList.length; i++) {
 				var obj = {
-					name: legendData[i],
+					name: brandList[i],
 					type: 'bar',
 					stack: '总量',
 					label: {
@@ -484,17 +422,17 @@ function barOption(ajaxData) {
 						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
 					}
 				},
-				legend: {
-					itemWidth: 30,
-					itemHeight: 20,
-					selectedMode: selectedMode,
-					inactiveColor: '#555',
-					textStyle: {
-						color: textColor,
-						fontSize: 12
-					},
-					data: legendData //['0769', '3D', '凯奇', '歌蒂娅', 'V6'];
-				},
+				// legend: {
+				// 	itemWidth: 30,
+				// 	itemHeight: 20,
+				// 	selectedMode: selectedMode,
+				// 	inactiveColor: '#555',
+				// 	textStyle: {
+				// 		color: textColor,
+				// 		fontSize: 12
+				// 	},
+				// 	data: brandList //['0769', '3D', '凯奇', '歌蒂娅', 'V6'];
+				// },
 				grid: {
 					left: '6%',
 					right: '4%',
@@ -554,37 +492,61 @@ function barOption(ajaxData) {
 			};
 
 			BarChart.setOption(Baroption);
-			BarChart.on('legendselectchanged', function(params) {
-				linehight(params.name);
-			});
+			// BarChart.on('legendselectchanged', function(params) {
+			// 	console.log(params.name);
+			// 	selectedMode = 'single';
+			// 	BarChart.dispatchAction({
+			// 		type: 'legendSelect',
+			// 		name: brandList[i]
+			// 	});
+			// 	var obj = {
+			// 		country: '中国',
+			// 		brand: params.name
+			// 	}
+			// 	barOption(obj);
+			// 	return false;
+			// });
+			/*---点击柱状图lengend模块进行数据交互---*/
+			// BarChart.on('legendselectchanged', function(params) {
+			// 	linehight(params.name);
+			// });
 
-			linehight = function(name) {
-				if (name == '全部') {
-					for (var i = 0; i < legendData.length; i++) {
-						BarChart.dispatchAction({
-							type: 'legendSelect',
-							name: legendData[i]
-						});
-					}
-				} else {
-					BarChart.dispatchAction({
-						type: 'legendSelect',
-						name: name
-					});
-					for (var i = 0; i < legendData.length; i++) {
-						if (legendData[i] != name) {
-							BarChart.dispatchAction({
-								type: 'legendUnSelect',
-								name: legendData[i]
-							});
-						}
-					}
-				}
-			}
+			// linehight = function(name) {
+			// 	if (name == '全部') {
+			// 		for (var i = 0; i < legendData.length; i++) {
+			// 			BarChart.dispatchAction({
+			// 				type: 'legendSelect',
+			// 				name: legendData[i]
+			// 			});
+			// 		}
+			// 	} else {
+			// 		BarChart.dispatchAction({
+			// 			type: 'legendSelect',
+			// 			name: name
+			// 		});
+			// 		for (var i = 0; i < legendData.length; i++) {
+			// 			if (legendData[i] != name) {
+			// 				BarChart.dispatchAction({
+			// 					type: 'legendUnSelect',
+			// 					name: legendData[i]
+			// 				});
+			// 			}
+			// 		}
+			// 	}
+			// }
 
 
 		})
 		/*---柱状图代码结束---*/
+}
+
+function addBrandList(arr) {
+	var lis = '';
+	for (i in arr) {
+		var li = '<li>' + arr[i] + '</li>';
+		lis += (li);
+	}
+	$('.barLengend').append(lis);
 }
 
 //增加省级跟市级选择列表
@@ -598,13 +560,13 @@ function addProvinceLi() {
 	$(".provincesList").append(lis);
 	provinceBtn();
 
-	var ajaxData = {
+	ajaxObj = {
 		country: '中国',
 		province: '广东'
 			// province: '广东',
 			// city: '深圳市'
 	};
-	getData1(dataPath + "brandbyinfo", ajaxData).then(function(arr2) {
+	getData1(dataPath + "brandbyinfo", ajaxObj).then(function(arr2) {
 		$('.citysList').empty();
 		var area = arr2.area;
 		var lis1 = '';
@@ -634,12 +596,12 @@ function countryBtn() {
 		var name = $(this).text();
 		$(this).parent().siblings().text(name);
 		$('.unDevelopBox').hide(); //未开发地区隐藏
-		var obj = {
+		ajaxObj = {
 			country: name
 				// province: name
 				// city: '深圳市'
 		}
-		barOption(obj);
+		barOption(ajaxObj);
 	})
 }
 
@@ -689,12 +651,12 @@ function provinceBtn() {
 		})
 		$('.unDevelopBox').show(); //未开发地区显示
 
-		var obj = {
+		ajaxObj = {
 			country: '中国',
 			province: name
 				// city: '深圳市'
 		}
-		barOption(obj);
+		barOption(ajaxObj);
 	})
 }
 
@@ -705,12 +667,25 @@ function cityBtn() {
 		$(this).parent().siblings().text(name);
 		var provinceBtnText = $('.provinceBtn').text();
 		$('.unDevelopBox').hide(); //未开发地区隐藏
-		var obj = {
+		ajaxObj = {
 			country: '中国',
 			province: provinceBtnText,
 			city: name
 		}
-		barOption(obj);
+		barOption(ajaxObj);
+	})
+}
+
+function barList() {
+	$('.barLengend li').off('click').click(function() {
+		var text = $(this).text();
+		if (text == '全部') {
+			delete ajaxObj.brand;
+			barOption(ajaxObj);
+		} else {
+			ajaxObj["brand"] = text;
+			barOption(ajaxObj);
+		}
 	})
 }
 

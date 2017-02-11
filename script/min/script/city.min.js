@@ -320,7 +320,7 @@ setOption = function(id, series, arr) {
 	var myChart = echarts.init(document.getElementById('main'));
 	$.get('../geojson/city/' + id + '.json', function(Json) {
 		//地图加载成功
-		$('.animate').css('background', 'none').fadeOut(600);
+		// $('.animate').css('background', 'none').fadeOut(600);
 		Tips();
 
 		echarts.registerMap(id, Json);

@@ -212,7 +212,7 @@ setData = function(id) {
 setOption = function(id, series, storeNames, Brands, Citys) {
   $.get('../geojson/province/' + id + '.json', function(Json, brands) {
     //地图加载成功
-    $('.animate').css('background', 'none').fadeOut(600);
+    // $('.animate').css('background', 'none').fadeOut(600);
     Tips();
     //初始化地图
     echarts.registerMap(id, Json);

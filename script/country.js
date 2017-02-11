@@ -301,7 +301,7 @@ setOption = function(pieces, series, data, area, col1, lis) {
 	var myChart = echarts.init(document.getElementById('main'));
 	$.get('../geojson/country/' + name + '.json', function(Json) {
 		//地图加载成功
-		$('.animate').css('background', 'none').fadeOut(600);
+		// $('.animate').css('background', 'none').fadeOut(600);
 		Tips();
 
 		//设置地图
