@@ -15,6 +15,7 @@ var paramArr = urlStr.split("=");
 var paramArr1 = paramArr[2].split('&');
 var provinceName = paramArr1[0];
 var cityName = paramArr[1].split('&', 1).toString();
+indexName = cityName;
 
 $(document).ready(function() {
 
@@ -68,53 +69,6 @@ $(document).ready(function() {
 	}
 	setMap();
 
-	/*------店铺详情框代码------*/
-	$(".slidBar").click(function() {
-			var marginLeft = $(".storeDetailBox").css('margin-left');
-			if (marginLeft == '0px') {
-				$('.manageMsgBox').show();
-				$("#main").css({
-					'width': '100%',
-					'margin-left': '0px'
-				});
-				geoLeft = 'center';
-				zoom = 1.1;
-				geoTop = 130;
-
-				$(this).removeClass('Right2');
-
-				visualMapBottom = 180;
-				visulMapR = 80;
-				setMap();
-				$(".storeDetailBox").css('margin-left', '-1200px');
-				$(".symbol").css({
-					'bottom': '140px',
-					'right': '105px'
-				});
-			} else {
-				$('.manageMsgBox').hide();
-				$("#main").css({
-					'width': '790px',
-					'margin-left': '1200px'
-				});
-				geoLeft = 'center';
-				zoom = 0.8;
-				geoTop = 100;
-
-				$(this).addClass('Right2');
-
-				visualMapBottom = 'bottom';
-				visulMapR = -280;
-				setMap();
-				$(".storeDetailBox").css('margin-left', '0px');
-				$(".symbol").css({
-					'bottom': '30px',
-					'right': '100px'
-				});
-			}
-		})
-		/*------店铺详情框代码结束------*/
-
 	var ajaxData = {
 		country: '中国',
 		province: provinceName,
@@ -135,32 +89,213 @@ insertData = function(id) {
 		city: cityName
 	};
 	getData1(dataPath + "areadistribute", ajaxData).then(function(arr) {
-		// areaColor = MapColorR;
-		// console.log(arr);
-		arr = arr.info;
-		var stores = [];
-		for (var i = 0; i < arr.length; i++) {
-			var array = arr[i].stores;
-			for (var j = 0; j < array.length; j++) {
-				stores.push(array[j]);
+		function resetOption(id, arr) {
+			// areaColor = MapColorR;
+			// console.log(arr);
+			arr = arr.info;
+			var stores = [];
+			for (var i = 0; i < arr.length; i++) {
+				var array = arr[i].stores;
+				for (var j = 0; j < array.length; j++) {
+					stores.push(array[j]);
+				}
 			}
-		}
 
-		//添加店铺列表
-		$("ul.storeList li").remove();
-		for (var i = 0; i < stores.length; i++) {
-			if (i == 0) {
-				var liNode = '<li class="li1 on">';
-			} else {
-				var liNode = '<li>';
+			//添加店铺列表
+			$("ul.storeList li").remove();
+			for (var i = 0; i < stores.length; i++) {
+				if (i == 0) {
+					var liNode = '<li class="li1 on">';
+				} else {
+					var liNode = '<li>';
+				}
+				var li = liNode +
+					"<h3>" + stores[i].STORE + "</h3>" +
+					"<p>电话：1888888880</p>" +
+					"<p>地址：" + stores[i].ADDRESS + "</p>" +
+					"</li>";
+				$("ul.storeList").append(li);
 			}
-			var li = liNode +
-				"<h3>" + stores[i].STORE + "</h3>" +
-				"<p>电话：1888888880</p>" +
-				"<p>地址：" + stores[i].ADDRESS + "</p>" +
-				"</li>";
-			$("ul.storeList").append(li);
+
+			var series = [];
+			var data = [];
+			var UniqueQuxian = [];
+			for (var i = 0; i < stores.length; i++) {
+				if (stores[i].PROPERTY == '综合店') {
+					zonghe++;
+					var symbol = 'image://../image1080/9-yellow.png';
+				} else {
+					danpin++;
+					var symbol = 'image://../image1080/10-pink.png';
+				}
+
+				var obj = {
+					name: i + 'nameMap',
+					type: "scatter",
+					coordinateSystem: "geo",
+					zlevel: 12,
+					data: [{
+						name: stores[i].STORE,
+						value: [stores[i].JINGDU, stores[i].WEIDU]
+					}],
+					symbol: symbol,
+					symbolSize: [32, 40]
+				}
+
+				series.push(obj);
+			}
+
+			for (var i = 0; i < arr.length; i++) {
+				var obj1 = {
+					name: arr[i].countyName,
+					value: 1
+				};
+				data.push(obj1);
+			}
+
+			(function() {
+				var obj = {
+					name: '113.75824,23.284367',
+					top: geoTop,
+					left: geoLeft,
+					zoom: zoom,
+					center: center,
+					type: 'map',
+					// roam: true,
+					map: id,
+					label: {
+						normal: {
+							show: true
+						},
+						emphasis: {
+							show: true
+						}
+					},
+					itemStyle: {
+						normal: {
+							borderColor: borderColor,
+							areaColor: areaColor
+						}
+					},
+					data: data
+				}
+				series.push(obj);
+			})()
+
+			/*载入地图*/
+			setOption(id, series, arr);
+
+			//tooltip回调函数
+			tooltipData = function(params) {
+				var name = params.name;
+				var tooltip = '所属区县：' + name + '<br/>' + '进驻品牌：';
+				var brandStr = [];
+				var brandMsgStr = '';
+
+				//该市已开发区县
+				var countys = [];
+				var Brands = []; //该地级市各个区县入驻品牌列表
+				for (var i = 0; i < arr.length; i++) {
+					countys.push(arr[i].countyName);
+					Brands.push(arr[i].brands);
+				}
+
+				//如果点击的是区县地图
+				if (countys.indexOf(name) != -1) {
+					for (var i = 0; i < countys.length; i++) {
+						if (name == countys[i]) { //循环判断当前是哪个区县
+							for (var j = 0; j < Brands[i].length; j++) {
+								brandMsgStr = brandMsgStr + '<br/>' + Brands[i][j].BRAND + '店铺：' + Brands[i][j].QTY + '家';
+								brandStr.push(Brands[i][j].BRAND);
+							}
+						}
+					}
+					brandStr = brandStr.join('、');
+					tooltip = tooltip + brandStr + brandMsgStr;
+				} else {
+					var tooltip = name;
+					for (var i = 0; i < arr.length; i++) {
+						if (name == arr[i].STORE) {
+							tooltip += '<br/>' + arr[i].ADDRESS;
+						}
+					}
+				}
+				return tooltip;
+			}
 		}
+		resetOption(id, arr);
+		$('.bigger').off('click').click(function() {
+			zoom += 1;
+			resetOption(id, arr);
+			$('.smaller').show();
+		})
+		$('.smaller').off('click').click(function() {
+			zoom -= 1;
+			resetOption(id, arr);
+			if (zoom <= 1.1) {
+				$('.smaller').hide();
+			}
+		})
+
+		/*------店铺详情框代码------*/
+		$(".slidBar").click(function() {
+				var marginLeft = $(".storeDetailBox").css('margin-left');
+				if (marginLeft == '0px') {
+					$('.manageMsgBox').show();
+					$("#main").css({
+						'width': '100%',
+						'margin-left': '0px'
+					});
+					geoLeft = 'center';
+					zoom = 1.1;
+					geoTop = 130;
+
+					$(this).removeClass('Right2');
+
+					visualMapBottom = 180;
+					visulMapR = 80;
+					resetOption(id, arr);
+					$(".storeDetailBox").css('margin-left', '-1200px');
+					$(".symbol").css({
+						'bottom': '140px',
+						'right': '105px'
+					});
+				} else {
+					$('.manageMsgBox').hide();
+					$("#main").css({
+						'width': '790px',
+						'margin-left': '1200px'
+					});
+					geoLeft = 'center';
+					zoom = 0.8;
+					geoTop = 100;
+
+					$(this).addClass('Right2');
+
+					visualMapBottom = 'bottom';
+					visulMapR = -280;
+					resetOption(id, arr);
+					$(".storeDetailBox").css('margin-left', '0px');
+					$(".symbol").css({
+						'bottom': '30px',
+						'right': '100px'
+					});
+				}
+			})
+			/*------店铺详情框代码结束------*/
+
+		//点击店铺列表
+		$(".storeList li").click(function() {
+				$(this).addClass('on');
+				$(this).siblings().removeClass('on');
+
+				// setStoreMsg();
+				var storeName = $('.storeList .on').find('h3').html();
+				setStoreMsg(storeName);
+			})
+			//计算出单品点以及综合店的数量123123
+		$('.symbol .li1 span').text('(' + danpin + ')');
+		$('.symbol .li2 span').text('(' + zonghe + ')');
 
 		//插入店铺详情
 		$(function() {
@@ -168,124 +303,6 @@ insertData = function(id) {
 			setStoreMsg(storeName);
 		})
 
-		//点击店铺列表
-		$(".storeList li").click(function() {
-			$(this).addClass('on');
-			$(this).siblings().removeClass('on');
-
-			// setStoreMsg();
-			var storeName = $('.storeList .on').find('h3').html();
-			setStoreMsg(storeName);
-		})
-
-		var series = [];
-		var data = [];
-		var UniqueQuxian = [];
-		for (var i = 0; i < stores.length; i++) {
-			if (stores[i].PROPERTY == '综合店') {
-				zonghe++;
-				var symbol = 'image://../image1080/9-yellow.png';
-			} else {
-				danpin++;
-				var symbol = 'image://../image1080/10-pink.png';
-			}
-
-			var obj = {
-				name: i + 'nameMap',
-				type: "scatter",
-				coordinateSystem: "geo",
-				zlevel: 12,
-				data: [{
-					name: stores[i].STORE,
-					value: [stores[i].JINGDU, stores[i].WEIDU]
-				}],
-				symbol: symbol,
-				symbolSize: [32, 40]
-			}
-
-			series.push(obj);
-		}
-
-		for (var i = 0; i < arr.length; i++) {
-			var obj1 = {
-				name: arr[i].countyName,
-				value: 1
-			};
-			data.push(obj1);
-		}
-
-		(function() {
-			var obj = {
-				name: '113.75824,23.284367',
-				top: geoTop,
-				left: geoLeft,
-				zoom: zoom,
-				center: center,
-				type: 'map',
-				// roam: true,
-				map: id,
-				label: {
-					normal: {
-						show: true
-					},
-					emphasis: {
-						show: true
-					}
-				},
-				itemStyle: {
-					normal: {
-						borderColor: borderColor,
-						areaColor: areaColor
-					}
-				},
-				data: data
-			}
-			series.push(obj);
-		})()
-
-		/*载入地图*/
-		setOption(id, series, arr);
-		//计算出单品点以及综合店的数量
-		$('.symbol .li1 span').text('(' + danpin + ')');
-		$('.symbol .li2 span').text('(' + zonghe + ')');
-
-		//tooltip回调函数
-		tooltipData = function(params) {
-			var name = params.name;
-			var tooltip = '所属区县：' + name + '<br/>' + '进驻品牌：';
-			var brandStr = [];
-			var brandMsgStr = '';
-
-			//该市已开发区县
-			var countys = [];
-			var Brands = []; //该地级市各个区县入驻品牌列表
-			for (var i = 0; i < arr.length; i++) {
-				countys.push(arr[i].countyName);
-				Brands.push(arr[i].brands);
-			}
-
-			//如果点击的是区县地图
-			if (countys.indexOf(name) != -1) {
-				for (var i = 0; i < countys.length; i++) {
-					if (name == countys[i]) { //循环判断当前是哪个区县
-						for (var j = 0; j < Brands[i].length; j++) {
-							brandMsgStr = brandMsgStr + '<br/>' + Brands[i][j].BRAND + '店铺：' + Brands[i][j].QTY + '家';
-							brandStr.push(Brands[i][j].BRAND);
-						}
-					}
-				}
-				brandStr = brandStr.join('、');
-				tooltip = tooltip + brandStr + brandMsgStr;
-			} else {
-				var tooltip = name;
-				for (var i = 0; i < arr.length; i++) {
-					if (name == arr[i].STORE) {
-						tooltip += '<br/>' + arr[i].ADDRESS;
-					}
-				}
-			}
-			return tooltip;
-		}
 	})
 
 	function setStoreMsg(storeName) {
@@ -421,7 +438,6 @@ setOption = function(id, series, arr) {
 		myChart.setOption(option);
 
 		myChart.on('click', function(params) {
-
 			if (params.componentSubType == 'map' && indexName != params.name) {
 				insertData(id);
 				var arr5 = tude[params.name];
@@ -429,19 +445,6 @@ setOption = function(id, series, arr) {
 				indexName = params.name;
 			}
 		});
-
-		$('.bigger').off('click').click(function() {
-			zoom += 1;
-			insertData(id);
-			$('.smaller').show();
-		})
-		$('.smaller').off('click').click(function() {
-			zoom -= 1;
-			insertData(id);
-			if (zoom <= 1.1) {
-				$('.smaller').hide();
-			}
-		})
 	})
 }
 
@@ -465,6 +468,8 @@ managerMsg = function(provinceName) {
 		for (var i = 0; i < arr.length; i++) {
 			if ((arr[i].city).indexOf(cityName) >= 0) {
 				var msg = arr[i];
+				$('.img1').attr('src', picPath + msg.mulu + '/' + msg.pics);
+				$('.img2').attr('src', picPath + msg.mulu + '/' + msg.qr);
 				$('.name').text(msg.manger);
 				$('.area').text(msg.area);
 				$('.provinces').text(msg.city);
@@ -484,6 +489,7 @@ managerMsg = function(provinceName) {
 		// }
 	})
 }
+
 
 /**
  *

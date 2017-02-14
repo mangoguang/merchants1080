@@ -658,7 +658,7 @@ h1.title {
   z-index: 102; }
   #slidBar li {
     width: 40px;
-    height: 140px;
+    height: 110px;
     font-size: 30px;
     line-height: 50px;
     text-align: center;
@@ -1117,6 +1117,57 @@ h1.title {
   padding-top: 30px;
   box-sizing: border-box;
   z-index: -1; }
+  .barGraphBox .barLengend {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 120px;
+    margin-top: 100px;
+    z-index: 1000; }
+    .barGraphBox .barLengend li {
+      float: left;
+      font-size: 16px;
+      line-height: 30px;
+      color: #f0f5f9;
+      margin-right: 10px;
+      padding-left: 35px;
+      border-radius: 4px;
+      position: relative; }
+      .barGraphBox .barLengend li span {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 30px;
+        height: 20px;
+        border-radius: 4px;
+        background: #525252; }
+    .barGraphBox .barLengend li.on span {
+      background: #00838f; }
+  .barGraphBox ul.on li:nth-child(1) span {
+    background: #006064; }
+  .barGraphBox ul.on li:nth-child(2) span {
+    background: #00838f; }
+  .barGraphBox ul.on li:nth-child(3) span {
+    background: #0097a7; }
+  .barGraphBox ul.on li:nth-child(4) span {
+    background: #00acc1; }
+  .barGraphBox ul.on li:nth-child(5) span {
+    background: #00bcd4; }
+  .barGraphBox ul.on li:nth-child(6) span {
+    background: #26c6da; }
+  .barGraphBox ul.on li:nth-child(7) span {
+    background: #4dd0e1; }
+  .barGraphBox ul.on li:nth-child(8) span {
+    background: #80deea; }
+  .barGraphBox ul.on li:nth-child(9) span {
+    background: #b2ebf2; }
+  .barGraphBox ul.on li:nth-child(10) span {
+    background: #e0f7fa; }
+  .barGraphBox ul.on li:nth-child(11) span {
+    background: #c4ccd3; }
+  .barGraphBox ul.on li:nth-child(12) span {
+    background: #006064; }
   .barGraphBox h2 {
     width: 300px;
     color: #dcdcdc;
@@ -1168,19 +1219,6 @@ h1.title {
       margin-right: 40px;
       margin-bottom: 40px;
       float: right; }
-
-.barLengend {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding-left: 120px;
-  margin-top: 100px;
-  z-index: 1000; }
-  .barLengend li {
-    float: left;
-    font-size: 0.266rem;
-    color: #fff;
-    margin-right: 15px; }
 
 #countryListBox {
   width: 410px;

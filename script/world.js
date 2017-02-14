@@ -2,6 +2,8 @@
 var geoTop = 170;
 var geoLeft = 20;
 var selectedMode = true;
+var mapName = 'world';
+var wjson;
 
 var provinces = ["广东", "安徽", "澳门", "北京", "重庆", "福建", "甘肃", "广西", "贵州", "海南", "河北", "黑龙江", "河南", "湖北", "湖南", "江苏", "江西", "吉林", "辽宁", "内蒙古", "宁夏", "青海", "山东", "上海", "山西", "四川", "天津", "香港", "新疆", "西藏", "云南", "浙江"];
 var CNname = [];
@@ -11,6 +13,8 @@ var sum = [];
 var ajaxObj = {};
 var brandList = [];
 var brandState = true;
+var canClick = true;
+
 
 $(document).ready(function() {
 	var height = document.documentElement.clientHeight;
@@ -19,6 +23,9 @@ $(document).ready(function() {
 	$(".barGraphBox").height(height - 230);
 	$(".barGraph").height(height - 280);
 	$(".unDevelopBox").height(height - 200);
+
+	//添加各国店铺情况
+	addStoreMsg();
 
 	/*------列表部分代码------*/
 	//点击显示/隐藏列表按钮
@@ -60,9 +67,6 @@ $(document).ready(function() {
 		}
 	})
 
-	//添加各国店铺情况
-	addStoreMsg();
-
 	//添加省份筛选列
 	addProvinceLi();
 
@@ -81,26 +85,42 @@ $(document).ready(function() {
 	// })
 
 	/*------列表部分代码结束------*/
-
-	//设置地图
-	/*	各个国家开店总数，直营点与加盟店个数。*/
-	getData1(dataPath + "sortinfo").then(function(arr) {
-		setData(arr);
+	$.get('./geojson/world.json', function(Json) {
+		//设置地图
+		simpleMap(mapName, Json);
+		/*	各个国家开店总数，直营点与加盟店个数。*/
+		setData(Json);
 	})
+
+
+	lazyload();
 
 });
 
-
-setData = function(arr) {
-	/*载入世界地图*/
+simpleMap = function(mapName, Json) {
+	echarts.registerMap(mapName, Json);
+	option = {
+		series: {
+			type: 'map',
+			top: geoTop,
+			left: geoLeft,
+			zoom: 0.9,
+			map: mapName
+		}
+	};
 	var myChart = echarts.init(document.getElementById('main'));
-	$.get('geojson/world.json', function(worldJson) {
+	myChart.setOption(option);
+}
+
+setData = function(Json) {
+	getData1(dataPath + "sortinfo").then(function(arr) {
+		/*载入世界地图*/
+		var myChart = echarts.init(document.getElementById('main'));
 		//地图加载成功
 		// $('.animate').css('background', 'none').fadeOut(600);
 		Tips();
 
-		var mapName = 'world';
-		echarts.registerMap(mapName, worldJson);
+		echarts.registerMap(mapName, Json);
 		var geoCoordMap = {
 			"China": [113.5, 63.48],
 			"Japan": [138.76, 48.67],
@@ -206,7 +226,7 @@ setData = function(arr) {
 			// 	}
 			// },
 			title: {
-				text: '世界地图',
+				text: '慕思招商系统',
 				top: 50,
 				left: 260,
 				textStyle: {
@@ -344,8 +364,9 @@ function lazyload() {
 function barOption(ajaxObj) {
 
 	getData1(dataPath + "brandbyinfo", ajaxObj).then(function(data) {
-			console.log(data);
-			//获取行政区域数组
+			canClick = true;
+
+			//获取行政区域数组1
 			var temp = data.area;
 			var yAxisData = [];
 			for (var i = 0; i < temp.length; i++) {
@@ -543,7 +564,7 @@ function barOption(ajaxObj) {
 function addBrandList(arr) {
 	var lis = '';
 	for (i in arr) {
-		var li = '<li>' + arr[i] + '</li>';
+		var li = '<li class="li' + i + '"><span></span>' + arr[i] + '</li>';
 		lis += (li);
 	}
 	$('.barLengend').append(lis);
@@ -678,13 +699,20 @@ function cityBtn() {
 
 function barList() {
 	$('.barLengend li').off('click').click(function() {
-		var text = $(this).text();
-		if (text == '全部') {
-			delete ajaxObj.brand;
-			barOption(ajaxObj);
-		} else {
-			ajaxObj["brand"] = text;
-			barOption(ajaxObj);
+		if (canClick) {
+			canClick = false;
+			var text = $(this).text();
+			if (text == '全部') {
+				$('.barLengend').addClass('on');
+				delete ajaxObj.brand;
+				barOption(ajaxObj);
+			} else {
+				$('.barLengend').removeClass('on');
+				$(this).addClass('on');
+				$(this).siblings().removeClass('on');
+				ajaxObj["brand"] = text;
+				barOption(ajaxObj);
+			}
 		}
 	})
 }
@@ -809,6 +837,26 @@ addOtherCountry = function(name1) {
 		provinceBtn();
 	})
 }
+var obj;
+var fn;
+/*测试面向对象编程中promise的使用*/
+// var two = 'two';
+// getData1(dataPath + "brandbyinfo", ajaxObj).then(function(data) {
+// 	obj = function() {
+// 		var one = 'one';
+// 		this.one = function() {
+// 			console.log(data);
+// 		}
+// 		this.two = function() {
+// 			console.log(two);
+// 		}
+// 	}
+// 	fn = new obj;
+// 	// fn.one();
+// 	fn.two();
+// })
+// fn.one();
+
 
 
 /**

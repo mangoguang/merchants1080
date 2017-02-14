@@ -134,7 +134,7 @@ getChina = function() {
 				}
 
 				var str = '<li class="' + class1Name + '">' +
-					'<img class="manPhoto" title="'+picPath+data[i].mulu+'/'+data[i].qr+'" src="'+picPath+data[i].mulu+'/'+data[i].pictures+'" alt="" />' +
+					'<img class="manPhoto" title="' + picPath + data[i].mulu + '/' + data[i].qr + '" src="' + picPath + data[i].mulu + '/' + data[i].pictures + '" alt="" />' +
 					'<p>姓名：<span class="manName">' + data[i].name + '</span></p>' +
 					'<p>电话：<span class="manPhone">' + '1882398470' + '</span></p>' +
 					'<p>片区：<span class="manArea">' + data[i].city + '</span></p>' +
@@ -278,7 +278,7 @@ function getManMsg(obj) {
 		var developList = developListArr.join("、");
 		var undevelopListArr = [];
 		var undevelop = ret1.undevelop;
-		for(i in undevelop){
+		for (i in undevelop) {
 			undevelopListArr.push(undevelop[i].AREA)
 		}
 		var undevelopList = undevelopListArr.join("、");
@@ -288,10 +288,10 @@ function getManMsg(obj) {
 		$(".area").html(manArea);
 		$(".phone").html(manPhone);
 		$(".photo").css({
-			'background':'url('+manPhoto+')',
+			'background': 'url(' + manPhoto + ')',
 			'background-size': '100% 100%'
 		});
-		$(".qr").attr('src',manQR);
+		$(".qr").attr('src', manQR);
 		$(".developList").html(developList);
 		$(".undevelopList").html(undevelopList);
 	})

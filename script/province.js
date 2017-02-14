@@ -28,6 +28,7 @@ $(document).ready(function() {
   //id省份拼音名称
   var id = getQueryString("id");
   setData(id);
+  simpleMap(id);
 });
 
 //招商经理名片数据初始化
@@ -40,8 +41,8 @@ managerMsg = function() {
     console.log(arr);
     for (var i = 0; i < arr.length; i++) {
       var msgDiv = '<div class="manageMsgBox manageMsgBox' + (i + 1) + '">' +
-        '<img class="img1" src="'+picPath+arr[i].mulu+'/'+arr[i].pics+'"/>' +
-        '<img class="img2" src="'+picPath+arr[i].mulu+'/'+arr[i].qr+'"/>' +
+        '<img class="img1" src="' + picPath + arr[i].mulu + '/' + arr[i].pics + '"/>' +
+        '<img class="img2" src="' + picPath + arr[i].mulu + '/' + arr[i].qr + '"/>' +
         '<h3 class="name">招商经理：' + arr[i].manger + '</h3>' +
         '<p>片区：<span class="area">' + arr[i].area + '</span></p>' +
         '<p>负责区域：<span class="provinces">' + arr[i].city + '</span></p>' +
@@ -53,6 +54,23 @@ managerMsg = function() {
   })
 }
 managerMsg();
+
+simpleMap = function(id) {
+  $.get('../geojson/province/' + id + '.json', function(Json) {
+    echarts.registerMap(id, Json);
+    option = {
+      series: {
+        type: 'map',
+        top: geoTop,
+        left: geoL,
+        zoom: geoZoom,
+        map: id
+      }
+    };
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.setOption(option);
+  })
+}
 
 setData = function(id) {
   /*载入中国主要城市地图*/
