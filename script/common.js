@@ -101,30 +101,75 @@ function Tips() {
     })
 }
 
-/*水波纹*/
-var addRippleEffect = function(e) {
-    // deviceClick();
-    var body = document.getElementById('body');
-    var target = e.target;
-    if (target.tagName.toLowerCase() === '') return false;
-    var rect = target.getBoundingClientRect();
-    var ripple = target.querySelector('.ripple');
-    if (!ripple) {
-        ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        ripple.style.height = ripple.style.width = Math.max(30, 30) + 'px';
-        body.appendChild(ripple);
-    }
-    ripple.classList.remove('show');
-    var top = e.pageY - 15;
-    var left = e.pageX - 15;
-    ripple.style.top = top + 'px';
-    ripple.style.left = left + 'px';
-    ripple.classList.add('show');
-    return false;
-}
+apiready = function() {
 
-document.addEventListener('click', addRippleEffect, false);
+    var t;
+    var clickDiv = '<div id="clickDiv" style="width: 100%;height: ' + height + 'px;position: absolute;top: 0;left:0;z-index:100000;"></div>';
+    /*水波纹*/
+    var addRippleEffect = function(e) {
+        playing();
+        var body = document.getElementById('body');
+        var target = e.target;
+        if (target.tagName.toLowerCase() === '') return false;
+        var rect = target.getBoundingClientRect();
+        var ripple = target.querySelector('.ripple');
+        if (!ripple) {
+            ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.height = ripple.style.width = Math.max(30, 30) + 'px';
+            body.appendChild(ripple);
+        }
+        ripple.classList.remove('show');
+        var top = e.pageY - 15;
+        var left = e.pageX - 15;
+        ripple.style.top = top + 'px';
+        ripple.style.left = left + 'px';
+        ripple.classList.add('show');
+        return false;
+    }
+
+    document.addEventListener('click', addRippleEffect, false);
+
+
+    var videoPlayer = api.require('videoPlayer');
+
+    playing = function() {
+        clearTimeout(t);
+        $('#clickDiv').remove();
+        videoPlayer.close();
+        t = setTimeout("videoOpen()", 180000);
+    }
+    playing();
+
+    videoOpen = function() {
+        //回退到首页
+        backHome();
+
+        clearTimeout(t);
+        $('.body').append(clickDiv);
+        videoPlayer.open({
+            path: 'http://oa.derucci.net:8901/businessfile/uf_brand/e257b051f4a64b65a1e5052baaaa2545.mp4'
+        }, function(ret, err) {
+            videoPlayer.setRect({
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: 1920,
+                    h: 'auto'
+                },
+                fullscreen: false
+            });
+
+            t = setTimeout("playLoop()", 33000);
+            playLoop = function() {
+                $('#clickDiv').remove();
+                videoPlayer.close();
+                clearTimeout(t);
+                t = setTimeout("videoOpen()", 15000);
+            }
+        });
+    }
+}
 
 /*------获取数据------*/
 function getData1(url, ajaxData) {

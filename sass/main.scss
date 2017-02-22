@@ -1481,9 +1481,10 @@ h1.title{
 .visualMap{
   min-height: 200px;
   position: absolute;
-  top: 100px;
+  top: 50%;
   right: 80px;
   z-index: 100;
+  // margin-top: -460px;
   li{
     font-size: 24px;
     color: #f0f5f9;
@@ -1496,31 +1497,34 @@ h1.title{
     width: 30px;
     height: 30px;
     border-radius: 6px;
-    background: red;
+    background: #525252;
     position: absolute;
     left: 0;
     top: 8px;
   }
   // 颜色的顺序需要跟country.js文件的col数组相同
+  // ['#d21819', '#8265b9', '#ed9740', '#d1ed40', '#7bed40', '#40ed5d', '#40eeb3', '#40cfed', '#0e47a1', '#1976d3', '#673bb7', '#8e24aa', '#d81a60', '#ec407a', '#d32f2e', '#f6410a', '#fe5722', '#fb8c00', '#fec107', '#f3ce37']
   
-  
-  li:nth-child(16) span{background: #ff7373;}
-  li:nth-child(15) span{background: #673ab7;}
-  li:nth-child(14) span{background: #1976d2;}
-  li:nth-child(13) span{background: #0d47a1;}
-  li:nth-child(12) span{background: #d32f2f;}
-  li:nth-child(11) span{background: #8e24aa;}
-  li:nth-child(10) span{background: #d81b60;}
-  li:nth-child(9) span{background: #f5410a;}
-  li:nth-child(8) span{background: #ec407a;}
-  li:nth-child(7) span{background: #ff99ff;}
-  li:nth-child(6) span{background: #ff5722;}
-  li:nth-child(5) span{background: #f4ce37;}
-  li:nth-child(4) span{background: #ffc107;}
-  li:nth-child(3) span{background: #79cf4c;}
-  li:nth-child(2) span{background: #ccff00;}
-  li:nth-child(1) span{background: #ff9900;}
-  li:nth-child(0) span{background: #add6d6;}
+  // li:nth-child(19) span{background: #d21819;}
+  // li:nth-child(18) span{background: #8265b9;}
+  // li:nth-child(17) span{background: #ed9740;}
+  // li:nth-child(16) span{background: #d1ed40;}
+  // li:nth-child(15) span{background: #7bed40;}
+  // li:nth-child(14) span{background: #40ed5d;}
+  // li:nth-child(13) span{background: #40eeb3;}
+  // li:nth-child(12) span{background: #40cfed;}
+  // li:nth-child(11) span{background: #0e47a1;}
+  // li:nth-child(10) span{background: #1976d3;}
+  // li:nth-child(9) span{background: #673bb7;}
+  // li:nth-child(8) span{background: #8e24aa;}
+  // li:nth-child(7) span{background: #d81a60;}
+  // li:nth-child(6) span{background: #ec407a;}
+  // li:nth-child(5) span{background: #d32f2e;}
+  // li:nth-child(4) span{background: #f6410a;}
+  // li:nth-child(3) span{background: #fe5722;}
+  // li:nth-child(2) span{background: #fb8c00;}
+  // li:nth-child(1) span{background: #fec107;}
+  // li:nth-child(0) span{background: #f3ce37;}
 }
 
 .managerList {
@@ -1701,6 +1705,7 @@ h1.title{
   .phone{
     font-size: 30px;
     line-height: 70px;
+    height: 70px;
     background: url(../image1080/7-iconphone.png) no-repeat;
     background-size: 30px 40px;
     background-position: 0 center;

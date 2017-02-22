@@ -75,6 +75,9 @@ $(document).ready(function() {
 		city: cityName
 	};
 	getData1(dataPath + "gettude", ajaxData).then(function(arr) {
+		console.log(123123123);
+		console.log(arr);
+		console.log(123123123);
 		tude = arr;
 	})
 })
@@ -89,6 +92,13 @@ insertData = function(id) {
 		city: cityName
 	};
 	getData1(dataPath + "areadistribute", ajaxData).then(function(arr) {
+		console.log(arr);
+		if (arr.haveSubArea == false) {
+			var areaColor = MapColorR;
+		} else {
+			var areaColor = MapColorL;
+		}
+
 		function resetOption(id, arr) {
 			// areaColor = MapColorR;
 			// console.log(arr);
@@ -111,11 +121,21 @@ insertData = function(id) {
 				}
 				var li = liNode +
 					"<h3>" + stores[i].STORE + "</h3>" +
-					"<p>电话：1888888880</p>" +
+					"<p>电话：" + stores[i].PHONE + "</p>" +
 					"<p>地址：" + stores[i].ADDRESS + "</p>" +
 					"</li>";
 				$("ul.storeList").append(li);
 			}
+
+			//点击店铺列表
+			$(".storeList li").click(function() {
+				$(this).addClass('on');
+				$(this).siblings().removeClass('on');
+
+				// setStoreMsg();
+				var storeName = $('.storeList .on').find('h3').html();
+				setStoreMsg(storeName);
+			})
 
 			var series = [];
 			var data = [];
@@ -238,7 +258,7 @@ insertData = function(id) {
 		})
 
 		/*------店铺详情框代码------*/
-		$(".slidBar").click(function() {
+		$(".slidBar").off('click').click(function() {
 				var marginLeft = $(".storeDetailBox").css('margin-left');
 				if (marginLeft == '0px') {
 					$('.manageMsgBox').show();
@@ -284,16 +304,7 @@ insertData = function(id) {
 			})
 			/*------店铺详情框代码结束------*/
 
-		//点击店铺列表
-		$(".storeList li").click(function() {
-				$(this).addClass('on');
-				$(this).siblings().removeClass('on');
-
-				// setStoreMsg();
-				var storeName = $('.storeList .on').find('h3').html();
-				setStoreMsg(storeName);
-			})
-			//计算出单品点以及综合店的数量123123
+		//计算出单品点以及综合店的数量123123
 		$('.symbol .li1 span').text('(' + danpin + ')');
 		$('.symbol .li2 span').text('(' + zonghe + ')');
 
@@ -440,9 +451,11 @@ setOption = function(id, series, arr) {
 		myChart.on('click', function(params) {
 			if (params.componentSubType == 'map' && indexName != params.name) {
 				insertData(id);
-				var arr5 = tude[params.name];
-				center = [arr5[1], arr5[0]];
-				indexName = params.name;
+				if (tude != null) {
+					var arr5 = tude[params.name];
+					center = [arr5[1], arr5[0]];
+					indexName = params.name;
+				}
 			}
 		});
 	})
