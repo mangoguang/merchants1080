@@ -9,6 +9,7 @@ var provinces = ["广东", "安徽", "澳门", "北京", "重庆", "福建", "�
 var CNname = [];
 var ENname = [];
 var sum = [];
+var brandsArr;
 
 var ajaxObj = {};
 var brandList = [];
@@ -357,11 +358,11 @@ function lazyload() {
 		country: '中国'
 			// city: '惠州市'
 	}
-	barOption(ajaxObj);
+	barOption(ajaxObj, '');
 }
 
 /*---柱状图代码---*/
-function barOption(ajaxObj) {
+function barOption(ajaxObj, text) {
 
 	getData1(dataPath + "brandbyinfo", ajaxObj).then(function(data) {
 			canClick = true;
@@ -383,11 +384,14 @@ function barOption(ajaxObj) {
 			// $('.barLengend')
 			// console.log(legendData);
 			legendData.unshift('全部');
+
 			if (brandState) {
-				brandList = legendData;
-				addBrandList(legendData);
+				brandsArr = legendData;
 				brandState = false;
 			}
+
+			brandList = legendData;
+			addBrandList(brandsArr, text);
 			barList();
 			// console.log(legendData);
 			// console.log(legendData);
@@ -561,13 +565,22 @@ function barOption(ajaxObj) {
 		/*---柱状图代码结束---*/
 }
 
-function addBrandList(arr) {
+function addBrandList(arr, text) {
+	$('.barLengend').empty();
 	var lis = '';
 	for (i in arr) {
 		var li = '<li class="li' + i + '"><span></span>' + arr[i] + '</li>';
 		lis += (li);
 	}
 	$('.barLengend').append(lis);
+	if (text != '') {
+		for (i in arr) {
+			if (arr[i] == text) {
+				console.log(i);
+				$('.barLengend .li' + i).addClass('on');
+			}
+		}
+	}
 }
 
 //增加省级跟市级选择列表
@@ -622,7 +635,7 @@ function countryBtn() {
 				// province: name
 				// city: '深圳市'
 		}
-		barOption(ajaxObj);
+		barOption(ajaxObj, '');
 	})
 }
 
@@ -677,7 +690,7 @@ function provinceBtn() {
 			province: name
 				// city: '深圳市'
 		}
-		barOption(ajaxObj);
+		barOption(ajaxObj, '');
 	})
 }
 
@@ -693,7 +706,7 @@ function cityBtn() {
 			province: provinceBtnText,
 			city: name
 		}
-		barOption(ajaxObj);
+		barOption(ajaxObj, '');
 	})
 }
 
@@ -705,13 +718,13 @@ function barList() {
 			if (text == '全部') {
 				$('.barLengend').addClass('on');
 				delete ajaxObj.brand;
-				barOption(ajaxObj);
+				barOption(ajaxObj, '');
 			} else {
 				$('.barLengend').removeClass('on');
 				$(this).addClass('on');
 				$(this).siblings().removeClass('on');
 				ajaxObj["brand"] = text;
-				barOption(ajaxObj);
+				barOption(ajaxObj, text);
 			}
 		}
 	})

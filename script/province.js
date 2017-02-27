@@ -134,7 +134,7 @@ setData = function(id) {
           obj = {
             // name: brands[i],
             type: 'map',
-            // roam: true,
+            roam: true,
             top: geoTop,
             left: geoL,
             zoom: geoZoom,
@@ -312,7 +312,7 @@ setOption = function(id, series, storeNames, Brands, Citys) {
         top: geoTop,
         left: geoL,
         zoom: geoZoom,
-        // roam: true,
+        roam: true,
         // scaleLimit: {
         //   min: 0.6,
         //   max: 20

@@ -181,7 +181,7 @@ insertData = function(id) {
 					zoom: zoom,
 					center: center,
 					type: 'map',
-					// roam: true,
+					roam: true,
 					map: id,
 					label: {
 						normal: {
@@ -429,7 +429,7 @@ setOption = function(id, series, arr) {
 				left: geoLeft,
 				zoom: zoom,
 				center: center,
-				// roam: true,
+				roam: true,
 				label: {
 					emphasis: {
 						show: false
@@ -451,6 +451,7 @@ setOption = function(id, series, arr) {
 		myChart.on('click', function(params) {
 			if (params.componentSubType == 'map' && indexName != params.name) {
 				insertData(id);
+				console.log(tude);
 				if (tude != null) {
 					var arr5 = tude[params.name];
 					center = [arr5[1], arr5[0]];
