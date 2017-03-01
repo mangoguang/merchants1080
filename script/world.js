@@ -16,6 +16,10 @@ var brandList = [];
 var brandState = true;
 var canClick = true;
 
+var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {
+	tyep: 'unknown'
+};
+var type_text = ['unknown', 'ethernet', 'wifi', '2g', '3g', '4g', 'none'];
 
 $(document).ready(function() {
 	var height = document.documentElement.clientHeight;
@@ -119,7 +123,7 @@ setData = function(Json) {
 		var myChart = echarts.init(document.getElementById('main'));
 		//地图加载成功
 		// $('.animate').css('background', 'none').fadeOut(600);
-		Tips();
+		// Tips();
 
 		echarts.registerMap(mapName, Json);
 		var geoCoordMap = {
@@ -414,10 +418,9 @@ function barOption(ajaxObj, text) {
 			/*柱状图lengend模块'全部'数组数据*/
 			var setupData = [];
 			for (var i = 0; i < lengendNumArr[0].length; i++) {
-				setupData.push(0);
+				setupData.push(temp[i][1]);
 			}
 			lengendNumArr.unshift(setupData);
-
 
 			var series = [];
 			for (var i = 0; i < brandList.length; i++) {

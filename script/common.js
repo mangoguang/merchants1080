@@ -8,7 +8,7 @@ var borderColor = '#333'; //地图边界颜色
 var pointColor = '#2196f3'; //地图气泡颜色
 var textColor = '#dcdcdc'; //地图文字颜色
 
-var tips = localStorage.getItem("tips"); //本地存储
+// var tips = localStorage.getItem("tips"); //本地存储
 // var unclickTime
 //屏幕可布局高度
 var height = document.documentElement.clientHeight;
@@ -71,105 +71,59 @@ getQueryString = function(name) {
         return null;
     }
     // localStorage.setItem("tips", '');
-addTips = function() {
-    var tipsBox = '<div class="tipsBox"><div id="tips"><p>长按地图，可查看详细信息。</p><div><span></span><input name="tip" id="tip" type="checkbox" style="display: none;" /><label for="tip">不再提示</label><button>我知道了</button></div></div></div>';
-    $('body').append(tipsBox);
 
-    $('#tips button').click(function() {
-        var tips = $('#tips input').prop("checked");
-        if (tips == true) {
-            localStorage.setItem("tips", 'true');
-        }
-        $('.tipsBox').hide();
-    })
+// addTips = function() {
+//     var tipsBox = '<div class="tipsBox"><div id="tips"><p>长按地图，可查看详细信息。</p><div><span></span><input name="tip" id="tip" type="checkbox" style="display: none;" /><label for="tip">不再提示</label><button>我知道了</button></div></div></div>';
+//     $('body').append(tipsBox);
+
+//     $('#tips button').click(function() {
+//         var tips = $('#tips input').prop("checked");
+//         if (tips == true) {
+//             localStorage.setItem("tips", 'true');
+//         }
+//         $('.tipsBox').hide();
+//     })
+// }
+
+// function Tips() {
+//     if (tips != 'true') {
+//         addTips();
+//     }
+//     // alert(tipp + typeof(tipp));
+//     $('#tips input').click(function() {
+//         var tips = $('#tips input').prop("checked");
+//         if (tips) {
+//             $('#tips span').addClass('on');
+//             $('#tips input').attr('checked', 'checked');
+//         } else {
+//             $('#tips span').removeClass('on');
+//             $('#tips input').attr('checked', '');
+//         }
+//     })
+// }
+
+/*水波纹*/
+var addRippleEffect = function(e) {
+    var target = e.target;
+    if (target.tagName.toLowerCase() !== 'button') return false;
+    var rect = target.getBoundingClientRect();
+    var ripple = target.querySelector('.ripple');
+    if (!ripple) {
+        ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.height = ripple.style.width = Math.max(rect.width, rect.height) + 'px';
+        target.appendChild(ripple);
+    }
+    ripple.classList.remove('show');
+    var top = e.pageY - rect.top - ripple.offsetHeight / 2 - document.body.scrollTop;
+    var left = e.pageX - rect.left - ripple.offsetWidth / 2 - document.body.scrollLeft;
+    ripple.style.top = top + 'px';
+    ripple.style.left = left + 'px';
+    ripple.classList.add('show');
+    return false;
 }
 
-function Tips() {
-    if (tips != 'true') {
-        addTips();
-    }
-    // alert(tipp + typeof(tipp));
-    $('#tips input').click(function() {
-        var tips = $('#tips input').prop("checked");
-        if (tips) {
-            $('#tips span').addClass('on');
-            $('#tips input').attr('checked', 'checked');
-        } else {
-            $('#tips span').removeClass('on');
-            $('#tips input').attr('checked', '');
-        }
-    })
-}
-
-apiready = function() {
-
-    var t;
-    var clickDiv = '<div id="clickDiv" style="width: 100%;height: ' + height + 'px;position: absolute;top: 0;left:0;z-index:100000;"></div>';
-    /*水波纹*/
-    var addRippleEffect = function(e) {
-        playing();
-        var body = document.getElementById('body');
-        var target = e.target;
-        if (target.tagName.toLowerCase() === '') return false;
-        var rect = target.getBoundingClientRect();
-        var ripple = target.querySelector('.ripple');
-        if (!ripple) {
-            ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            ripple.style.height = ripple.style.width = Math.max(30, 30) + 'px';
-            body.appendChild(ripple);
-        }
-        ripple.classList.remove('show');
-        var top = e.pageY - 15;
-        var left = e.pageX - 15;
-        ripple.style.top = top + 'px';
-        ripple.style.left = left + 'px';
-        ripple.classList.add('show');
-        return false;
-    }
-
-    document.addEventListener('click', addRippleEffect, false);
-
-
-    var videoPlayer = api.require('videoPlayer');
-
-    playing = function() {
-        clearTimeout(t);
-        $('#clickDiv').remove();
-        videoPlayer.close();
-        t = setTimeout("videoOpen()", 180000);
-    }
-    playing();
-
-    videoOpen = function() {
-        //回退到首页
-        backHome();
-
-        clearTimeout(t);
-        $('.body').append(clickDiv);
-        videoPlayer.open({
-            path: 'http://oa.derucci.net:8901/businessfile/uf_brand/e257b051f4a64b65a1e5052baaaa2545.mp4'
-        }, function(ret, err) {
-            videoPlayer.setRect({
-                rect: {
-                    x: 0,
-                    y: 0,
-                    w: 1920,
-                    h: 'auto'
-                },
-                fullscreen: false
-            });
-
-            t = setTimeout("playLoop()", 33000);
-            playLoop = function() {
-                $('#clickDiv').remove();
-                videoPlayer.close();
-                clearTimeout(t);
-                t = setTimeout("videoOpen()", 15000);
-            }
-        });
-    }
-}
+document.addEventListener('click', addRippleEffect, false);
 
 /*------获取数据------*/
 function getData1(url, ajaxData) {

@@ -75,9 +75,6 @@ $(document).ready(function() {
 		city: cityName
 	};
 	getData1(dataPath + "gettude", ajaxData).then(function(arr) {
-		console.log(123123123);
-		console.log(arr);
-		console.log(123123123);
 		tude = arr;
 	})
 })
@@ -92,7 +89,6 @@ insertData = function(id) {
 		city: cityName
 	};
 	getData1(dataPath + "areadistribute", ajaxData).then(function(arr) {
-		console.log(arr);
 		if (arr.haveSubArea == false) {
 			var areaColor = MapColorR;
 		} else {
@@ -181,7 +177,7 @@ insertData = function(id) {
 					zoom: zoom,
 					center: center,
 					type: 'map',
-					roam: true,
+					// roam: true,
 					map: id,
 					label: {
 						normal: {
@@ -321,6 +317,23 @@ insertData = function(id) {
 			storeName: storeName
 		};
 		getData1(dataPath + "storeinfo", ajaxData).then(function(msg) {
+			console.log(msg);
+			var lis = '';
+			var temp = msg.pictures;
+			var picList = temp.split(',');
+			var mulu = msg.mulu;
+			for (i = 0; i < picList.length; i++) {
+				var li = '<li class="li' + i + '"></li>';
+				lis += li;
+			}
+			$('.slides').append(lis);
+
+			for (i in picList) {
+				$(".slides .li" + i).css('background', 'url(' + picPath + mulu + '/' + picList[i] + ') 50% 0 no-repeat');
+			}
+
+			$('.photo').css('background', 'url(' + picPath + mulu + '/' + msg.photo + ') no-repeat');
+
 			$(".storeTit").html(msg.storeName);
 			$(".storePhone").html(msg.phone);
 			$(".storeAddress").html(msg.address);
@@ -349,7 +362,7 @@ setOption = function(id, series, arr) {
 	$.get('../geojson/city/' + id + '.json', function(Json) {
 		//地图加载成功
 		// $('.animate').css('background', 'none').fadeOut(600);
-		Tips();
+		// Tips();
 
 		echarts.registerMap(id, Json);
 		option = {
@@ -429,7 +442,7 @@ setOption = function(id, series, arr) {
 				left: geoLeft,
 				zoom: zoom,
 				center: center,
-				roam: true,
+				// roam: true,
 				label: {
 					emphasis: {
 						show: false
@@ -451,7 +464,6 @@ setOption = function(id, series, arr) {
 		myChart.on('click', function(params) {
 			if (params.componentSubType == 'map' && indexName != params.name) {
 				insertData(id);
-				console.log(tude);
 				if (tude != null) {
 					var arr5 = tude[params.name];
 					center = [arr5[1], arr5[0]];
@@ -463,7 +475,6 @@ setOption = function(id, series, arr) {
 }
 
 function load() {
-	$(".slides li").css('background', 'url(../image1080/storePictures.png) 50% 0 no-repeat');
 	$('.bottomNav').css({
 		'background': 'url(../image1080/7-menuon.png) no-repeat',
 		'background-size': '1144px 140px'

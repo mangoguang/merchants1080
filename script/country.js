@@ -134,9 +134,9 @@ getChina = function() {
         }
 
         var str = '<li class="' + class1Name + '">' +
-          '<img class="manPhoto" title="' + picPath + data[i].mulu + '/' + data[i].qr + '" src="' + picPath + data[i].mulu + '/' + data[i].pictures + '" alt="" />' +
+          '<img class="manPhoto" title="' + picPath + data[i].mulu + '/' + data[i].qr + '" src="' + picPath + data[i].mulu + '/' + data[i].headPhoto + '" alt="" />' +
           '<p>姓名：<span class="manName">' + data[i].name + '</span></p>' +
-          '<p>电话：<span class="manPhone">' + '1882398470' + '</span></p>' +
+          '<p>电话：<span class="manPhone">' + data[i].phone + '</span></p>' +
           '<p>片区：<span class="manArea">' + data[i].city + '</span></p>' +
           '<p>负责区域：<span class="manPianqu">' + area[i] + '</span></p>' +
           '</li>';
@@ -302,7 +302,7 @@ setOption = function(pieces, series, data, area, col1, lis) {
   $.get('../geojson/country/' + name + '.json', function(Json) {
     //地图加载成功
     // $('.animate').css('background', 'none').fadeOut(600);
-    Tips();
+    // Tips();
 
     //设置地图
     echarts.registerMap(name, Json);

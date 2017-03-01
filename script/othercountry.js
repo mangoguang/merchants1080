@@ -130,8 +130,8 @@ setOption = function(name, areaData, series) {
     var myChart = echarts.init(document.getElementById('main'));
     $.get('../geojson/country/' + name + '.json', function(Json) {
       //地图加载成功
-    // $('.animate').css('background', 'none').fadeOut(600);
-      Tips();
+      // $('.animate').css('background', 'none').fadeOut(600);
+      // Tips();
 
       //设置地图
       echarts.registerMap(name, Json);
