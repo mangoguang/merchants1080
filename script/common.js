@@ -14,6 +14,7 @@ var textColor = '#dcdcdc'; //地图文字颜色
 var height = document.documentElement.clientHeight;
 
 var dataPath = 'http://zs.derucci.net:8821/deruccimid/cst/';
+var dataPath1 = 'http://zs.derucci.net:8821/deruccimid/businessapp/';
 var picPath = 'http://oa.derucci.net:8901/businessfile/';
 
 //body全屏

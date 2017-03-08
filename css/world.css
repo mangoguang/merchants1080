@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* 鍙橀噺 */
+/* 变量 */
 /*reset sass */
 body, dl, dd, ul, ol, h1, h2, h3, h4, h5, h6, pre, form, fieldset, legend, input, textarea, optgroup, p, blockquote, figure, hr, menu, dir, thead, tbody, tfoot, th, td {
   margin: 0;
@@ -110,7 +110,7 @@ a {
 .line100 {
   height: 100px; }
 
-/* ------棣栭〉------ */
+/* ------首页------ */
 .showList1 {
   position: absolute;
   width: 9rem;
@@ -129,7 +129,7 @@ a {
     background: #525252;
     border-radius: .1rem; }
 
-/* 甯傜骇鍦板浘 */
+/* 市级地图 */
 .storyList1 {
   margin-top: .5rem;
   padding: 0 .5rem; }
@@ -151,5 +151,3 @@ a {
     .storyList1 > li p {
       font-size: 0.32rem;
       line-height: 1.4em; }
-
-/*# sourceMappingURL=world.css.map */

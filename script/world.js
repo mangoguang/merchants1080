@@ -44,6 +44,14 @@ $(document).ready(function() {
 		$(".listBox").hide(500);
 	})
 
+	ajaxObj = {
+		// brand: '3D'
+	};
+	getData1(dataPath1 + "gettuozhan", ajaxObj).then(function(arr) {
+		console.log(arr); 
+	})
+
+
 	$('.countryListBox').scroll(function() {
 		var t = $(this).scrollTop();
 		if (t > 50) {
@@ -71,11 +79,11 @@ $(document).ready(function() {
 
 	//点击拓展人员列表按钮
 	$('.kzryListBtn').click(function() {
-		$('.kzryMsgBox').show();
+		$('.kzryMsgBox').show(500);
 	})
 
 	$('.kzryMsgBox>button').click(function() {
-		$('.kzryMsgBox').hide();
+		$('.kzryMsgBox').hide(500);
 	})
 
 	//添加省份筛选列
@@ -899,23 +907,13 @@ addOtherCountry = function(name1) {
 }
 var obj;
 var fn;
-/*测试面向对象编程中promise的使用*/
-// var two = 'two';
-// getData1(dataPath + "brandbyinfo", ajaxObj).then(function(data) {
-// 	obj = function() {
-// 		var one = 'one';
-// 		this.one = function() {
-// 			console.log(data);
-// 		}
-// 		this.two = function() {
-// 			console.log(two);
-// 		}
-// 	}
-// 	fn = new obj;
-// 	// fn.one();
-// 	fn.two();
-// })
-// fn.one();
+
+function zsryBtn(){
+	$('.zsrySelect').click(function(){
+		$('.zsrySelect ul').toggle();
+	})
+}
+zsryBtn();
 
 
 

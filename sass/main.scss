@@ -1193,7 +1193,7 @@ h1.title{
 }
 
 .listBox{
-  display: none;
+  // display: none;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -1336,7 +1336,7 @@ h1.title{
 }
 
 .kzryMsgBox{
-  display: none;
+  // display: none;
   position: absolute;
   right: 0;
   width: 794px;
@@ -1353,12 +1353,60 @@ h1.title{
     top: 50%;
     margin-top: -70px;
   }
-  .kzryListBox{
-    width: 734px;
-    height: 100%;
-    background: rgba(13,13,13,0.95);
+}
+
+.kzryListBox{
+  width: 734px;
+  height: 100%;
+  background: rgba(13,13,13,0.95);
+  position: absolute;
+  right: 0;
+  .zsrySelect{
+    width: 160px;
+    height: 50px;
+    font-size: 24px;
     position: absolute;
-    right: 0;
+    top: 75px;
+    left: 30px;
+    button{
+      display: block;
+      width: 160px;
+      height: 50px;
+      font-size: 24px;
+      text-align: left;
+      padding-left: 10px;
+      background: url(../image1080/iconfont-xiasanjiao.png) no-repeat,#dcdcdc;
+      background-size: 20px 20px;
+      background-position: 132px 15px;
+      border-radius: 4px;
+      padding-bottom: 4px;
+    }
+    ul{
+      display: none;
+      background: rgba(224,224,224,0.9);
+      margin-top: -4px;
+      li{
+        padding-left: 8px;
+        border-bottom: 1px solid #2e2e2e;
+      }
+    }
+  }
+  &>h2{
+    height: 60px;
+    font-size: 36px;
+    line-height: 60px;
+    text-align: right;
+    font-weight: 700;
+    color: #dcdcdc;
+    border-right: 8px solid #fff; 
+    margin: 70px 60px;
+    padding-right: 8px;
+  }
+  .kzryList{
+    li{
+      
+    }
+
   }
 }
 
