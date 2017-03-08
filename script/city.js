@@ -364,113 +364,126 @@ setOption = function(id, series, arr) {
 		// $('.animate').css('background', 'none').fadeOut(600);
 		// Tips();
 
-		echarts.registerMap(id, Json);
-		option = {
-			// backgroundColor: bgColor, //bgColor变量在common.js定义
-			title: {
-				text: cityName + '加盟商分布',
-				top: 50,
-				left: 260,
-				// subtext: 'Data from www.musi.com',
-				sublink: 'http://www.musi.com',
-				textStyle: {
-					color: '#e5e5e5',
-					fontSize: 40,
-					fontWeight: 300
-				}
-			},
-			tooltip: {
-				trigger: 'item',
-				showDelay: 0,
-				hideDelay: 1000,
-				transitionDuration: 0.2,
-				// extraCssText: 'background: rgba(255,255,255,0.5);border: 2px solid #525252;color:#525252;',
-				// position: [10, 80],
-				textStyle: {
-					color: '#e5e5e5',
-					fontSize: 28
-				},
-				trigger: 'item',
-				extraCssText: 'border: 1px solid #e5e5e5;border-radius: 12px;background: rgba(110,110,110,0.2)',
-				formatter: function(params) {
-					return tooltipData(params);
-				}
-			},
-			visualMap: {
-				type: 'piecewise',
-				left: visulMapR,
-				top: visualMapBottom,
-				align: 'left',
-				itemWidth: 40,
-				itemHeight: 40,
-				orient: 'vertical',
-				// itemSymbol: 'rect',
-				textStyle: {
-					color: '#e5e5e5',
-					fontSize: 26
-				},
-				pieces: [{
-					min: 0,
-					max: 0,
-					label: '未开发区域'
-				}, {
-					min: 1,
-					max: 1,
-					label: '已开发区域'
-				}],
-				outOfRange: {
-					color: pointColor
-				},
-				color: [MapColorR, MapColorL]
-			},
-			toolbox: {
-				show: true,
-				//orient: 'vertical',
-				left: 'left',
-				top: 'top',
-				feature: {
-					dataView: {
-						readOnly: false
-					},
-					restore: {},
-					saveAsImage: {}
-				}
-			},
-			geo: {
-				map: id,
-				top: geoTop,
-				left: geoLeft,
-				zoom: zoom,
-				center: center,
-				// roam: true,
-				label: {
-					emphasis: {
-						show: false
+		tryFun = function() {
+			echarts.registerMap(id, Json);
+			option = {
+				// backgroundColor: bgColor, //bgColor变量在common.js定义
+				title: {
+					text: cityName + '加盟商分布',
+					top: 50,
+					left: 260,
+					// subtext: 'Data from www.musi.com',
+					sublink: 'http://www.musi.com',
+					textStyle: {
+						color: '#e5e5e5',
+						fontSize: 40,
+						fontWeight: 300
 					}
 				},
-				itemStyle: {
-					normal: {
-						color: MapColorL
+				tooltip: {
+					trigger: 'item',
+					showDelay: 0,
+					hideDelay: 1000,
+					transitionDuration: 0.2,
+					// extraCssText: 'background: rgba(255,255,255,0.5);border: 2px solid #525252;color:#525252;',
+					// position: [10, 80],
+					textStyle: {
+						color: '#e5e5e5',
+						fontSize: 28
 					},
-					emphasis: {
-						color: MapColorL
+					trigger: 'item',
+					extraCssText: 'border: 1px solid #e5e5e5;border-radius: 12px;background: rgba(110,110,110,0.2)',
+					formatter: function(params) {
+						return tooltipData(params);
 					}
-				}
-			},
-			series: series
-		};
-		myChart.setOption(option);
+				},
+				visualMap: {
+					type: 'piecewise',
+					left: visulMapR,
+					top: visualMapBottom,
+					align: 'left',
+					itemWidth: 40,
+					itemHeight: 40,
+					orient: 'vertical',
+					// itemSymbol: 'rect',
+					textStyle: {
+						color: '#e5e5e5',
+						fontSize: 26
+					},
+					pieces: [{
+						min: 0,
+						max: 0,
+						label: '未开发区域'
+					}, {
+						min: 1,
+						max: 1,
+						label: '已开发区域'
+					}],
+					outOfRange: {
+						color: pointColor
+					},
+					color: [MapColorR, MapColorL]
+				},
+				toolbox: {
+					show: true,
+					//orient: 'vertical',
+					left: 'left',
+					top: 'top',
+					feature: {
+						dataView: {
+							readOnly: false
+						},
+						restore: {},
+						saveAsImage: {}
+					}
+				},
+				geo: {
+					map: id,
+					top: geoTop,
+					left: geoLeft,
+					zoom: zoom,
+					center: center,
+					// roam: true,
+					label: {
+						emphasis: {
+							show: false
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: MapColorL
+						},
+						emphasis: {
+							color: MapColorL
+						}
+					}
+				},
+				series: series
+			};
+			myChart.setOption(option);
+			myChart.on('click', function(params) {
+				try {
 
-		myChart.on('click', function(params) {
-			if (params.componentSubType == 'map' && indexName != params.name) {
-				insertData(id);
-				if (tude != null) {
-					var arr5 = tude[params.name];
-					center = [arr5[1], arr5[0]];
-					indexName = params.name;
+					if (params.componentSubType == 'map' && indexName != params.name) {
+						insertData(id);
+						if (tude != null) {
+							var arr5 = tude[params.name];
+							center = [arr5[1], arr5[0]];
+							indexName = params.name;
+						}
+					}
+
+				} catch (err) {
+					alert('地图数据暂时缺失。');
 				}
-			}
-		});
+			});
+		}
+
+		try {
+			tryFun();
+		} catch (err) {
+			alert('你的网络有问题！');
+		}
 	})
 }
 
@@ -493,7 +506,7 @@ managerMsg = function(provinceName) {
 		for (var i = 0; i < arr.length; i++) {
 			if ((arr[i].city).indexOf(cityName) >= 0) {
 				var msg = arr[i];
-				$('.img1').attr('src', picPath + msg.mulu + '/' + msg.pics);
+				$('.img1').attr('src', picPath + msg.mulu + '/' + msg.headPhoto);
 				$('.img2').attr('src', picPath + msg.mulu + '/' + msg.qr);
 				$('.name').text(msg.manger);
 				$('.area').text(msg.area);

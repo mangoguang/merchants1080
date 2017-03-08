@@ -134,112 +134,121 @@ setOption = function(name, areaData, series) {
       // Tips();
 
       //设置地图
-      echarts.registerMap(name, Json);
-      option = {
-        // backgroundColor: bgColor, //bgColor变量在common.js定义
-        title: {
-          text: name + '地图',
-          top: 50,
-          left: 260,
-          sublink: 'http://www.musi.com',
-          textStyle: {
-            color: '#dcdcdc',
-            fontSize: 40,
-            fontWeight: 300
-          }
-        },
-        tooltip: {
-          trigger: 'item',
-          showDelay: 0,
-          transitionDuration: 0.2,
-          // position: [1480, 80],
-          trigger: 'item',
-          textStyle: {
-            color: '#e5e5e5',
-            fontSize: 28
-          },
-          extraCssText: 'border: 1px solid #e5e5e5;border-radius: 12px;background: rgba(178,178,178,0.5)',
-          formatter: function(params) {
-            return tooltipData(params);
-          }
-        },
-        visualMap: {
-          show: visualMapShow,
-          type: 'piecewise',
-          align: 'left',
-          top: visualMapT,
-          left: visualMapL,
-          itemWidth: 40,
-          itemHeight: 40,
-          orient: visualMapOrient,
-          inverse: true,
-          textStyle: {
-            color: '#dcdcdc',
-            fontSize: 30
-          },
-          pieces: [{
-            min: 3,
-            max: 4,
-            label: '完全开发区域'
-          }, {
-            min: 1,
-            max: 2,
-            label: '未完全开发区域'
-          }, {
-            min: 0,
-            max: 0,
-            label: '未开发区域'
-          }],
-          color: [MapColorM, MapColorR, MapColorL]
-        },
-        toolbox: {
-          show: true,
-          //orient: 'vertical',
-          left: 'left',
-          top: 'top',
-          feature: {
-            dataView: {
-              readOnly: false
-            },
-            restore: {},
-            saveAsImage: {}
-          }
-        },
-        geo: {
-          map: name,
-          top: geoTop,
-          left: geoLeft,
-          zoom: zoom,
-          // roam: true,
-          // scaleLimit: {
-          //   min: 0.6,
-          //   max: 20
-          // },
-          // label: {
-          //   normal: {
-          //     show: true,
-          //     textStyle: {
-          //       color: '#525252',
-          //       fontSize: 18
-          //     }
-          //   }
-          // },
-          itemStyle: {
-            normal: {
-              borderColor: borderColor,
-              areaColor: MapColorL
+
+      tryFun = function() {
+        echarts.registerMap(name, Json);
+        option = {
+          // backgroundColor: bgColor, //bgColor变量在common.js定义
+          title: {
+            text: name + '地图',
+            top: 50,
+            left: 260,
+            sublink: 'http://www.musi.com',
+            textStyle: {
+              color: '#dcdcdc',
+              fontSize: 40,
+              fontWeight: 300
             }
-          }
-        },
-        series: series
-      };
+          },
+          tooltip: {
+            trigger: 'item',
+            showDelay: 0,
+            transitionDuration: 0.2,
+            // position: [1480, 80],
+            trigger: 'item',
+            textStyle: {
+              color: '#e5e5e5',
+              fontSize: 28
+            },
+            extraCssText: 'border: 1px solid #e5e5e5;border-radius: 12px;background: rgba(178,178,178,0.5)',
+            formatter: function(params) {
+              return tooltipData(params);
+            }
+          },
+          visualMap: {
+            show: visualMapShow,
+            type: 'piecewise',
+            align: 'left',
+            top: visualMapT,
+            left: visualMapL,
+            itemWidth: 40,
+            itemHeight: 40,
+            orient: visualMapOrient,
+            inverse: true,
+            textStyle: {
+              color: '#dcdcdc',
+              fontSize: 30
+            },
+            pieces: [{
+              min: 3,
+              max: 4,
+              label: '完全开发区域'
+            }, {
+              min: 1,
+              max: 2,
+              label: '未完全开发区域'
+            }, {
+              min: 0,
+              max: 0,
+              label: '未开发区域'
+            }],
+            color: [MapColorM, MapColorR, MapColorL]
+          },
+          toolbox: {
+            show: true,
+            //orient: 'vertical',
+            left: 'left',
+            top: 'top',
+            feature: {
+              dataView: {
+                readOnly: false
+              },
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+          geo: {
+            map: name,
+            top: geoTop,
+            left: geoLeft,
+            zoom: zoom,
+            // roam: true,
+            // scaleLimit: {
+            //   min: 0.6,
+            //   max: 20
+            // },
+            // label: {
+            //   normal: {
+            //     show: true,
+            //     textStyle: {
+            //       color: '#525252',
+            //       fontSize: 18
+            //     }
+            //   }
+            // },
+            itemStyle: {
+              normal: {
+                borderColor: borderColor,
+                areaColor: MapColorL
+              }
+            }
+          },
+          series: series
+        };
 
-      myChart.setOption(option);
-      load();
+        myChart.setOption(option);
+        load();
 
 
-      tooltipData = function(params) {
-        return params.name;
+        tooltipData = function(params) {
+          return params.name;
+        }
+      }
+
+      try {
+        tryFun();
+      } catch (err) {
+        alert('你的网络有问题！');
       }
     })
   }

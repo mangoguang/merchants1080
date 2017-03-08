@@ -304,224 +304,231 @@ setOption = function(pieces, series, data, area, col1, lis) {
     // $('.animate').css('background', 'none').fadeOut(600);
     // Tips();
 
-    //设置地图
-    echarts.registerMap(name, Json);
-    option = {
-      // backgroundColor: bgColor, //bgColor变量在common.js定义
-      title: {
-        text: '中国地图',
-        top: 50,
-        left: 260,
-        // subtext: 'Data from www.musi.com',
-        sublink: 'http://www.musi.com',
-        textStyle: {
-          color: '#dcdcdc',
-          fontSize: 40,
-          fontWeight: 300
-        }
-      },
-      tooltip: {
-        trigger: 'item',
-        showDelay: 0,
-        transitionDuration: 0.2,
-        // position: [1480, 80],
-        trigger: 'item',
-        textStyle: {
-          color: '#e5e5e5',
-          fontSize: 28
+    tryFun = function() {
+      //设置地图
+      echarts.registerMap(name, Json);
+      option = {
+        // backgroundColor: bgColor, //bgColor变量在common.js定义
+        title: {
+          text: '中国地图',
+          top: 50,
+          left: 260,
+          // subtext: 'Data from www.musi.com',
+          sublink: 'http://www.musi.com',
+          textStyle: {
+            color: '#dcdcdc',
+            fontSize: 40,
+            fontWeight: 300
+          }
         },
-        extraCssText: 'border: 1px solid #e5e5e5;border-radius: 12px;background: rgba(178,178,178,0.5)',
-        formatter: function(params) {
-          return tooltipData(params);
-        }
-      },
-      // legend: {
-      // 	orient: 'horizontal',
-      // 	bottom: 25,
-      // 	left: 12,
-      // 	right: 12,
-      // 	itemWidth: 10,
-      // 	itemHeight: 10,
-      // 	itemGap: 16, //data:[managerName[0],managerName[1],managerName[2]]
-      // 	data: area
-      // },
-      visualMap: {
-        show: false,
-        type: 'piecewise',
-        // selectedMode: 'single',
-        align: 'left',
-        hoverLink: false,
-        // left: 'center',
-        // bottom: visualMapBottom,
-        top: 'center',
-        right: visualMapLeft,
-        // target: {
-        // 	outOfRange: {
-        // 		symbolSize: [30, 100]
-        // 	}
-        // },
-
-        itemWidth: 40,
-        itemHeight: 40,
-        orient: visualMapOrient,
-        textStyle: {
-          color: '#dcdcdc',
-          fontSize: 30
-        },
-        pieces: pieces,
-        color: col1
-          // color: ['#1976d2', '#f5410a', '#ffc107', '#f4ce37', '#d81b60', '#0d47a1', '#ff5722', '#8e24aa', '#673ab7', '#ff5722', '#ec407a', '#d32f2f']
-          //        西三区     东一区     北二区    北三区      南二区     西二区     东二区     南三区     西一区     北一区     东三区     南一区  
-      },
-      toolbox: {
-        show: false,
-        //orient: 'vertical',
-        left: 'left',
-        top: 'top',
-        feature: {
-          dataView: {
-            readOnly: false
+        tooltip: {
+          trigger: 'item',
+          showDelay: 0,
+          transitionDuration: 0.2,
+          // position: [1480, 80],
+          trigger: 'item',
+          textStyle: {
+            color: '#e5e5e5',
+            fontSize: 28
           },
-          restore: {},
-          saveAsImage: {}
-        }
-      },
-      // geo: {
-      // 	map: name,
-      // 	top: geoTop,
-      // 	left: geoLeft,
-      // 	zoom: zoom,
-      // 	// roam: true,
-      // 	scaleLimit: {
-      // 		min: 0.6,
-      // 		max: 20
-      // 	},
-      // 	label: {
-      // 		emphasis: {
-      // 			show: false
-      // 		}
-      // 	},
-      // 	itemStyle: {
-      // 		normal: {
-      // 			borderColor: borderColor,
-      // 			areaColor: MapColorL
-      // 		}
-      // 	}
-      // },
-      series: series()
-        // {
-        //         name: '华中招商经理',
-        //         type: 'map',
-        //         roam: true,
-        //         map: name,
-        //         data:[
-        //               {name: '四川',value: 1 },
-        //               {name: '浙江',value: 1 },
-        //               {name: '江苏',value: 1 },
-        //               {name: '湖北',value: 1 }
-        //         ]
-        //     }
-    };
+          extraCssText: 'border: 1px solid #e5e5e5;border-radius: 12px;background: rgba(178,178,178,0.5)',
+          formatter: function(params) {
+            return tooltipData(params);
+          }
+        },
+        // legend: {
+        //  orient: 'horizontal',
+        //  bottom: 25,
+        //  left: 12,
+        //  right: 12,
+        //  itemWidth: 10,
+        //  itemHeight: 10,
+        //  itemGap: 16, //data:[managerName[0],managerName[1],managerName[2]]
+        //  data: area
+        // },
+        visualMap: {
+          show: false,
+          type: 'piecewise',
+          // selectedMode: 'single',
+          align: 'left',
+          hoverLink: false,
+          // left: 'center',
+          // bottom: visualMapBottom,
+          top: 'center',
+          right: visualMapLeft,
+          // target: {
+          //  outOfRange: {
+          //    symbolSize: [30, 100]
+          //  }
+          // },
 
-    myChart.setOption(option);
-    load();
-    //visualMap模块交互
-    if (nomore) {
-      visualMapAct(lis, data, col1);
-      nomore = false;
-    }
-    $(".visualMap>li").click(function() {
-      var className = $(this).attr('class');
-      var obj3 = {};
-      if (className == 'all') {
-        for (i in pieces) {
-          obj3[i] = true;
-        }
-      } else {
-        for (i in pieces) {
-          obj3[i] = false;
-        }
-        obj3[parseInt(className)] = true;
+          itemWidth: 40,
+          itemHeight: 40,
+          orient: visualMapOrient,
+          textStyle: {
+            color: '#dcdcdc',
+            fontSize: 30
+          },
+          pieces: pieces,
+          color: col1
+            // color: ['#1976d2', '#f5410a', '#ffc107', '#f4ce37', '#d81b60', '#0d47a1', '#ff5722', '#8e24aa', '#673ab7', '#ff5722', '#ec407a', '#d32f2f']
+            //        西三区     东一区     北二区    北三区      南二区     西二区     东二区     南三区     西一区     北一区     东三区     南一区  
+        },
+        toolbox: {
+          show: false,
+          //orient: 'vertical',
+          left: 'left',
+          top: 'top',
+          feature: {
+            dataView: {
+              readOnly: false
+            },
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        // geo: {
+        //  map: name,
+        //  top: geoTop,
+        //  left: geoLeft,
+        //  zoom: zoom,
+        //  // roam: true,
+        //  scaleLimit: {
+        //    min: 0.6,
+        //    max: 20
+        //  },
+        //  label: {
+        //    emphasis: {
+        //      show: false
+        //    }
+        //  },
+        //  itemStyle: {
+        //    normal: {
+        //      borderColor: borderColor,
+        //      areaColor: MapColorL
+        //    }
+        //  }
+        // },
+        series: series()
+          // {
+          //         name: '华中招商经理',
+          //         type: 'map',
+          //         roam: true,
+          //         map: name,
+          //         data:[
+          //               {name: '四川',value: 1 },
+          //               {name: '浙江',value: 1 },
+          //               {name: '江苏',value: 1 },
+          //               {name: '湖北',value: 1 }
+          //         ]
+          //     }
+      };
+
+      myChart.setOption(option);
+      load();
+      //visualMap模块交互
+      if (nomore) {
+        visualMapAct(lis, data, col1);
+        nomore = false;
       }
+      $(".visualMap>li").click(function() {
+        var className = $(this).attr('class');
+        var obj3 = {};
+        if (className == 'all') {
+          for (i in pieces) {
+            obj3[i] = true;
+          }
+        } else {
+          for (i in pieces) {
+            obj3[i] = false;
+          }
+          obj3[parseInt(className)] = true;
+        }
 
-      myChart.dispatchAction({
-        type: 'selectDataRange',
-        selected: obj3
+        myChart.dispatchAction({
+          type: 'selectDataRange',
+          selected: obj3
+        });
+      })
+
+      // var num = 0;
+      // myChart.on('datarangeselected', function(params) {
+      //  console.log(params);
+      //  if (num == 0) {
+      //    num = 1;
+      //    myChart.dispatchAction({
+      //      type: 'selectDataRange',
+      //      selected: {
+      //        4: false,
+      //        2: true
+      //      }
+      //    });
+      //  }
+      // });
+
+      // myChart.dispatchAction({123123
+      //  type: 'selectDataRange',
+      //  selected: {
+      //    3: sel1,
+      //    4: false,
+      //    2: true
+      //  }
+      // });
+
+      myChart.on('click', function(params) {
+        var str = params.name;
+        var provinceName = province[str];
+        if (provinceName == undefined) {
+          provinceName = 'shanxi1';
+        }
+        if (name == 'China') {
+          switch (provinceName) {
+            case 'tianjin':
+              location.href = 'city.html?id=000001&name=' + encodeURIComponent('天津市') + '&provinceName=天津' + '&index=2';
+              break;
+            case 'beijing':
+              location.href = 'city.html?id=000002&name=' + encodeURIComponent('北京市') + '&provinceName=北京' + '&index=2';
+              break;
+            case 'chongqing':
+              location.href = 'city.html?id=000003&name=' + encodeURIComponent('重庆市') + '&provinceName=重庆' + '&index=2';
+              break;
+            case 'shanghai':
+              location.href = 'city.html?id=000004&name=' + encodeURIComponent('上海市') + '&provinceName=上海' + '&index=2';
+              break;
+            case 'xianggang':
+              location.href = 'city.html?id=000005&name=' + encodeURIComponent('香港') + '&provinceName=香港' + '&index=2';
+              break;
+            case 'aomen':
+              location.href = 'city.html?id=000006&name=' + encodeURIComponent('澳门') + '&provinceName=澳门' + '&index=2';
+              break;
+            default:
+              location.href = 'province.html?name=' + encodeURIComponent(str) + '&id=' + provinceName + '&index=2';
+          }
+        }
       });
-    })
 
-    // var num = 0;
-    // myChart.on('datarangeselected', function(params) {
-    // 	console.log(params);
-    // 	if (num == 0) {
-    // 		num = 1;
-    // 		myChart.dispatchAction({
-    // 			type: 'selectDataRange',
-    // 			selected: {
-    // 				4: false,
-    // 				2: true
-    // 			}
-    // 		});
-    // 	}
-    // });
-
-    // myChart.dispatchAction({123123
-    // 	type: 'selectDataRange',
-    // 	selected: {
-    // 		3: sel1,
-    // 		4: false,
-    // 		2: true
-    // 	}
-    // });
-
-    myChart.on('click', function(params) {
-      var str = params.name;
-      var provinceName = province[str];
-      if (provinceName == undefined) {
-        provinceName = 'shanxi1';
-      }
-      if (name == 'China') {
-        switch (provinceName) {
-          case 'tianjin':
-            location.href = 'city.html?id=000001&name=' + encodeURIComponent('天津市') + '&provinceName=天津' + '&index=2';
-            break;
-          case 'beijing':
-            location.href = 'city.html?id=000002&name=' + encodeURIComponent('北京市') + '&provinceName=北京' + '&index=2';
-            break;
-          case 'chongqing':
-            location.href = 'city.html?id=000003&name=' + encodeURIComponent('重庆市') + '&provinceName=重庆' + '&index=2';
-            break;
-          case 'shanghai':
-            location.href = 'city.html?id=000004&name=' + encodeURIComponent('上海市') + '&provinceName=上海' + '&index=2';
-            break;
-          case 'xianggang':
-            location.href = 'city.html?id=000005&name=' + encodeURIComponent('香港') + '&provinceName=香港' + '&index=2';
-            break;
-          case 'aomen':
-            location.href = 'city.html?id=000006&name=' + encodeURIComponent('澳门') + '&provinceName=澳门' + '&index=2';
-            break;
-          default:
-            location.href = 'province.html?name=' + encodeURIComponent(str) + '&id=' + provinceName + '&index=2';
+      tooltipData = function(params) {
+        // console.log(data);
+        var DATA = {};
+        var name = params.name;
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].city.indexOf(name) != -1) {
+            DATA = data[i];
+          }
+        }
+        // console.log(DATA);
+        for (var i = 0; i < area.length; i++) {
+          // if (area[i].indexOf(name) != -1) {
+          return ('所属大区：' + DATA.area + '<br/>招商经理：' + DATA.name + '<br/>省级行政区：' + DATA.city + '<br/>加盟店数量：' + DATA.qty + '<br/>加盟品牌：' + DATA.brands.slice(0, 26));
+          // return (params.name + area[0] + '<br/>招商经理：***<br/>拥有品牌：3D，0769，凯奇，歌蒂娅<br/>品牌总点数： 180家，覆盖率：53%<br/>***品牌店：30家');
+          // }
         }
       }
-    });
-
-    tooltipData = function(params) {
-      // console.log(data);
-      var DATA = {};
-      var name = params.name;
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].city.indexOf(name) != -1) {
-          DATA = data[i];
-        }
-      }
-      // console.log(DATA);
-      for (var i = 0; i < area.length; i++) {
-        // if (area[i].indexOf(name) != -1) {
-        return ('所属大区：' + DATA.area + '<br/>招商经理：' + DATA.name + '<br/>省级行政区：' + DATA.city + '<br/>加盟店数量：' + DATA.qty + '<br/>加盟品牌：' + DATA.brands.slice(0, 26));
-        // return (params.name + area[0] + '<br/>招商经理：***<br/>拥有品牌：3D，0769，凯奇，歌蒂娅<br/>品牌总点数： 180家，覆盖率：53%<br/>***品牌店：30家');
-        // }
-      }
+    }
+    try {
+      tryFun();
+    } catch (err) {
+      alert('你的网络有问题');
     }
   })
 }

@@ -41,7 +41,7 @@ managerMsg = function() {
     console.log(arr);
     for (var i = 0; i < arr.length; i++) {
       var msgDiv = '<div class="manageMsgBox manageMsgBox' + (i + 1) + '">' +
-        '<img class="img1" src="' + picPath + arr[i].mulu + '/' + arr[i].pics + '"/>' +
+        '<img class="img1" src="' + picPath + arr[i].mulu + '/' + arr[i].headPhoto + '"/>' +
         '<img class="img2" src="' + picPath + arr[i].mulu + '/' + arr[i].qr + '"/>' +
         '<h3 class="name">招商经理：' + arr[i].manger + '</h3>' +
         '<p>片区：<span class="area">' + arr[i].area + '</span></p>' +
@@ -79,132 +79,139 @@ setData = function(id) {
     province: provinceName
   };
   getData1(dataPath + "distributeinfo", ajaxData).then(function(arr) {
-    // console.log(arr);
-    arr = arr.detailCount;
-    var data = [];
-    var storeNames = [];
-    var jingdus = [];
-    var weidus = [];
-    var types = [];
+
+    tryFun = function() {
+      // console.log(arr);
+      arr = arr.detailCount;
+      var data = [];
+      var storeNames = [];
+      var jingdus = [];
+      var weidus = [];
+      var types = [];
 
 
-    //获取各城市品牌信息
-    var Brands = [];
-    var Citys = [];
-    for (var i = 0; i < arr.length; i++) {
-      Brands.push(arr[i].brands);
-      Citys.push(arr[i].cityName);
-    }
-
-
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i].allDevStatus) {
-        var obj = { //obj为城市对象数组123123
-          name: arr[i].cityName,
-          value: 3
-        };
-      } else {
-        var obj = { //obj为城市对象数组
-          name: arr[i].cityName,
-          value: 1
-        };
+      //获取各城市品牌信息
+      var Brands = [];
+      var Citys = [];
+      for (var i = 0; i < arr.length; i++) {
+        Brands.push(arr[i].brands);
+        Citys.push(arr[i].cityName);
       }
 
-      data.push(obj);
 
-      var stores = arr[i].stores;
-      for (var j = 0; j < stores.length; j++) {
-        storeNames.push(stores[j].storeName);
-        jingdus.push(stores[j].jingdu);
-        weidus.push(stores[j].weidu);
-        types.push(stores[j].type);
-      }
-    }
-
-
-    //定义series数组
-    var series = new Array();
-    for (var i = 0; i < 1 /*data.length*/ ; i++) {
-      //如果该城市没有加盟店或者品牌数大于3
-      if (data.length != 0) {
-        if (data[i].length == 0) {
-          continue;
-        } else {
-          var obj = new Object();
-          obj = {
-            // name: brands[i],
-            type: 'map',
-            roam: true,
-            top: geoTop,
-            left: geoL,
-            zoom: geoZoom,
-            // scaleLimit: {
-            //   min: 0.6,
-            //   max: 20
-            // },
-            map: id,
-            symbol: 'pin',
-            symbolSize: 50,
-            label: {
-              normal: {
-                show: true,
-                textStyle: {
-                  color: '#525252',
-                  fontSize: 18
-                }
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  color: '#525252',
-                  fontSize: 18
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                borderColor: borderColor,
-                areaColor: MapColorL
-              }
-            },
-            data: data
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].allDevStatus) {
+          var obj = { //obj为城市对象数组123123
+            name: arr[i].cityName,
+            value: 3
           };
-          series.push(obj);
+        } else {
+          var obj = { //obj为城市对象数组
+            name: arr[i].cityName,
+            value: 1
+          };
+        }
+
+        data.push(obj);
+
+        var stores = arr[i].stores;
+        for (var j = 0; j < stores.length; j++) {
+          storeNames.push(stores[j].storeName);
+          jingdus.push(stores[j].jingdu);
+          weidus.push(stores[j].weidu);
+          types.push(stores[j].type);
         }
       }
+
+
+      //定义series数组
+      var series = new Array();
+      for (var i = 0; i < 1 /*data.length*/ ; i++) {
+        //如果该城市没有加盟店或者品牌数大于3
+        if (data.length != 0) {
+          if (data[i].length == 0) {
+            continue;
+          } else {
+            var obj = new Object();
+            obj = {
+              // name: brands[i],
+              type: 'map',
+              // roam: true,
+              top: geoTop,
+              left: geoL,
+              zoom: geoZoom,
+              // scaleLimit: {
+              //   min: 0.6,
+              //   max: 20
+              // },
+              map: id,
+              symbol: 'pin',
+              symbolSize: 50,
+              label: {
+                normal: {
+                  show: true,
+                  textStyle: {
+                    color: '#525252',
+                    fontSize: 18
+                  }
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    color: '#525252',
+                    fontSize: 18
+                  }
+                }
+              },
+              itemStyle: {
+                normal: {
+                  borderColor: borderColor,
+                  areaColor: MapColorL
+                }
+              },
+              data: data
+            };
+            series.push(obj);
+          }
+        }
+      }
+
+      //添加店铺数据
+      for (var i = 0; i < storeNames.length; i++) {
+        if (types[i] == '综合店') {
+          zonghe++;
+          var symbol = 'image://../image1080/9-yellow.png';
+        } else {
+          danpin++;
+          var symbol = 'image://../image1080/10-pink.png';
+        }
+        var obj = {
+          type: "scatter",
+          coordinateSystem: "geo",
+          zlevel: 12,
+          data: [{
+            name: storeNames[i],
+            value: [jingdus[i], weidus[i]]
+          }],
+          symbol: symbol,
+          symbolSize: [16, 20]
+        }
+        series.push(obj);
+      }
+
+
+      setOption(id, series, storeNames, Brands, Citys);
+      load();
+      //计算出单品点以及综合店的数量
+      $('.symbol .li1 span').text('(' + danpin + ')');
+      $('.symbol .li2 span').text('(' + zonghe + ')');
     }
 
-    //添加店铺数据
-    for (var i = 0; i < storeNames.length; i++) {
-      if (types[i] == '综合店') {
-        zonghe++;
-        var symbol = 'image://../image1080/9-yellow.png';
-      } else {
-        danpin++;
-        var symbol = 'image://../image1080/10-pink.png';
-      }
-      var obj = {
-        type: "scatter",
-        coordinateSystem: "geo",
-        zlevel: 12,
-        data: [{
-          name: storeNames[i],
-          value: [jingdus[i], weidus[i]]
-        }],
-        symbol: symbol,
-        symbolSize: [16, 20]
-      }
-      series.push(obj);
+    try {
+      tryFun();
+    } catch (err) {
+      alert('你的网络有问题');
     }
-
-
-    setOption(id, series, storeNames, Brands, Citys);
-    load();
-    //计算出单品点以及综合店的数量
-    $('.symbol .li1 span').text('(' + danpin + ')');
-    $('.symbol .li2 span').text('(' + zonghe + ')');
-
-
 
   })
 
@@ -312,7 +319,7 @@ setOption = function(id, series, storeNames, Brands, Citys) {
         top: geoTop,
         left: geoL,
         zoom: geoZoom,
-        roam: true,
+        // roam: true,
         // scaleLimit: {
         //   min: 0.6,
         //   max: 20

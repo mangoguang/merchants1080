@@ -10,16 +10,12 @@ var CNname = [];
 var ENname = [];
 var sum = [];
 var brandsArr;
+var labelShow = false;
 
 var ajaxObj = {};
 var brandList = [];
 var brandState = true;
 var canClick = true;
-
-var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {
-	tyep: 'unknown'
-};
-var type_text = ['unknown', 'ethernet', 'wifi', '2g', '3g', '4g', 'none'];
 
 $(document).ready(function() {
 	var height = document.documentElement.clientHeight;
@@ -94,14 +90,16 @@ $(document).ready(function() {
 		//设置地图
 		simpleMap(mapName, Json);
 		/*	各个国家开店总数，直营点与加盟店个数。*/
-		setData(Json);
-	})
 
+
+		setData(Json);
+
+	})
 
 	lazyload();
 
-});
 
+});
 simpleMap = function(mapName, Json) {
 	echarts.registerMap(mapName, Json);
 	option = {
@@ -119,225 +117,239 @@ simpleMap = function(mapName, Json) {
 
 setData = function(Json) {
 	getData1(dataPath + "sortinfo").then(function(arr) {
-		/*载入世界地图*/
-		var myChart = echarts.init(document.getElementById('main'));
-		//地图加载成功
-		// $('.animate').css('background', 'none').fadeOut(600);
-		// Tips();
+		tryFun = function() {
+			/*载入世界地图*/
+			var myChart = echarts.init(document.getElementById('main'));
+			//地图加载成功
+			// $('.animate').css('background', 'none').fadeOut(600);
+			// Tips();
 
-		echarts.registerMap(mapName, Json);
-		var geoCoordMap = {
-			"China": [113.5, 63.48],
-			"Japan": [138.76, 48.67],
-			"Australia": [135.13, -18.3],
-			"USA": [-80.02, 48.54],
-			"Canada": [-103.98, 70.33],
-			"India": [76.5, 29.48],
-			"Germany": [10.76, 63.67]
-		};
+			echarts.registerMap(mapName, Json);
+			var geoCoordMap = {
+				"China": [113.5, 63.48],
+				"Japan": [138.76, 48.67],
+				"Australia": [135.13, -18.3],
+				"USA": [-80.02, 48.54],
+				"Canada": [-103.98, 70.33],
+				"India": [76.5, 29.48],
+				"Germany": [10.76, 63.67],
+				"Italy": [12.5, 48],
+				"Cambodia": [104, 18]
+			};
 
-		var convertData = function(data) {
-			var res = [];
-			for (var i = 0; i < data.length; i++) {
-				var geoCoord = geoCoordMap[data[i].name];
-				if (geoCoord) {
-					res.push({
-						name: data[i].name,
-						value: geoCoord.concat(data[i].value)
-					});
+			var convertData = function(data) {
+				var res = [];
+				for (var i = 0; i < data.length; i++) {
+					var geoCoord = geoCoordMap[data[i].name];
+					if (geoCoord) {
+						res.push({
+							name: data[i].name,
+							value: geoCoord.concat(data[i].value)
+						});
+					}
 				}
-			}
-			return res;
-		};
+				return res;
+			};
 
-		//定义series数组
-		var country = [];
-		for (var i = 0; i < arr.length; i++) {
-			country.push(arr[i].area);
-		}
-		var series = new Array();
-		for (i in ENname) {
-			if (ENname[i] == 'China') {
-				var symbolSize = [200, 230];
-				var fontSize = 32;
-			} else {
-				var symbolSize = [100, 115];
-				var fontSize = 18;
+			//定义series数组
+			var country = [];
+			for (var i = 0; i < arr.length; i++) {
+				country.push(arr[i].area);
 			}
-			var obj2 = {
-				type: 'scatter',
-				coordinateSystem: 'geo',
-				data: convertData([{
-					name: ENname[i],
-					value: 2
-				}]),
-				symbol: 'image://./image1080/6-tap.png',
-				symbolSize: symbolSize,
-				label: {
-					normal: {
-						show: true,
-						formatter: CNname[i] + '\n' + sum[i] + '家' + '\n',
-						textStyle: {
-							color: '#000',
-							fontSize: fontSize
+			var series = new Array();
+			console.log(ENname);
+			for (i in ENname) {
+				if (ENname[i] == 'China') {
+					var symbolSize = [200, 230];
+					var fontSize = 32;
+				} else if (ENname[i] == 'Cambodia' || ENname[i] == 'Italy') {
+					var symbolSize = [50, 57];
+					var fontSize = 14;
+				} else {
+					var symbolSize = [100, 115];
+					var fontSize = 18;
+				}
+				var obj2 = {
+					type: 'scatter',
+					coordinateSystem: 'geo',
+					data: convertData([{
+						name: ENname[i],
+						value: 2
+					}]),
+					symbol: 'image://./image1080/6-tap.png',
+					symbolSize: symbolSize,
+					label: {
+						normal: {
+							show: true,
+							formatter: CNname[i] + '\n' + sum[i] + '家' + '\n',
+							textStyle: {
+								color: '#000',
+								fontSize: fontSize
+							}
 						}
 					}
 				}
+				series.push(obj2);
 			}
-			series.push(obj2);
+
+			(function() {
+				var data = new Array();
+				for (var i = 0; i < country.length; i++) {
+					if (ENname[i] == 'USA') {
+						ENname[i] = 'United States of America';
+					}
+					var temp = ENname[i];
+					var obj = new Object();
+					obj.name = temp;
+					obj.value = 1;
+					data.push(obj);
+				}
+
+				var obj = {
+					type: 'map',
+					map: 'world',
+					zoom: 0.9,
+					// roam: true,
+					top: geoTop,
+					left: geoLeft,
+					itemStyle: {
+						normal: {
+							borderColor: borderColor,
+							areaColor: MapColorL
+						}
+					},
+					data: data
+				};
+				series.push(obj);
+			})()
+
+
+			//设置地图
+			option = {
+				// tooltip: {
+				// 	trigger: 'item',
+				// 	showDelay: 0,
+				// 	transitionDuration: 0.2,
+				// 	trigger: 'item',
+				// 	formatter: function(params) {
+				// 		return tooltipData(params);
+				// 	}
+				// },
+				title: {
+					text: '慕思招商系统',
+					top: 50,
+					left: 260,
+					textStyle: {
+						color: '#dcdcdc',
+						fontSize: 40,
+						fontWeight: 300
+					}
+				},
+				visualMap: {
+					type: 'piecewise',
+					left: 40,
+					bottom: 50,
+					itemWidth: 40,
+					itemHeight: 40,
+					orient: 'vertical',
+					textStyle: {
+						color: '#e5e5e5',
+						fontSize: 26
+					},
+					outOfRange: {
+						color: pointColor,
+						fontSize: 30
+					},
+					pieces: [{
+						min: 1,
+						max: 10,
+						label: '已开发区域'
+					}, {
+						min: 0,
+						max: 0,
+						label: '未开发区域'
+					}],
+					color: [MapColorR, MapColorL]
+				},
+				toolbox: {
+					show: false,
+					left: 'left',
+					top: 'top',
+					feature: {
+						dataView: {
+							readOnly: false
+						},
+						restore: {},
+						saveAsImage: {}
+					}
+				},
+				geo: {
+					type: 'map',
+					map: mapName,
+					zoom: 0.9,
+					// roam: true,
+					top: geoTop,
+					left: geoLeft,
+					itemStyle: {
+						normal: {
+							borderColor: borderColor,
+							areaColor: MapColorL
+						}
+					}
+				},
+				series: series
+			};
+
+			myChart.setOption(option);
+			load();
+
+			//点击相应国家实现下钻
+			myChart.on('click', function(params) {
+				var str = params.name;
+				if (str == 'USA') {
+					str = 'United States of America';
+				}
+				var countryName = '';
+				switch (str) {
+					case 'China':
+						location.href = 'html/country.html?name=China&index=1';
+						break;
+					case 'United States of America':
+						location.href = 'html/othercountry.html?name=USA&CNname=' + encodeURIComponent('美国') + '&index=1';
+						break;
+					case 'Japan':
+						location.href = 'html/othercountry.html?name=Japan&CNname=' + encodeURIComponent('日本') + '&index=1';
+						break;
+					case 'Australia':
+						location.href = 'html/othercountry.html?name=Australia&CNname=' + encodeURIComponent('澳大利亚') + '&index=1';
+						break;
+					case 'Germany':
+						location.href = 'html/othercountry.html?name=German&CNname=' + encodeURIComponent('德国') + '&index=1';
+						break;
+					case 'India':
+						location.href = 'html/othercountry.html?name=India&CNname=' + encodeURIComponent('印度') + '&index=1';
+						break;
+					case 'Canada':
+						location.href = 'html/othercountry.html?name=Canada&CNname=' + encodeURIComponent('加拿大') + '&index=1';
+						break;
+					case 'Italy':
+						alert('该国家地图数据暂时缺失');
+						break;
+					case 'Cambodia':
+						alert('该国家地图数据暂时缺失');
+						break;
+						// default:
+						// location.href = 'html/country.html?name=' + countryName;
+				}
+
+			});
+		}
+		try {
+			tryFun();
+		} catch (err) {
+			alert('你的网络有问题。');
 		}
 
-		(function() {
-			var data = new Array();
-			for (var i = 0; i < country.length; i++) {
-				if (ENname[i] == 'USA') {
-					ENname[i] = 'United States of America';
-				}
-				var temp = ENname[i];
-				var obj = new Object();
-				obj.name = temp;
-				obj.value = 1;
-				data.push(obj);
-			}
-
-			var obj = {
-				type: 'map',
-				map: 'world',
-				zoom: 0.9,
-				// roam: true,
-				top: geoTop,
-				left: geoLeft,
-				itemStyle: {
-					normal: {
-						borderColor: borderColor,
-						areaColor: MapColorL
-					}
-				},
-				data: data
-			};
-			series.push(obj);
-		})()
-
-
-		//设置地图
-		option = {
-			// tooltip: {
-			// 	trigger: 'item',
-			// 	showDelay: 0,
-			// 	transitionDuration: 0.2,
-			// 	trigger: 'item',
-			// 	formatter: function(params) {
-			// 		return tooltipData(params);
-			// 	}
-			// },
-			title: {
-				text: '慕思招商系统',
-				top: 50,
-				left: 260,
-				textStyle: {
-					color: '#dcdcdc',
-					fontSize: 40,
-					fontWeight: 300
-				}
-			},
-			visualMap: {
-				type: 'piecewise',
-				left: 40,
-				bottom: 50,
-				itemWidth: 40,
-				itemHeight: 40,
-				orient: 'vertical',
-				textStyle: {
-					color: '#e5e5e5',
-					fontSize: 26
-				},
-				outOfRange: {
-					color: pointColor,
-					fontSize: 30
-				},
-				pieces: [{
-					min: 1,
-					max: 10,
-					label: '已开发区域'
-				}, {
-					min: 0,
-					max: 0,
-					label: '未开发区域'
-				}],
-				color: [MapColorR, MapColorL]
-			},
-			toolbox: {
-				show: false,
-				left: 'left',
-				top: 'top',
-				feature: {
-					dataView: {
-						readOnly: false
-					},
-					restore: {},
-					saveAsImage: {}
-				}
-			},
-			geo: {
-				type: 'map',
-				map: mapName,
-				zoom: 0.9,
-				// roam: true,
-				top: geoTop,
-				left: geoLeft,
-				itemStyle: {
-					normal: {
-						borderColor: borderColor,
-						areaColor: MapColorL
-					}
-				}
-			},
-			series: series
-		};
-
-		myChart.setOption(option);
-		load();
-
-		//点击相应国家实现下钻
-		myChart.on('click', function(params) {
-			var str = params.name;
-			if (str == 'USA') {
-				str = 'United States of America';
-			}
-			var countryName = '';
-			switch (str) {
-				case 'China':
-					location.href = 'html/country.html?name=China&index=1';
-					break;
-				case 'United States of America':
-					location.href = 'html/othercountry.html?name=USA&CNname=' + encodeURIComponent('美国') + '&index=1';
-					break;
-				case 'Japan':
-					location.href = 'html/othercountry.html?name=Japan&CNname=' + encodeURIComponent('日本') + '&index=1';
-					break;
-				case 'Australia':
-					location.href = 'html/othercountry.html?name=Australia&CNname=' + encodeURIComponent('澳大利亚') + '&index=1';
-					break;
-				case 'Germany':
-					location.href = 'html/othercountry.html?name=German&CNname=' + encodeURIComponent('德国') + '&index=1';
-					break;
-				case 'India':
-					location.href = 'html/othercountry.html?name=India&CNname=' + encodeURIComponent('印度') + '&index=1';
-					break;
-				case 'Canada':
-					location.href = 'html/othercountry.html?name=Canada&CNname=' + encodeURIComponent('加拿大') + '&index=1';
-					break;
-				case 'Italy':
-					alert('该国家地图数据暂时缺失');
-					break;
-				case 'Cambodia':
-					alert('该国家地图数据暂时缺失');
-					break;
-					// default:
-					// location.href = 'html/country.html?name=' + countryName;
-			}
-
-		});
 
 		// tooltipData = function(params) {
 		// 	if (params.name == 'China') {
@@ -369,157 +381,166 @@ function lazyload() {
 function barOption(ajaxObj, text) {
 
 	getData1(dataPath + "brandbyinfo", ajaxObj).then(function(data) {
-			canClick = true;
+			tryFun = function() {
+				canClick = true;
 
-			//获取行政区域数组1
-			var temp = data.area;
-			var yAxisData = [];
-			for (var i = 0; i < temp.length; i++) {
-				yAxisData.push(temp[i][0]);
-			}
-			// console.log(yAxisData);
-
-			//获取各品牌
-			var legendData = [];
-			var brandMsg = data.brandMsg;
-			for (var i = 0; i < brandMsg.length; i++) {
-				legendData.push(brandMsg[i].brand);
-			}
-			// $('.barLengend')
-			// console.log(legendData);
-			legendData.unshift('全部');
-
-			if (brandState) {
-				brandsArr = legendData;
-				brandState = false;
-			}
-
-			brandList = legendData;
-			addBrandList(brandsArr, text);
-			barList();
-			// console.log(legendData);
-			// console.log(legendData);
-
-			//获取各品牌在各行政区域的店铺数量
-			var lengendBrandArr = [];
-			var lengendNumArr = [];
-			lengendNumArr.length = brandMsg.length;
-			for (var i = 0; i < brandMsg.length; i++) {
-				lengendNumArr[i] = [];
-				lengendBrandArr.push(brandMsg[i].brandInfo);
-			}
-
-			for (var i = 0; i < lengendBrandArr.length; i++) {
-				for (var j = 0; j < lengendBrandArr[i].length; j++) {
-					lengendNumArr[i].push(lengendBrandArr[i][j].QTY);
+				//获取行政区域数组1
+				var temp = data.area;
+				var yAxisData = [];
+				for (var i = 0; i < temp.length; i++) {
+					yAxisData.push(temp[i][0]);
 				}
-			}
+				// console.log(yAxisData);
 
-			/*柱状图lengend模块'全部'数组数据*/
-			var setupData = [];
-			for (var i = 0; i < lengendNumArr[0].length; i++) {
-				setupData.push(temp[i][1]);
-			}
-			lengendNumArr.unshift(setupData);
+				//获取各品牌
+				var legendData = [];
+				var brandMsg = data.brandMsg;
+				for (var i = 0; i < brandMsg.length; i++) {
+					legendData.push(brandMsg[i].brand);
+				}
+				// $('.barLengend')
+				// console.log(legendData);
+				legendData.unshift('全部');
 
-			var series = [];
-			for (var i = 0; i < brandList.length; i++) {
-				var obj = {
-					name: brandList[i],
-					type: 'bar',
-					stack: '总量',
-					label: {
-						normal: {
-							// show: true,
-							position: 'insideRight'
-						}
-					},
-					data: lengendNumArr[i] //[169, 60, 80, 130, 135, 65, 30, 50, 90, 85, 80]
+				if (brandState) {
+					brandsArr = legendData;
+					brandState = false;
 				}
 
-				series.push(obj);
-			}
+				brandList = legendData;
+				addBrandList(brandsArr, text);
+				barList();
+				// console.log(legendData);
+				// console.log(legendData);
 
-			var BarChart = echarts.init(document.getElementById('barGraph'));
+				//获取各品牌在各行政区域的店铺数量
+				var lengendBrandArr = [];
+				var lengendNumArr = [];
+				lengendNumArr.length = brandMsg.length;
+				for (var i = 0; i < brandMsg.length; i++) {
+					lengendNumArr[i] = [];
+					lengendBrandArr.push(brandMsg[i].brandInfo);
+				}
 
-			Baroption = {
-				tooltip: {
-					trigger: 'axis',
-					// triggerOn: 'click',
-					axisPointer: { // 坐标轴指示器，坐标轴触发有效
-						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				for (var i = 0; i < lengendBrandArr.length; i++) {
+					for (var j = 0; j < lengendBrandArr[i].length; j++) {
+						lengendNumArr[i].push(lengendBrandArr[i][j].QTY);
 					}
-				},
-				// legend: {
-				// 	itemWidth: 30,
-				// 	itemHeight: 20,
-				// 	selectedMode: selectedMode,
-				// 	inactiveColor: '#555',
-				// 	textStyle: {
-				// 		color: textColor,
-				// 		fontSize: 12
-				// 	},
-				// 	data: brandList //['0769', '3D', '凯奇', '歌蒂娅', 'V6'];
-				// },
-				grid: {
-					left: '6%',
-					right: '4%',
-					bottom: '3%',
-					containLabel: true
-				},
-				xAxis: {
-					type: 'value',
-					axisLabel: {
-						textStyle: {
-							color: textColor,
-							fontSize: 12
-						}
-					},
-					axisLine: {
-						lineStyle: {
-							color: textColor
-						}
-					},
-					splitLine: {
-						show: false
+				}
+
+				/*柱状图lengend模块'全部'数组数据*/
+				var setupData = [];
+				// for (var i = 0; i < lengendNumArr[0].length; i++) {
+				// 	setupData.push(temp[i][1]);
+				// }
+				lengendNumArr.unshift(setupData);
+
+				var series = [];
+				for (var i = 0; i < brandList.length; i++) {
+					var obj = {
+						name: brandList[i],
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: labelShow,
+								position: 'right',
+
+							}
+						},
+						data: lengendNumArr[i] //[169, 60, 80, 130, 135, 65, 30, 50, 90, 85, 80]
 					}
-				},
-				yAxis: {
-					type: 'category',
-					axisLabel: {
-						textStyle: {
-							color: textColor,
-							fontSize: 12
+
+					series.push(obj);
+				}
+
+				var BarChart = echarts.init(document.getElementById('barGraph'));
+
+				Baroption = {
+					tooltip: {
+						trigger: 'axis',
+						// triggerOn: 'click',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
 						}
 					},
-					axisLine: {
-						lineStyle: {
-							color: textColor,
-							fontSize: 12
-						}
-					},
-					axisTick: {
-						show: false
-					},
-					inverse: true,
-					data: yAxisData // var yAxisData = ['广东', '广西', '福建', '浙江', '江苏', '湖南', '江西', '贵州', '云南', '四川', '湖北'];
-				},
-				series: series
-					// [{
-					// 	name: '0769',
-					// 	type: 'bar',
-					// 	stack: '总量',
-					// 	label: {
-					// 		normal: {
-					// 			show: true,
-					// 			position: 'insideRight'
-					// 		}
+					// legend: {
+					// 	itemWidth: 30,
+					// 	itemHeight: 20,
+					// 	selectedMode: selectedMode,
+					// 	inactiveColor: '#555',
+					// 	textStyle: {
+					// 		color: textColor,
+					// 		fontSize: 12
 					// 	},
-					// 	data: [169, 60, 80, 130, 135, 65, 30, 50, 90, 85, 80]
-					// }]
-			};
+					// 	data: brandList //['0769', '3D', '凯奇', '歌蒂娅', 'V6'];
+					// },
+					grid: {
+						left: '6%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: {
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: textColor,
+								fontSize: 12
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: textColor
+							}
+						},
+						splitLine: {
+							show: false
+						}
+					},
+					yAxis: {
+						type: 'category',
+						axisLabel: {
+							textStyle: {
+								color: textColor,
+								fontSize: 12
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: textColor,
+								fontSize: 12
+							}
+						},
+						axisTick: {
+							show: false
+						},
+						inverse: true,
+						data: yAxisData // var yAxisData = ['广东', '广西', '福建', '浙江', '江苏', '湖南', '江西', '贵州', '云南', '四川', '湖北'];
+					},
+					series: series
+						// [{
+						// 	name: '0769',
+						// 	type: 'bar',
+						// 	stack: '总量',
+						// 	label: {
+						// 		normal: {
+						// 			show: true,
+						// 			position: 'insideRight'
+						// 		}
+						// 	},
+						// 	data: [169, 60, 80, 130, 135, 65, 30, 50, 90, 85, 80]
+						// }]
+				};
 
-			BarChart.setOption(Baroption);
+				BarChart.setOption(Baroption);
+			}
+
+			try {
+				tryFun();
+			} catch (err) {
+				alert('你的网络有问题。');
+			}
 			// BarChart.on('legendselectchanged', function(params) {
 			// 	console.log(params.name);
 			// 	selectedMode = 'single';
@@ -618,6 +639,9 @@ function addProvinceLi() {
 //点击国家列表
 function countryBtn() {
 	$(".countrysList li").click(function() {
+		labelShow = false;
+		$('.barLengend').addClass('on');
+		delete ajaxObj.brand;
 
 		var _thisName = $(this).text();
 		if (_thisName == '中国') {
@@ -644,6 +668,10 @@ function countryBtn() {
 
 function provinceBtn() {
 	$(".provincesList li").click(function() {
+		labelShow = false;
+		$('.barLengend').addClass('on');
+		delete ajaxObj.brand;
+
 		$('.citysListBox > h2').text('市');
 		$(this).parent().hide(500);
 		$('.citysListBox').show(500);
@@ -699,6 +727,10 @@ function provinceBtn() {
 
 function cityBtn() {
 	$(".citysList li").click(function() {
+		labelShow = false;
+		$('.barLengend').addClass('on');
+		delete ajaxObj.brand;
+
 		$(this).parent().hide(500);
 		var name = $(this).text();
 		$(this).parent().siblings().text(name);
@@ -719,10 +751,12 @@ function barList() {
 			canClick = false;
 			var text = $(this).text();
 			if (text == '全部') {
+				labelShow = false;
 				$('.barLengend').addClass('on');
 				delete ajaxObj.brand;
 				barOption(ajaxObj, '');
 			} else {
+				labelShow = true;
 				$('.barLengend').removeClass('on');
 				$(this).addClass('on');
 				$(this).siblings().removeClass('on');
