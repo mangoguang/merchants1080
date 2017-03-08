@@ -1320,6 +1320,48 @@ h1.title{
   }
 }
 
+.kzryListBtn{
+  width: 50px;
+  height: 300px;
+  padding: 15px 13px;
+  color: #1a1a1a;
+  font-size: 30px;
+  line-height: 1.5em;
+  background: #3b3b3b;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -150px;
+  box-sizing: border-box;
+}
+
+.kzryMsgBox{
+  display: none;
+  position: absolute;
+  right: 0;
+  width: 794px;
+  &>button{
+    display: block;
+    width: 60px;
+    height: 140px;
+    font-size: 30px;
+    color: #fff;
+    background: #00acc1;
+    padding: 16px 15px;
+    position: absolute;
+    right: 734px;
+    top: 50%;
+    margin-top: -70px;
+  }
+  .kzryListBox{
+    width: 734px;
+    height: 100%;
+    background: rgba(13,13,13,0.95);
+    position: absolute;
+    right: 0;
+  }
+}
+
 #barGraphBox{
   width: 1186px;
   overflow-x: hidden;

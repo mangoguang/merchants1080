@@ -24,6 +24,7 @@ $(document).ready(function() {
 	$(".barGraphBox").height(height - 230);
 	$(".barGraph").height(height - 280);
 	$(".unDevelopBox").height(height - 200);
+	$(".kzryMsgBox").height(height);
 
 	//添加各国店铺情况
 	addStoreMsg();
@@ -66,6 +67,15 @@ $(document).ready(function() {
 		} else {
 			$(this).siblings().hide(500);
 		}
+	})
+
+	//点击拓展人员列表按钮
+	$('.kzryListBtn').click(function() {
+		$('.kzryMsgBox').show();
+	})
+
+	$('.kzryMsgBox>button').click(function() {
+		$('.kzryMsgBox').hide();
 	})
 
 	//添加省份筛选列
