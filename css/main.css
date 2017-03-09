@@ -76,6 +76,9 @@ a {
   color: #020202; }
 
 /* common css */
+.hide {
+  display: none; }
+
 .left {
   float: left; }
 
@@ -140,7 +143,6 @@ a {
     -o-transform: scale(2);
     -ms-transform: scale(2);
     opacity: 0; } }
-
 @-moz-keyframes ripple {
   to {
     transform: scale(2);
@@ -149,7 +151,6 @@ a {
     -o-transform: scale(2);
     -ms-transform: scale(2);
     opacity: 0; } }
-
 @-webkit-keyframes ripple {
   to {
     transform: scale(2);
@@ -158,7 +159,6 @@ a {
     -o-transform: scale(2);
     -ms-transform: scale(2);
     opacity: 0; } }
-
 @-o-keyframes ripple {
   to {
     transform: scale(2);
@@ -167,7 +167,6 @@ a {
     -o-transform: scale(2);
     -ms-transform: scale(2);
     opacity: 0; } }
-
 @-ms-keyframes ripple {
   to {
     transform: scale(2);
@@ -176,7 +175,6 @@ a {
     -o-transform: scale(2);
     -ms-transform: scale(2);
     opacity: 0; } }
-
 /* ------加载动画------ */
 .animate {
   width: 100%;
@@ -240,7 +238,6 @@ div.rect {
     -moz-transform: rotateZ(360deg);
     -o-transform: rotateZ(360deg);
     -ms-transform: rotateZ(360deg); } }
-
 @-webkit-keyframes mymove {
   0% {
     transform: rotateZ(0deg);
@@ -254,7 +251,6 @@ div.rect {
     -moz-transform: rotateZ(360deg);
     -o-transform: rotateZ(360deg);
     -ms-transform: rotateZ(360deg); } }
-
 @-moz-keyframes mymove {
   0% {
     transform: rotateZ(0deg);
@@ -268,7 +264,6 @@ div.rect {
     -moz-transform: rotateZ(360deg);
     -o-transform: rotateZ(360deg);
     -ms-transform: rotateZ(360deg); } }
-
 @-o-keyframes mymove {
   0% {
     transform: rotateZ(0deg);
@@ -282,7 +277,6 @@ div.rect {
     -moz-transform: rotateZ(360deg);
     -o-transform: rotateZ(360deg);
     -ms-transform: rotateZ(360deg); } }
-
 @-ms-keyframes mymove {
   0% {
     transform: rotateZ(0deg);
@@ -296,7 +290,6 @@ div.rect {
     -moz-transform: rotateZ(360deg);
     -o-transform: rotateZ(360deg);
     -ms-transform: rotateZ(360deg); } }
-
 /* ------加载动画结束------ */
 /* ------提示样式------ */
 .tipsBox {
@@ -804,25 +797,21 @@ h1.title {
     /* Safari and Chrome */
     -o-animation: moveRight 0.5s;
     /* Opera */ }
-
 @keyframes moveRight {
   from {
     left: -5.2rem; }
   to {
     left: -1rem; } }
-
 @-moz-keyframes moveRight /* Firefox */ {
   from {
     left: -5.2rem; }
   to {
     left: -1rem; } }
-
 @-webkit-keyframes moveRight /* Safari and Chrome */ {
   from {
     left: -5.2rem; }
   to {
     left: -1rem; } }
-
 @-o-keyframes moveRight /* Opera */ {
   from {
     left: -5.2rem; }
@@ -1066,6 +1055,7 @@ h1.title {
   left: 760px; }
 
 .listBox {
+  display: none;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -1191,7 +1181,7 @@ h1.title {
 .kzryListBtn {
   width: 50px;
   height: 300px;
-  padding: 15px 13px;
+  padding: 15px 10px;
   color: #1a1a1a;
   font-size: 30px;
   line-height: 1.5em;
@@ -1203,6 +1193,7 @@ h1.title {
   box-sizing: border-box; }
 
 .kzryMsgBox {
+  display: none;
   position: absolute;
   right: 0;
   width: 794px; }
@@ -1224,14 +1215,17 @@ h1.title {
   height: 100%;
   background: rgba(13, 13, 13, 0.95);
   position: absolute;
-  right: 0; }
+  right: 0;
+  border-left: 1px solid #00acc1;
+  box-shadow: 10px 10px 25px 10px #00acc1; }
   .kzryListBox .zsrySelect {
     width: 160px;
     height: 50px;
     font-size: 24px;
     position: absolute;
     top: 75px;
-    left: 30px; }
+    left: 30px;
+    z-index: 1; }
     .kzryListBox .zsrySelect button {
       display: block;
       width: 160px;
@@ -1261,6 +1255,62 @@ h1.title {
     border-right: 8px solid #fff;
     margin: 70px 60px;
     padding-right: 8px; }
+  .kzryListBox .kzryList {
+    overflow-x: hidden; }
+    .kzryListBox .kzryList li {
+      min-height: 220px;
+      border-bottom: 1px solid #dcdcdc;
+      overflow: hidden;
+      position: relative; }
+      .kzryListBox .kzryList li img {
+        height: 160px;
+        width: 160px;
+        position: absolute;
+        top: 30px; }
+      .kzryListBox .kzryList li .headPhoto {
+        left: 30px;
+        border-radius: 50%; }
+      .kzryListBox .kzryList li .QR {
+        right: 60px; }
+      .kzryListBox .kzryList li div {
+        padding: 24px 235px 24px 205px; }
+        .kzryListBox .kzryList li div h3 {
+          font-size: 24px;
+          font-weight: 700;
+          color: #dcdcdc; }
+          .kzryListBox .kzryList li div h3 span {
+            display: inline-block;
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.4em;
+            background: #ff5824;
+            border-radius: 6px;
+            padding: 0 10px;
+            margin-left: 10px; }
+        .kzryListBox .kzryList li div p {
+          font-size: 18px;
+          color: #ccc; }
+        .kzryListBox .kzryList li div p.moreBox {
+          max-height: 64px;
+          overflow: hidden; }
+        .kzryListBox .kzryList li div button {
+          font-size: 12px;
+          color: #dcdcdc;
+          border: 1px solid #dcdcdc;
+          border-radius: 4px;
+          padding: 0 5px;
+          position: absolute;
+          bottom: 10px;
+          right: 235px;
+          z-index: 999; }
+    .kzryListBox .kzryList li:first-child {
+      border-top: 1px solid #dcdcdc; }
+
+.noMenMsg {
+  color: #dcdcdc;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 30px; }
 
 #barGraphBox {
   width: 1186px;
@@ -1742,7 +1792,6 @@ h1.title {
   width: 100%;
   height: 340px;
   background: #ccc; }
-
 .storeDetail .managerMsg:after {
   content: '';
   display: block;
@@ -1752,7 +1801,6 @@ h1.title {
   position: absolute;
   left: 30px;
   bottom: 0; }
-
 .storeDetail .managerMsg {
   padding-right: 30px;
   padding-bottom: 30px;
@@ -1786,7 +1834,6 @@ h1.title {
     line-height: 1.4em; }
     .storeDetail .managerMsg > p span {
       color: #dcdcdc; }
-
 .storeDetail .storeMsg {
   font-size: 26px;
   color: #dcdcdc; }
@@ -1972,7 +2019,6 @@ h1.title {
   color: #fff;
   background: #525252;
   text-align: center; }
-
 .productDetail p {
   font-size: 0.42rem;
   color: #fff;
@@ -2008,3 +2054,5 @@ h1.title {
     margin-top: .5rem; }
 
 /* ------店铺查询结束------ */
+
+/*# sourceMappingURL=main.css.map */

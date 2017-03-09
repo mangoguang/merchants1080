@@ -13,6 +13,7 @@ var brandsArr;
 var labelShow = false;
 
 var ajaxObj = {};
+var ajaxObj1 = {}; //获取拓展人员资料参数
 var brandList = [];
 var brandState = true;
 var canClick = true;
@@ -25,6 +26,7 @@ $(document).ready(function() {
 	$(".barGraph").height(height - 280);
 	$(".unDevelopBox").height(height - 200);
 	$(".kzryMsgBox").height(height);
+	$('.kzryList').height(height - 200);
 
 	//添加各国店铺情况
 	addStoreMsg();
@@ -42,13 +44,6 @@ $(document).ready(function() {
 		$(this).siblings().removeClass('on');
 		$(this).addClass('on');
 		$(".listBox").hide(500);
-	})
-
-	ajaxObj = {
-		// brand: '3D'
-	};
-	getData1(dataPath1 + "gettuozhan", ajaxObj).then(function(arr) {
-		console.log(arr); 
 	})
 
 
@@ -175,7 +170,6 @@ setData = function(Json) {
 				country.push(arr[i].area);
 			}
 			var series = new Array();
-			console.log(ENname);
 			for (i in ENname) {
 				if (ENname[i] == 'China') {
 					var symbolSize = [200, 230];
@@ -393,6 +387,12 @@ function lazyload() {
 			// city: '惠州市'
 	}
 	barOption(ajaxObj, '');
+
+	//添加拓展人员信息列表
+	ajaxObj1 = {
+
+	};
+	addzsryLi(ajaxObj1);
 }
 
 /*---柱状图代码---*/
@@ -408,7 +408,6 @@ function barOption(ajaxObj, text) {
 				for (var i = 0; i < temp.length; i++) {
 					yAxisData.push(temp[i][0]);
 				}
-				// console.log(yAxisData);
 
 				//获取各品牌
 				var legendData = [];
@@ -427,9 +426,9 @@ function barOption(ajaxObj, text) {
 
 				brandList = legendData;
 				addBrandList(brandsArr, text);
+				//添加品牌列表
+				addzsryList(brandsArr);
 				barList();
-				// console.log(legendData);
-				// console.log(legendData);
 
 				//获取各品牌在各行政区域的店铺数量
 				var lengendBrandArr = [];
@@ -618,7 +617,6 @@ function addBrandList(arr, text) {
 	if (text != '') {
 		for (i in arr) {
 			if (arr[i] == text) {
-				console.log(i);
 				$('.barLengend .li' + i).addClass('on');
 			}
 		}
@@ -908,14 +906,85 @@ addOtherCountry = function(name1) {
 var obj;
 var fn;
 
-function zsryBtn(){
-	$('.zsrySelect').click(function(){
+function zsryBtn() {
+	$('.zsrySelect').click(function() {
 		$('.zsrySelect ul').toggle();
 	})
 }
 zsryBtn();
 
+//拓展人员筛选列表添加
+function addzsryList(brandsArr) {
+	var lis = '';
+	$('.zsryBox').empty();
+	for (i in brandsArr) {
+		var li = '<li>' + brandsArr[i] + '</li>';
+		lis += li;
+	}
+	$('.zsryBox').append(lis);
 
+	zsryLiClick();
+}
+
+//点击拓展人员列表
+function zsryLiClick() {
+	$('.zsryBox li').off('click').click(function() {
+		var brand = $(this).text();
+		$('.zsryBtn').html(brand);
+
+		if (brand == '全部') {
+			ajaxObj1 = {
+
+			};
+		} else {
+			ajaxObj1 = {
+				brand: brand
+			};
+		}
+
+		addzsryLi(ajaxObj1);
+	})
+}
+
+function addzsryLi(ajaxObj1) {
+	console.log(ajaxObj1);
+	getData1(dataPath1 + "gettuozhan", ajaxObj1).then(function(arr) {
+		console.log(arr);
+		if (arr.length > 0) {
+			$('.kzryList').empty();
+			var lis = '';
+			for (i in arr) {
+				var area = arr[i].AREA;
+				if (area.length > 26) {
+					var button = "<button class='moreBtn'>显示全部</button>";
+				} else {
+					var button = '';
+				}
+				var li = "<li>" +
+					"<img class='headPhoto' src='" + picPath + arr[i].MULU + '/' + arr[i].HEADPHOTO + "'/>" +
+					"<div>" +
+					"<h3>" + arr[i].NAME + "<span>" + arr[i].BRAND + "</span></h3>" +
+					"<p>电话：" + arr[i].PHONE + "</p>" +
+					"<p>职位：" + arr[i].POSITION + "</p>" +
+					"<p class='moreBox'>负责区域：" + area + "</p>" +
+					button +
+					"</div>" +
+					"<img class='QR' src='" + picPath + arr[i].MULU + '/' + arr[i].QRPIC + "'/>" +
+					"</li>";
+				lis += li;
+			}
+			$('.kzryList').append(lis);
+
+			$('.moreBtn').off('click').click(function() {
+				$(this).hide();
+				$(this).siblings('.moreBox').css('max-height', '1000px');
+			})
+		} else {
+			$('.kzryList').empty();
+			$('.kzryList').append('<p class="noMenMsg">该品牌暂时没有设置拓展人员！</p>');
+		}
+	})
+}
 
 /**
  *
