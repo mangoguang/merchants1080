@@ -1,12 +1,12 @@
 
-  /* 变量 */
- $font10: .266rem; $font12: .32rem; $font14: .36rem;
- $font16: .42rem;  $font18: .48rem; $font20: .533rem;
- $font24: .64rem;  $font30: .8rem;
- $color: #19bd9b;  $color1: #020202;
-
-/*reset sass */
-body,dl,dd,ul,ol,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,textarea,optgroup,p,blockquote,figure,hr,menu,dir,thead,tbody,tfoot,th,td {margin:0;padding:0}  
+//变量
+$bgc: #fafafa;//背景色
+$fc: #31c3b0;//主色
+$subfc: #0d332e;//辅助色
+$inputfc: #999;//输入框字体颜色
+$btnfc: #fff;//按钮字体颜色
+  /*reset css */
+body,dl,dd,ul,ol,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,textarea,p,thead,tbody,tfoot,th,td {margin:0;padding:0}  
 ul,ol{list-style-type:none;list-style-image:none}
 a{text-decoration:none}a:active{background-color:transparent}  a:active,a:hover{outline:0 none}a:focus{outline:1px dotted}  
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;font-size:62.5%}  
@@ -23,74 +23,78 @@ a,button{
 button,input,textarea{
     border: none;
     background: none;
+    outline: none;
 }
 textarea{overflow: hidden;}
+
+h3{
+  color: #666;
+}
+p,li,span,input,label,div{
+  color: #999;
+}
+
 a:hover{text-decoration:none;}
-a{color: $color1;}
 
-/* common sass */
-#main{padding-top: .5rem;}
-.left{float: left;}
-.right{float: right;}
-.clear{clear: both;}
-.clearfix { *zoom: 1; } 
-.clearfix:before, 
-.clearfix:after {
-  display: table;
-  line-height: 0; 
-  content: ""; 
-} 
-.clearfix:after { clear: both; } 
-.line20{height:20px;background: #f9f9f9;}
-.line50{height: 50px;}
-.line100{height: 100px;}
+/* common css */
+.hide{
+  display: none;
+}
 
-/* ------首页------ */
-// body.index{background-color: $color1;}
-.showList{
-  position: absolute;
-  width: 9rem;
-  height: 6rem;
-  left: 50%;
-  top: 50%;
-  margin-left: -4.5rem;
-  margin-top: -3rem;
-  a{
-    display: block;
-    line-height: 2.6em;
-    margin-top: .5rem;
-    font-size: $font20;
-    text-align: center;
-    color: #fff;
-    background: #525252;
-    border-radius: .1rem;
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+  &:before {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+  &:after {
+    display: table;
+    line-height: 0;
+    content: "";
+    clear: both;
   }
 }
 
-/* 市级地图 */
-.storyList{
-  margin-top: .5rem;
-  padding: 0 .5rem;
-  &>li{
-    padding-left: .6rem;
-    padding-bottom: .5rem;
-    border-bottom: 1px solid #f0f1f2;
-    position: relative;
-    i{
-      font-size: $font24;
-      display: inline-block;
-      line-height: 1.708rem;
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    h3{
-      font-size: $font16;
-      line-height: 3em;
-    }
-    p{
-      font-size: $font12;
-      line-height: 1.4em;
-    }
-  }
+.line20 {
+  height: 20px;
+  background: #f9f9f9;
 }
+
+.line50 {
+  height: 50px;
+}
+
+.line100 {
+  height: 100px;
+}
+
+//设置input框的placeholder样式
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #999;
+    font-size: 20px;
+  } 
+  input:-moz-placeholder, textarea:-moz-placeholder {
+    color: #999;
+    font-size: 20px;
+  } 
+  input::-moz-placeholder, textarea::-moz-placeholder {
+    color: #999;
+    font-size: 20px;
+  } 
+  input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color: #999;
+    font-size: 20px;
+  }

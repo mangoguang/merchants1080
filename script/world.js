@@ -5,7 +5,7 @@ var selectedMode = true;
 var mapName = 'world';
 var wjson;
 
-var provinces = ["广东", "安徽", "澳门", "北京", "重庆", "福建", "甘肃", "广西", "贵州", "海南", "河北", "黑龙江", "河南", "湖北", "湖南", "江苏", "江西", "吉林", "辽宁", "内蒙古", "宁夏", "青海", "山东", "上海", "山西", "四川", "天津", "香港", "新疆", "西藏", "云南", "浙江"];
+var provinces = ["广东", "安徽", "澳门", "北京", "重庆", "福建", "甘肃", "广西", "贵州", "海南", "河北", "黑龙江", "河南", "湖北", "湖南", "江苏", "江西", "吉林", "辽宁", "内蒙古", "宁夏", "青海", "山东", "上海", "山西", "四川", "天津", "香港", "新疆", "西藏", "云南", "浙江", "陕西"];
 var CNname = [];
 var ENname = [];
 var sum = [];
@@ -390,7 +390,7 @@ function lazyload() {
 
 	//添加拓展人员信息列表
 	ajaxObj1 = {
-
+		brand: '慕思儿童'
 	};
 	addzsryLi(ajaxObj1);
 }
@@ -934,11 +934,11 @@ function zsryLiClick() {
 
 		if (brand == '全部') {
 			ajaxObj1 = {
-
+				brand: '慕思儿童'
 			};
 		} else {
 			ajaxObj1 = {
-				brand: brand
+				brand: '慕思儿童'
 			};
 		}
 
@@ -953,7 +953,7 @@ function addzsryLi(ajaxObj1) {
 		if (arr.length > 0) {
 			$('.kzryList').empty();
 			var lis = '';
-			for (i in arr) {
+			for (var i = 0; i < (arr.length - 1); i++) {
 				var area = arr[i].AREA;
 				if (area.length > 26) {
 					var button = "<button class='moreBtn'>显示全部</button>";
