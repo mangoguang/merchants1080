@@ -317,7 +317,7 @@ insertData = function(id) {
 			storeName: storeName
 		};
 		getData1(dataPath + "storeinfo", ajaxData).then(function(msg) {
-			console.log(msg);
+			// console.log(msg);
 			var lis = '';
 			var temp = msg.pictures;
 			var picList = temp.split(',');
@@ -503,6 +503,7 @@ managerMsg = function(provinceName) {
 
 	getData1(dataPath + "managerbyprovince", ajaxData).then(function(arr) {
 		var index;
+		console.log(arr);
 		for (var i = 0; i < arr.length; i++) {
 			if ((arr[i].city).indexOf(cityName) >= 0) {
 				var msg = arr[i];

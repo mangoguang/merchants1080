@@ -11,16 +11,25 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     browserSync = require('browser-sync');
 
-
-gulp.task('css', function() {
-    return gulp.src('./css/*.css')
-        .pipe(watch('./css/*.css'))
+gulp.task('sass',function(){
+    return gulp.src('./sass/*.scss')
+        .pipe(watch('./sass/*.scss'))
+        .pipe(sass())
+        .pipe(gulp.dest('./css'))
         .pipe(minifycss())
-        // .pipe(rename({
-        //     suffix: '.min'
-        // }))
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('./css/min'))
 })
+
+// gulp.task('css', function() {
+//     return gulp.src('./css/*.css')
+//         .pipe(watch('./css/*.css'))
+//         .pipe(minifycss())
+//         // .pipe(rename({
+//         //     suffix: '.min'
+//         // }))
+//         .pipe(gulp.dest('./css/min'))
+// })
 
 //压缩合并JS文件
 gulp.task('js', function() {
@@ -51,7 +60,7 @@ gulp.task('browser-sync', function() {
 
 
 
-gulp.task('default', ['browser-sync', 'js', 'css'], function() {
+gulp.task('default', ['browser-sync', 'js', 'sass'], function() {
     // gulp.src('./sass/*.scss')
     //     .pipe(uglify())
     //     .pipe(sass())

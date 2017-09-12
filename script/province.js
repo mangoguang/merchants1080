@@ -8,7 +8,7 @@ provinceName = provinceName.split("&", 1).toString(); //省份中文名
 
 //初始化地图设置
 if (provinceName == '海南') {
-  var geoTop = 2600;
+  var geoTop = 2700;
   var geoL = 1600;
   var geoZoom = 8;
 } else if ((provinceName == '西藏') || (provinceName == '青海')) {

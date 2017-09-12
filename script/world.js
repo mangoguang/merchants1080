@@ -11,6 +11,7 @@ var ENname = [];
 var sum = [];
 var brandsArr;
 var labelShow = false;
+var canaddZSRY = true;
 
 var ajaxObj = {};
 var ajaxObj1 = {}; //获取拓展人员资料参数
@@ -389,10 +390,7 @@ function lazyload() {
 	barOption(ajaxObj, '');
 
 	//添加拓展人员信息列表
-	ajaxObj1 = {
-
-	};
-	addzsryLi(ajaxObj1);
+	addzsryLi('');
 }
 
 /*---柱状图代码---*/
@@ -779,6 +777,8 @@ function barList() {
 				ajaxObj["brand"] = text;
 				barOption(ajaxObj, text);
 			}
+
+			addzsryLi(text);
 		}
 	})
 }
@@ -923,7 +923,7 @@ function addzsryList(brandsArr) {
 	}
 	$('.zsryBox').append(lis);
 
-	zsryLiClick();
+	// zsryLiClick();
 }
 
 //点击拓展人员列表
@@ -934,11 +934,11 @@ function zsryLiClick() {
 
 		if (brand == '全部') {
 			ajaxObj1 = {
-
+				brand: '慕思儿童'
 			};
 		} else {
 			ajaxObj1 = {
-				brand: brand
+				brand: '慕思儿童'
 			};
 		}
 
@@ -946,14 +946,17 @@ function zsryLiClick() {
 	})
 }
 
-function addzsryLi(ajaxObj1) {
-	console.log(ajaxObj1);
-	getData1(dataPath1 + "gettuozhan", ajaxObj1).then(function(arr) {
-		console.log(arr);
+function addzsryLi(text) {
+	if(text == '慕思儿童'){
+		ajaxObj4 = {
+		brand: '慕思儿童'
+	};
+        getData1(dataPath1 + "gettuozhan", ajaxObj4).then(function(arr) {
+
 		if (arr.length > 0) {
 			$('.kzryList').empty();
 			var lis = '';
-			for (i in arr) {
+			for (var i=0;i<2;i++) {
 				var area = arr[i].AREA;
 				if (area.length > 26) {
 					var button = "<button class='moreBtn'>显示全部</button>";
@@ -984,6 +987,34 @@ function addzsryLi(ajaxObj1) {
 			$('.kzryList').append('<p class="noMenMsg">该品牌暂时没有设置拓展人员！</p>');
 		}
 	})
+	}else{
+		var ajaxData3 = {
+	    country: '中国'
+	  };
+	getData1(dataPath + "managerbyinfo", ajaxData3).then(function(data) {
+		console.log(data);
+		$('.kzryList').empty();
+		var str1 = '';
+		for(var i=0;i<data.length;i++){
+			var li1 = "<li>" +
+	          "<img class='headPhoto' src='" + picPath + data[i].mulu + '/' + data[i].headPhoto + "'/>" +
+	          "<div>" +
+	          "<h3>" + data[i].name + "</h3>" +
+	          "<p>电话：" + data[i].phone + "</p>" +
+	          "<p>职位：" + "招商经理" + "</p>" +
+	          "<p class='moreBox'>负责区域：" + data[i].city + "</p>" +
+	          // button +
+	          "</div>" +
+	          "<img class='QR' src='" + picPath + data[i].mulu + '/' + data[i].qr + "'/>" +
+	          "</li>";
+	          str1 += li1;
+		}
+
+          $('.kzryList').append(str1);
+
+	})
+	}
+
 }
 
 /**

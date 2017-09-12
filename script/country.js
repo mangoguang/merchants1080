@@ -140,6 +140,7 @@ getChina = function() {
           '<p>片区：<span class="manArea">' + data[i].city + '</span></p>' +
           '<p>负责区域：<span class="manPianqu">' + area[i] + '</span></p>' +
           '</li>';
+
         $(".managerListBox").append(str);
       }
 
@@ -273,7 +274,7 @@ function getManMsg(obj) {
     bigArea: manPianqu
   }
   getData1(dataPath + "marketsinfo", ajaxData).then(function(ret1) {
-    console.log(ret1);
+    // console.log(ret1);
     var developListArr = ret1.develop.split(",");
     var developList = developListArr.join("、");
     var undevelopListArr = [];
