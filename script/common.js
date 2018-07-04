@@ -13,8 +13,8 @@ var textColor = '#dcdcdc'; //地图文字颜色
 //屏幕可布局高度
 var height = document.documentElement.clientHeight;
 
-var dataPath = 'http://zs.derucci.net:8821/deruccimid/cst/';
-var dataPath1 = 'http://zs.derucci.net:8821/deruccimid/businessapp/';
+var dataPath = 'https://zs.derucci.net/deruccimid/cst/';
+var dataPath1 = 'https://zs.derucci.net/deruccimid/businessapp/';
 var picPath = 'http://oa.derucci.net:8901/businessfile/';
 
 //body全屏
